@@ -114,6 +114,8 @@ main{flex:1;padding:14px 18px calc(env(safe-area-inset-bottom,0px) + 92px);displ
 button.card{width:100%;text-align:left;border:0;cursor:pointer;align-items:start;font:inherit;color:inherit;grid-template-columns:40px 1fr auto;padding-right:14px}
 button.card .pill{align-self:center}
 .msg.note{border-left:3px solid var(--note)}
+.msg.sys{background:var(--late-soft);border-radius:14px}
+.msg.sys p{color:var(--late)}
 .msg i{display:block;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--note);margin-bottom:2px}
 .card .x{position:absolute;right:8px;top:8px;width:32px;height:32px;border-radius:50%;border:0;background:transparent;color:var(--ink-3);font-size:20px;line-height:1;cursor:pointer}
 .hint{font-size:12.5px;color:var(--ink-3);text-align:center;margin-top:8px}
@@ -155,6 +157,15 @@ button.card .pill{align-self:center}
 .send svg{width:18px;height:18px;fill:currentColor}
 /* boeking */
 .bcard{background:var(--surface);border-radius:18px;box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:12px}
+.bcard.sitter{padding:12px 14px;gap:8px}
+.bcard.tap{cursor:pointer;text-align:left;border:0;font:inherit;color:inherit;width:100%;display:flex;flex-direction:column;gap:4px}
+.bcard.picked{box-shadow:var(--shadow), inset 0 0 0 2px var(--accent)}
+.sitterhead{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.sitterhead .ava{width:40px;height:40px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:17px}
+.sitterhead b{display:block;font-size:15.5px}
+.sitterhead .sub{font-size:12.5px}
+.rate{text-align:right}.rate .st{display:block;color:var(--note);letter-spacing:1px;font-size:13px}
+.pill.warn{background:var(--late-soft);color:var(--late)}
 .bcard h3{margin:0;font-size:17px;font-weight:700;display:flex;align-items:center;gap:8px}
 .pill{font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--surface-2);color:var(--ink-2)}
 .pill.ok{background:var(--ok-soft);color:var(--ok)}.pill.note{background:var(--note-soft);color:var(--note)}.pill.acc{background:var(--accent-soft);color:var(--accent)}
@@ -395,7 +406,7 @@ const I18N = {
     language:'Taal', theme:'Weergave', th_auto:'Automatisch', th_light:'Licht', th_dark:'Donker',
     demo_time:'Demo: tijd van de dag', live:'Live', season:'Seizoen', se_auto:'Automatisch', se_dec:'December', se_carn:'Karnaval', se_none:'Geen',
     season_hint:'In december hangen er lichtjes in de palmboom. Tijdens het karnavalsseizoen (januari tot en met de dinsdag voor Aswoensdag) zijn de dieren feestelijk verkleed.',
-    export:'Exporteren (JSON voor Odoo)', reset:'Voorbeelddata herstellen', reset_q:'Alle voortgang wissen en voorbeelddata terugzetten?',
+    export:'Exporteren (JSON voor Odoo)', reset:'Voorbeelddata herstellen', reset_q:'Alle boekingen, berichten en voortgang wissen? De vragenlijst met je gegevens en dieren blijft ingevuld staan.', demo_full:'Demo met lopende boeking', demo_full_q:'De voorbeeldboeking van vandaag terugzetten?',
     install:'Zet de app op je beginscherm: Delen → Zet op beginscherm (iPhone) of ⋮ → App installeren (Android).',
     about:'Prototype · gegevens staan alleen op dit apparaat.',
     role_hint:'In de echte app loggen oppas en eigenaar apart in. Hier kun je wisselen om beide kanten te zien.',
@@ -437,7 +448,7 @@ const I18N = {
     language:'Language', theme:'Appearance', th_auto:'Automatic', th_light:'Light', th_dark:'Dark',
     demo_time:'Demo: time of day', live:'Live', season:'Season', se_auto:'Automatic', se_dec:'December', se_carn:'Carnival', se_none:'None',
     season_hint:'In December the palm tree gets fairy lights. During carnival season (January up to the Tuesday before Ash Wednesday) the pets dress up.',
-    export:'Export (JSON for Odoo)', reset:'Restore sample data', reset_q:'Erase all progress and restore the sample data?',
+    export:'Export (JSON for Odoo)', reset:'Restore sample data', reset_q:'Erase all bookings, messages and progress? The questionnaire with your details and pets stays filled in.', demo_full:'Demo with a running booking', demo_full_q:'Restore the example booking for today?',
     install:'Add the app to your home screen: Share → Add to Home Screen (iPhone) or ⋮ → Install app (Android).',
     about:'Prototype · data is stored on this device only.',
     role_hint:'In the real app sitter and owner log in separately. Here you can switch to see both sides.',
@@ -448,7 +459,29 @@ const I18N = {
   }
 };
 Object.assign(I18N.nl, {
-  booking:'Boeking', pets:'Dieren', walk_skip:'Wandeling overgeslagen', walk_skipped:'Overgeslagen', about_task:'bij {task}', bk_when_short:'Periode', me:'Jij', comments:'Opmerkingen', comments_add:'Opmerking toevoegen', hide:'Verbergen',
+  bk_addr_hidden:'Het volledige adres zie je zodra je de aanvraag accepteert.', bk_sitters:'Wie mag de aanvraag ontvangen?', bk_any:'Geen voorkeur', bk_any_s:'Iedereen in je buurt die met jouw dieren werkt en goede beoordelingen heeft.',
+  bk_match:'Past bij je dieren en buurt', bk_no_match:'Nog geen oppas gevonden die bij je dieren en buurt past.',
+  bk_profile:'Profiel', bk_years:'{n} jaar ervaring', bk_bookings:'{n} boekingen', bk_hoods:'Buurten', bk_choose:'Kies deze oppas', bk_chosen:'Gekozen',
+  bk_new:'+ Nieuwe aanvraag', bk_my:'Jouw aanvragen', bk_requests:'Nieuwe aanvragen', bk_yours:'Jouw boekingen', bk_detail:'Bekijk gegevens',
+  bk_declined_msg:'Helaas hebben we geen geschikte oppas kunnen vinden. Pas de zoekopdracht aan of neem contact op met Eline via info@huisdierenoppascuracao.com of +599 694 7642.',
+  bk_edit_search:'Zoekopdracht aanpassen', bk_delete:'Annuleren', st_declined:'Geen oppas gevonden', bk_invited:'Gevraagd aan',
+  bk_upcoming:'Start {when}', bk_owner_info:'Eigenaar', bk_address:'Adres', bk_hood:'Buurt', bk_phone:'Telefoon', bk_your_info:'Jouw gegevens',
+  bk_plan_pets:'Dieren', bk_plan_feed:'Eten', bk_plan_walks:'Uitlaten', bk_plan_chores:'Overige taken', bk_plan_notes:'Bijzonderheden',
+  q_owner:'Jouw gegevens', q_owner_s:'De oppas ziet deze gegevens zodra de boeking is geaccepteerd.',
+});
+Object.assign(I18N.en, {
+  bk_addr_hidden:'You will see the full address once you accept the request.', bk_sitters:'Who may receive this request?', bk_any:'No preference', bk_any_s:'Anyone in your area who works with your kind of pets and has good reviews.',
+  bk_match:'Matches your pets and area', bk_no_match:'No sitter matches your pets and area yet.',
+  bk_profile:'Profile', bk_years:'{n} years of experience', bk_bookings:'{n} bookings', bk_hoods:'Areas', bk_choose:'Choose this sitter', bk_chosen:'Chosen',
+  bk_new:'+ New request', bk_my:'Your requests', bk_requests:'New requests', bk_yours:'Your bookings', bk_detail:'View details',
+  bk_declined_msg:'Unfortunately we could not find a sitter. Adjust your search or contact Eline at info@huisdierenoppascuracao.com or +599 694 7642.',
+  bk_edit_search:'Adjust search', bk_delete:'Cancel', st_declined:'No sitter found', bk_invited:'Asked',
+  bk_upcoming:'Starts {when}', bk_owner_info:'Owner', bk_address:'Address', bk_hood:'Area', bk_phone:'Phone', bk_your_info:'Your details',
+  bk_plan_pets:'Pets', bk_plan_feed:'Food', bk_plan_walks:'Walks', bk_plan_chores:'Other tasks', bk_plan_notes:'Good to know',
+  q_owner:'Your details', q_owner_s:'The sitter sees these details once the booking is accepted.',
+});
+Object.assign(I18N.nl, {
+  booking:'Boeking', pets:'Dieren', app_name:'Huisdierenoppas Curaçao', walk_skip:'Wandeling overgeslagen', walk_skipped:'Overgeslagen', about_task:'bij {task}', bk_when_short:'Periode', me:'Jij', comments:'Opmerkingen', comments_add:'Opmerking toevoegen', hide:'Verbergen',
   chat:'Berichten', chat_ph:'Bericht aan {who}…', chat_all:'Alle berichten ({n})', chat_empty:'Nog geen berichten.',
   bk_who:'Waar ben je naar op zoek?', bk_find:'Ik zoek een oppas', bk_find_s:'Vul de vragenlijst in en stuur een aanvraag.',
   bk_offer:'Ik bied oppas aan', bk_offer_s:'Ontvang aanvragen en accepteer wat past.',
@@ -468,7 +501,7 @@ Object.assign(I18N.nl, {
   notif_req:'Nieuwe aanvraag ontvangen', notif_acc:'Je aanvraag is geaccepteerd',
 });
 Object.assign(I18N.en, {
-  booking:'Booking', pets:'Pets', walk_skip:'Walk skipped', walk_skipped:'Skipped', about_task:'about {task}', bk_when_short:'Dates', me:'You', comments:'Notes', comments_add:'Add a note', hide:'Hide',
+  booking:'Booking', pets:'Pets', app_name:'Huisdierenoppas Curaçao', walk_skip:'Walk skipped', walk_skipped:'Skipped', about_task:'about {task}', bk_when_short:'Dates', me:'You', comments:'Notes', comments_add:'Add a note', hide:'Hide',
   chat:'Messages', chat_ph:'Message {who}…', chat_all:'All messages ({n})', chat_empty:'No messages yet.',
   bk_who:'What are you looking for?', bk_find:'I need a sitter', bk_find_s:'Fill in the questionnaire and send a request.',
   bk_offer:'I offer pet sitting', bk_offer_s:'Receive requests and accept the ones that fit.',
@@ -534,6 +567,28 @@ function season(){
   return null;
 }
 
+/* ---------------- oppassers (demo-catalogus) ---------------- */
+const HOODS = ['Punda','Otrobanda','Scharloo','Pietermaai','Saliña','Mahaai','Julianadorp','Jan Thiel','Willibrordus','Sint Michiel'];
+const SITTERS = [
+  {id:'s_eline', name:'Eline', hoods:['Pietermaai','Punda','Scharloo','Saliña'], species:['dog','cat','turtle'], years:6, bookings:214, rating:4.9,
+   intro:'Ik pas al jaren op honden, katten en af en toe een schildpad. Ik stuur graag korte updates en een foto tussendoor.'},
+  {id:'s_naomi', name:'Naomi', hoods:['Pietermaai','Mahaai'], species:['cat'], years:3, bookings:87, rating:4.8,
+   intro:'Kattenmens in hart en nieren. Rustig aan huis en ik blijf graag even hangen voor een knuffel.'},
+  {id:'s_ruben', name:'Ruben', hoods:['Jan Thiel','Willibrordus'], species:['dog'], years:2, bookings:41, rating:4.6,
+   intro:'Sportief en actief: lange strandwandelingen zijn mijn ding.'},
+  {id:'s_kim', name:'Kim', hoods:['Punda','Otrobanda','Scharloo'], species:['dog','cat'], years:1, bookings:12, rating:3.2,
+   intro:'Net begonnen als oppas en leer graag bij. Vooral in het weekend beschikbaar.'},
+];
+const ME_SITTER = 's_eline';   // in dit prototype ben jij als oppas Eline
+const sitterById = id => SITTERS.find(x=>x.id===id) || null;
+/* voorfilter: past bij de buurt van de eigenaar én bij alle diersoorten */
+function matchingSitters(){
+  const hood = (S.plan.owner_info||{}).hood, kinds = [...new Set(S.plan.pets.map(p=>p.species))];
+  return SITTERS.filter(x => (!hood || x.hoods.includes(hood)) && kinds.every(k=>x.species.includes(k)));
+}
+const goodSitters = () => matchingSitters().filter(x=>x.rating >= 4);
+function stars(r){ const full = Math.round(r); return '★'.repeat(full) + '☆'.repeat(5-full); }
+
 /* ---------------- state ---------------- */
 let S = null;
 function seed(){
@@ -560,12 +615,13 @@ function seed(){
       kliko:{on:true,time:'20:00',weekday:today.getDay()},
     },
     meds:[], custom:[],
+    owner_info:{name:'Mirthe', address:'Scharlooweg 42', hood:'Pietermaai', phone:'+599 9 512 3344'},
     notes:'Mira is bang voor onweer: laat dan de radio zachtjes aan. Rocky trekt aan de lijn als hij geiten ziet.',
     vet:{name:'Dierenkliniek (voorbeeld)', phone:'+599 9 000 0000'},
   };
   const dk = d => d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
   const d2 = new Date(today); d2.setDate(d2.getDate()+2);
-  const booking = {state:'active', type:'range', sitter:'Eline', owner:'Mirthe',
+  const booking = {id:'bk_1', state:'active', type:'range', sitter:'Eline', owner:'Mirthe', sitter_ids:[ME_SITTER], accepted_by:ME_SITTER, declined_by:[],
     days:[{date:dateKey(today), start:'06:45', end:'21:30'},
           {date:dk(new Date(today.getTime()+864e5)), start:'07:00', end:'21:30'},
           {date:dk(d2), start:'07:00', end:'12:00'}],
@@ -574,7 +630,7 @@ function seed(){
     {id:'m1', from:'owner', text:'Hoi Eline! De sleutel ligt onder de bloempot bij de achterdeur.', at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,32).toISOString()},
     {id:'m2', from:'sitter', text:'Dank je! Ik ben binnen, de dieren zijn blij. Ik hou je op de hoogte.', at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,54).toISOString()},
   ];
-  const st = {v:1, lang:'nl', role:'sitter', user_type:'sitter', theme:'auto', season:'auto', demo_time:null, tab:'today', plan, days:{}, dismissed:{}, read:{owner:null, sitter:null}, booking, chat};
+  const st = {v:1, lang:'nl', role:'sitter', user_type:'sitter', theme:'auto', season:'auto', demo_time:null, tab:'today', plan, days:{}, dismissed:{}, read:{owner:null, sitter:null}, bookings:[booking], bkform:null, chat};
   const y = new Date(today); y.setDate(y.getDate()-1);
   const yk = dateKey(y);
   const tasks = generateTasks(plan, y);
@@ -591,10 +647,17 @@ function seed(){
   st.days[yk] = {date:yk, tasks};
   return st;
 }
+/* Voorbeelddata herstellen: vragenlijst ingevuld, maar nog geen boekingen en berichten */
+function seedClean(){
+  const st = seed();
+  st.bookings = []; st.bkform = null; st.chat = []; st.days = {}; st.dismissed = {}; st.read = {owner:null, sitter:null};
+  st.role = 'owner'; st.user_type = 'owner'; st.tab = 'booking';
+  return st;
+}
 function load(){
-  try{ const raw = localStorage.getItem(SAVE_KEY); if(raw){ const s = JSON.parse(raw); if(s && s.v===1){ s.dismissed = s.dismissed||{}; s.season = s.season||'auto'; s.chat = s.chat||[]; s.booking = s.booking||{state:'none', type:'single', days:[], sitter:'Eline', owner:'Mirthe'};
-        if(s.booking.sitter==='Shanti') s.booking.sitter='Eline';
-        if(s.booking.owner==='Eline') s.booking.owner='Mirthe';
+  try{ const raw = localStorage.getItem(SAVE_KEY); if(raw){ const s = JSON.parse(raw); if(s && s.v===1){ s.dismissed = s.dismissed||{}; s.season = s.season||'auto'; s.chat = s.chat||[]; if(s.booking){ s.booking.id = s.booking.id||'bk_1'; s.bookings = s.bookings||[s.booking]; delete s.booking; }
+        s.bookings = s.bookings||[]; s.plan.owner_info = s.plan.owner_info||{name:'Mirthe', address:'', hood:'Pietermaai', phone:''};
+        s.bookings.forEach(b=>{ b.sitter_ids = b.sitter_ids||[]; b.declined_by = b.declined_by||[]; if(b.sitter==='Shanti') b.sitter='Eline'; b.owner = s.plan.owner_info.name || 'Mirthe'; });
         s.read = s.read||{owner:null, sitter:null}; s.user_type = s.user_type||null; return s; } } }catch(e){}
   return null;
 }
@@ -631,9 +694,13 @@ function generateTasks(plan, date){
   return out;
 }
 const kindOrder = x => ({feed:0,med:1,walk:2,chore:3,custom:4})[x.kind] ?? 9;
+const EMPTY_DAY = {date:'', tasks:[]};
 function today(){
   const k = dateKey(nowDate());
-  if(!S.days[k]){ S.days[k] = {date:k, tasks:generateTasks(S.plan, nowDate())}; save(); }
+  if(S.days[k]) return S.days[k];
+  /* zonder boeking voor vandaag maken we geen takenlijst aan */
+  if(!bookingDay(k)){ EMPTY_DAY.date = k; EMPTY_DAY.tasks = []; return EMPTY_DAY; }
+  S.days[k] = {date:k, tasks:generateTasks(S.plan, nowDate())}; save();
   return S.days[k];
 }
 function rebuildToday(){
@@ -645,18 +712,34 @@ function rebuildToday(){
 }
 
 /* ---------------- boeking ---------------- */
-function bookingDay(key){ return (S.booking.days||[]).find(x=>x.date===key) || null; }
+const BLANK = {id:null, state:'none', days:[], sitter_ids:[], declined_by:[], type:'single'};
+/* de boeking waar het vandaag om gaat */
+function cur(){
+  const k = dateKey(nowDate()), has = b => (b.days||[]).some(d=>d.date===k);
+  const bs = S.bookings||[];
+  return bs.find(b=>b.state==='active' && has(b)) || bs.find(b=>b.state==='accepted' && has(b)) || null;
+}
+function bk(){ const c = cur(); return c || BLANK; }
+function bookingName(b){ return b && b.accepted_by ? (sitterById(b.accepted_by)||{}).name : 'Eline'; }
+const ownerName = () => (S.plan.owner_info||{}).name || 'Mirthe';
+function sitterName(){ const c = cur(); return c ? bookingName(c) : ((S.bookings||[]).map(bookingName)[0] || 'Eline'); }
+/* aanvragen die bij deze oppas (Eline) horen */
+const forMe = b => !b.sitter_ids.length ? !b.declined_by.includes(ME_SITTER) : b.sitter_ids.includes(ME_SITTER) && !b.declined_by.includes(ME_SITTER);
+const openRequests = () => (S.bookings||[]).filter(b=>b.state==='requested' && forMe(b));
+const myBookings = () => (S.bookings||[]).filter(b=>['accepted','active'].includes(b.state) && b.accepted_by===ME_SITTER);
+function firstDay(b){ return (b.days||[]).map(x=>x.date).sort()[0]; }
+function bookingDay(key){ return (bk().days||[]).find(x=>x.date===key) || null; }
 function bookingToday(){ return bookingDay(dateKey(nowDate())); }
-function isActive(){ return S.booking.state==='active' && !!bookingToday(); }
+function isActive(){ return bk().state==='active' && !!bookingToday(); }
 function checkinMin(){
-  const c = S.booking.checkin_at; if(!c) return null;
+  const c = bk().checkin_at; if(!c) return null;
   const d = new Date(c); return dateKey(d)===dateKey(nowDate()) ? d.getHours()*60+d.getMinutes() : (d < nowDate() ? 0 : null);
 }
 /* taken die buiten de oppastijd of vóór het inchecken vallen, staan grijs */
 function taskOff(x){
   const day = bookingToday();
-  if(!day || S.booking.state==='none') return 'none';
-  if(S.booking.state!=='active') return 'notyet';
+  if(!day || bk().state==='none') return 'none';
+  if(bk().state!=='active') return 'notyet';
   if(x.time_start < toMin(day.start) || x.time_start > toMin(day.end)) return 'outside';
   const ci = checkinMin();
   if(ci!=null && dueEnd(x) <= ci) return 'before';
@@ -664,8 +747,9 @@ function taskOff(x){
 }
 const liveTasks = d => d.tasks.filter(x=>!taskOff(x));
 function fmtShort(key){ const [y,m,dd] = key.split('-').map(Number); return `${t('wd')[new Date(y,m-1,dd).getDay()]} ${dd} ${t('mon')[m-1].slice(0,3)}`; }
-function bookingRange(){
-  const ds = (S.booking.days||[]).map(x=>x.date).sort();
+function bookingRange(b){
+  if(b){ const ds=(b.days||[]).map(x=>x.date).sort(); return !ds.length ? '' : ds.length===1 ? fmtShort(ds[0]) : t('bk_period',{from:fmtShort(ds[0]), to:fmtShort(ds[ds.length-1])}); }
+  const ds = (bk().days||[]).map(x=>x.date).sort();
   if(!ds.length) return '';
   return ds.length===1 ? fmtShort(ds[0]) : t('bk_period',{from:fmtShort(ds[0]), to:fmtShort(ds[ds.length-1])});
 }
@@ -707,7 +791,7 @@ function stream(){
   const notes = d.tasks.filter(x=>x.note && noteAt(x)).map(x=>({id:'n_'+x.id, from:'sitter', text:x.note, at:noteAt(x), task:taskTitle(x)}));
   return [...(S.chat||[]), ...notes].sort((a,b)=> (a.at||'').localeCompare(b.at||''));
 }
-function unreadItems(role){ return stream().filter(it => it.from !== role && !isRead(role, it.at)); }
+function unreadItems(role){ return stream().filter(it => (it.system ? role==='owner' : it.from !== role) && !isRead(role, it.at)); }
 function markRead(role){ S.read = S.read || {}; S.read[role] = nowDate().toISOString(); save(); }
 function taskStatus(x, m, date){
   if(x.state!=='done') return m >= dueEnd(x) ? 'late' : 'open';
@@ -1097,10 +1181,7 @@ function renderScene(){
   $('#scene').innerHTML = sceneSVG();
   const act = isActive();
   $('#sceneWrap').classList.toggle('inactive', !act);
-  let msg = $('#sceneWrap').querySelector('.veilmsg');
-  if(!act){ if(!msg){ msg = document.createElement('div'); msg.className='veilmsg'; $('#sceneWrap').appendChild(msg); }
-    msg.textContent = bookingToday() ? t('bk_not_started_s') : t('bk_none'); }
-  else if(msg) msg.remove();
+  const msg = $('#sceneWrap').querySelector('.veilmsg'); if(msg) msg.remove();
   applyYum();
   const d = today(), done = d.tasks.filter(x=>x.state==='done').length;
   $('#progFill').style.width = (d.tasks.length ? Math.round(done/d.tasks.length*100) : 0)+'%';
@@ -1116,6 +1197,8 @@ function renderHeader(){
 let openTask = null;
 const ICON_CHECK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 function viewToday(){
+  /* zonder boeking voor vandaag: geen takenlijst en geen berichten */
+  if(!cur() || !bookingToday()) return bannerHTML();
   return bannerHTML() + inboxSection() + (S.role === 'owner' ? viewOwner() : viewSitter());
 }
 /* één vak: het laatste ongelezen bericht of de laatste opmerking, of de chat zelf */
@@ -1126,7 +1209,7 @@ function inboxSection(){
   const body = last
     ? `<button class="card" data-act="open-chat">
         <div class="av">${last.task ? petAvatar((today().tasks.find(x=>taskTitle(x)===last.task)||{pet_ids:[]}).pet_ids[0]) : ICON_PERSON}</div>
-        <div><div class="meta"><b>${esc(last.from==='owner'?S.booking.owner:S.booking.sitter)}</b> · ${hmOf(last.at)}${last.task?` · ${esc(t('about_task',{task:last.task}))}`:''}</div><p>${esc(last.text)}</p></div>
+        <div><div class="meta"><b>${last.system ? t('app_name') : esc(last.from==='owner'?ownerName():sitterName())}</b> · ${hmOf(last.at)}${last.task?` · ${esc(t('about_task',{task:last.task}))}`:''}</div><p>${esc(last.text)}</p></div>
         ${un.length>1?`<span class="pill acc">${un.length}</span>`:''}</button>`
     : `<button class="card empty-card" data-act="open-chat"><div class="av">${ICON_PERSON}</div><div><p class="muted">${t('no_cards')}</p></div></button>`;
   return `<section class="sec" id="cardsSec"><h2>${title}</h2><div class="cards">${body}</div></section>`;
@@ -1134,17 +1217,12 @@ function inboxSection(){
 
 /* melding bovenaan: geen boeking, nieuwe aanvraag of nog niet ingecheckt */
 function bannerHTML(){
-  const b = S.booking, day = bookingToday();
-  if(S.role==='sitter' && b.state==='requested')
-    return `<div class="bcard"><h3>${t('bk_new_req')} <span class="pill note">${t('st_requested')}</span></h3>
-      <div class="kv"><b>${t('bk_owner')}</b><span>${esc(b.owner)}</span><b>${t('bk_when')}</b><span>${bookingRange()}</span><b>${t('pets')}</b><span>${t('bk_pets',{n:S.plan.pets.length})}</span></div>
-      <div class="brow"><button class="btn" data-act="bk-accept">${t('bk_accept')}</button><button class="btn ghost danger" data-act="bk-decline">${t('bk_decline')}</button></div></div>`;
-  if(!day || b.state==='none' || b.state==='requested')
+  const c = cur(), day = bookingToday();
+  if(!c || !day)
     return `<div class="bcard"><h3>${t('bk_none')}</h3><p class="sub">${t('bk_none_s')}</p>
       <div class="brow"><button class="btn ghost" data-act="go-booking">${t('bk_to_booking')}</button></div></div>`;
-  if(b.state!=='active')
+  if(c.state!=='active')
     return `<div class="bcard"><h3>${t('bk_not_started')} <span class="pill acc">${fmtShort(day.date)} ${day.start}</span></h3>
-      <p class="sub">${t('bk_not_started_s')}</p>
       ${S.role==='sitter' ? `<div class="brow"><button class="btn" data-act="bk-checkin">${t('bk_checkin')}</button></div>` : ''}</div>`;
   return '';
 }
@@ -1154,11 +1232,11 @@ let chatAll = false, chatOpen = false;
 const ICON_PERSON = '<svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.8"><circle cx="12" cy="9" r="3.4"/><path d="M5 20c.8-3.8 3.6-5.4 7-5.4s6.2 1.6 7 5.4"/></svg>';
 const ICON_SEND = '<svg viewBox="0 0 24 24"><path d="M3.4 20.4 21 12 3.4 3.6 3.4 10l12 2-12 2z"/></svg>';
 function chatBox(){
-  const other = S.role==='owner' ? S.booking.sitter : S.booking.owner;
+  const other = S.role==='owner' ? sitterName() : ownerName();
   const all = stream(), list = chatAll ? all : all.slice(-6);
   return `<div class="chat">
       ${all.length>6 && !chatAll ? `<button class="lnk" style="margin:10px 14px 0" data-act="chat-all">${t('chat_all',{n:all.length})}</button>` : ''}
-      <div class="msgs" id="msgs">${list.length ? list.map(mm=>`<div class="msg ${mm.from===S.role?'me':''} ${mm.task?'note':''}">${mm.task?`<i>${esc(mm.task)}</i>`:''}<p>${esc(mm.text)}</p><time>${mm.from===S.role ? t('me') : esc(mm.from==='owner'?S.booking.owner:S.booking.sitter)} · ${hmOf(mm.at)}</time></div>`).join('') : `<p class="sub muted" style="padding:4px 2px">${t('chat_empty')}</p>`}</div>
+      <div class="msgs" id="msgs">${list.length ? list.map(mm=>`<div class="msg ${mm.from===S.role && !mm.system?'me':''} ${mm.task?'note':''} ${mm.system?'sys':''}">${mm.task?`<i>${esc(mm.task)}</i>`:''}<p>${esc(mm.text)}</p><time>${mm.system ? t('app_name') : mm.from===S.role ? t('me') : esc(mm.from==='owner'?ownerName():sitterName())} · ${hmOf(mm.at)}</time></div>`).join('') : `<p class="sub muted" style="padding:4px 2px">${t('chat_empty')}</p>`}</div>
       <form class="chatin" id="chatForm" autocomplete="off"><input id="chatInput" type="text" placeholder="${t('chat_ph',{who:esc(other)})}"><button class="send" type="submit" aria-label="${t('chat')}">${ICON_SEND}</button></form>
     </div>`;
 }
@@ -1299,6 +1377,10 @@ function viewIntake(){
   const sec = (title, sub, inner) => `<div class="panel"><h3>${title}</h3>${sub?`<p class="sub">${sub}</p>`:''}${inner}</div>`;
   return `${ro?`<div class="ro-note">${t('ro_intake')}</div>`:`<p class="sub">${t('intake_intro')}</p>`}
     <fieldset ${ro?'disabled':''}>
+    ${sec(t('q_owner'), t('q_owner_s'), `<input type="text" data-f="oi.name" value="${esc((P.owner_info||{}).name||'')}" placeholder="${t('name')}">
+      <input type="text" data-f="oi.address" value="${esc((P.owner_info||{}).address||'')}" placeholder="${t('bk_address')}">
+      <select data-f="oi.hood">${HOODS.map(h=>`<option value="${h}" ${(P.owner_info||{}).hood===h?'selected':''}>${h}</option>`).join('')}</select>
+      <input type="tel" data-f="oi.phone" value="${esc((P.owner_info||{}).phone||'')}" placeholder="${t('bk_phone')}">`)}
     ${sec(t('q_pets'), t('q_pets_s'), petCards + (P.pets.length<4?`<button class="btn ghost sm" data-act="add-pet">${t('add_pet')}</button>`:''))}
     ${sec(t('q_feed'), t('q_feed_s'), feeds + `<button class="btn ghost sm" data-act="add-feed">${t('add_feed')}</button>`)}
     ${sec(t('q_walk'), t('q_walk_s'), walks)}
@@ -1312,18 +1394,17 @@ function viewIntake(){
 }
 
 /* ---------------- boekingsscherm ---------------- */
+let openBooking = null, openSitter = null, showForm = false;
 function bkForm(){
-  const b = S.booking, f = b.form = b.form || {};
   const k = dateKey(nowDate());
-  f.date = f.date || k; f.start = f.start || '08:00'; f.end = f.end || '18:00';
-  f.date2 = f.date2 || k; f.rows = f.rows || [{date:k, start:'08:00', end:'18:00'}];
-  b.type = b.type || 'single';
+  const f = S.bkform = S.bkform || {type:'single', date:k, start:'08:00', end:'18:00', date2:k, rows:[{date:k, start:'08:00', end:'18:00'}], sitter_ids:[]};
+  f.type = f.type || 'single'; f.sitter_ids = f.sitter_ids || [];
   return f;
 }
 function buildDays(){
-  const b = S.booking, f = bkForm(), out = [];
-  if(b.type==='single') out.push({date:f.date, start:f.start, end:f.end});
-  else if(b.type==='range'){
+  const f = bkForm(), out = [];
+  if(f.type==='single') out.push({date:f.date, start:f.start, end:f.end});
+  else if(f.type==='range'){
     const a = new Date(f.date+'T00:00'), z = new Date(f.date2+'T00:00');
     for(let d = new Date(a), i=0; d <= z && i < 60; d.setDate(d.getDate()+1), i++) out.push({date:dateKey(d), start:f.start, end:f.end});
   } else out.push(...f.rows.filter(r=>r.date).map(r=>({date:r.date, start:r.start, end:r.end})));
@@ -1336,53 +1417,118 @@ function viewBooking(){
   </div></section>`;
   return S.role==='owner' ? bookingOwner() : bookingSitter();
 }
-const bkPill = st => ({none:'', requested:'note', accepted:'acc', active:'ok', done:''})[st] || '';
-function bkSummary(extra){
-  const b = S.booking;
-  return `<div class="kv">
-    <b>${t('bk_status')}</b><span>${t('st_'+b.state)}</span>
-    <b>${t('bk_when_short')}</b><span>${bookingRange() || '—'}</span>
-    <b>${t('bk_sitter')}</b><span>${esc(b.sitter)}</span>
-    <b>${t('pets')}</b><span>${S.plan.pets.map(p=>esc(p.name)).join(', ')}</span>
-    ${extra||''}</div>`;
+const bkPill = st => ({none:'', requested:'note', accepted:'acc', active:'ok', declined:'warn', done:''})[st] || '';
+function bkDays(b){
+  return `<div class="daylist">${(b.days||[]).map(d=>`<div class="dayrow"><span>${fmtShort(d.date)}</span><span class="muted">${d.start} – ${d.end}</span><span></span></div>`).join('')}</div>`;
 }
-function bkDays(){
-  return `<div class="daylist">${(S.booking.days||[]).map(d=>`<div class="dayrow"><span>${fmtShort(d.date)}</span><span class="muted">${d.start} – ${d.end}</span><span></span></div>`).join('')}</div>`;
+function invitedText(b){
+  if(!b.sitter_ids.length) return t('bk_any');
+  return b.sitter_ids.map(id=>(sitterById(id)||{}).name).filter(Boolean).join(', ');
+}
+/* kaartje van een oppas: naam, buurten, ervaring, beoordeling en intro */
+function sitterCard(x, picked, showPick){
+  const open = openSitter===x.id;
+  return `<div class="bcard sitter ${picked?'picked':''}" data-sitter="${x.id}">
+    <button class="sitterhead" data-act="bk-sitter-open">
+      <span class="ava">${x.name[0]}</span>
+      <span><b>${esc(x.name)}</b><span class="sub">${x.hoods.slice(0,3).join(', ')}</span></span>
+      <span class="rate"><span class="st">${stars(x.rating)}</span><span class="sub">${x.rating.toFixed(1)} · ${t('bk_bookings',{n:x.bookings})}</span></span>
+    </button>
+    ${open ? `<div class="kv">
+        <b>${t('bk_hoods')}</b><span>${x.hoods.join(', ')}</span>
+        <b>${t('pets')}</b><span>${x.species.map(sp=>t(sp)).join(', ')}</span>
+        <b>${t('bk_profile')}</b><span>${t('bk_years',{n:x.years})} · ${t('bk_bookings',{n:x.bookings})}</span>
+      </div><p class="sub">${esc(x.intro)}</p>
+      ${showPick?`<div class="brow"><button class="btn ${picked?'ghost':''}" data-act="bk-pick">${picked?t('bk_chosen'):t('bk_choose')}</button></div>`:''}` : ''}
+  </div>`;
 }
 function bookingOwner(){
-  const b = S.booking, f = bkForm();
-  const chips = `<div class="seg">${[['single','bk_single'],['range','bk_range'],['multi','bk_multi']].map(([v,l])=>`<button class="chip ${b.type===v?'sel':''}" data-act="bk-type" data-v="${v}">${t(l)}</button>`).join('')}</div>`;
-  const when = b.type==='single'
+  const f = bkForm(), list = (S.bookings||[]).slice().sort((a,b)=> (firstDay(a)||'').localeCompare(firstDay(b)||''));
+  const chips = `<div class="seg">${[['single','bk_single'],['range','bk_range'],['multi','bk_multi']].map(([v,l])=>`<button class="chip ${f.type===v?'sel':''}" data-act="bk-type" data-v="${v}">${t(l)}</button>`).join('')}</div>`;
+  const when = f.type==='single'
     ? `<div class="dayrow"><input type="date" data-f="bk.date" value="${f.date}"><span style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><input type="time" data-f="bk.start" value="${f.start}"><input type="time" data-f="bk.end" value="${f.end}"></span><span></span></div>`
-    : b.type==='range'
+    : f.type==='range'
     ? `<p class="lbl">${t('bk_start_day')}</p><div class="dayrow"><input type="date" data-f="bk.date" value="${f.date}"><input type="time" data-f="bk.start" value="${f.start}"><span></span></div>
        <p class="lbl">${t('bk_end_day')}</p><div class="dayrow"><input type="date" data-f="bk.date2" value="${f.date2}"><input type="time" data-f="bk.end" value="${f.end}"><span></span></div>`
     : `${f.rows.map((r,i)=>`<div class="dayrow" data-row="${i}"><input type="date" data-f="bk.rdate" value="${r.date}">
         <span style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><input type="time" data-f="bk.rstart" value="${r.start}"><input type="time" data-f="bk.rend" value="${r.end}"></span>
         <button class="xbtn" data-act="bk-del-day" aria-label="${t('remove')}">×</button></div>`).join('')}
        <button class="btn ghost sm" data-act="bk-add-day">${t('bk_add_day')}</button>`;
-  const status = b.state==='none' ? '' : `<div class="bcard"><h3>${t('bk_overview')} <span class="pill ${bkPill(b.state)}">${t('st_'+b.state)}</span></h3>
-      ${bkSummary()}${bkDays()}
-      ${b.state==='active' && b.checkin_at ? `<p class="sub">${t('bk_checked_in',{time:hmOf(b.checkin_at)})}</p>` : ''}
-      <div class="brow">${b.state==='requested' ? `<button class="btn ghost danger" data-act="bk-decline">${t('bk_cancel')}</button>` : `<button class="btn ghost" data-act="bk-change">${t('bk_change')}</button>`}</div></div>`;
-  const form = b.state==='none' ? `<section class="sec"><h2>${t('bk_when')}</h2><div class="panel">${chips}${when}
-      <button class="btn" data-act="bk-send">${t('bk_send')}</button></div></section>` : '';
-  return `${status}${form}<section class="sec"><h2>${t('bk_plan')}</h2>${viewIntake()}</section>`;
+  const match = matchingSitters();
+  const picker = `<section class="sec"><h2>${t('bk_sitters')}</h2>
+    <div class="cards">
+      <button class="choice ${f.sitter_ids.length?'':'sel'}" data-act="bk-any"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.8-4.5 4.2 1.2 6.1L12 16.8 6.6 19.7l1.2-6.1L3.3 9.4l6.1-.8z"/></svg>
+        <span><b>${t('bk_any')}</b><span>${t('bk_any_s')}</span></span></button>
+      ${match.length ? `<p class="sub muted" style="margin:2px 2px 0">${t('bk_match')}</p>` + match.map(x=>sitterCard(x, f.sitter_ids.includes(x.id), true)).join('') : `<p class="sub muted">${t('bk_no_match')}</p>`}
+    </div></section>`;
+  const cards = list.map(b=>`<div class="bcard" data-booking="${b.id}">
+      <h3>${bookingRange(b)} <span class="pill ${bkPill(b.state)}">${t('st_'+b.state)}</span></h3>
+      <div class="kv"><b>${t('bk_invited')}</b><span>${esc(invitedText(b))}</span>
+        ${b.accepted_by?`<b>${t('bk_sitter')}</b><span>${esc(bookingName(b))}</span>`:''}
+        <b>${t('pets')}</b><span>${S.plan.pets.map(p=>esc(p.name)).join(', ')}</span></div>
+      ${bkDays(b)}
+      ${b.state==='declined'?`<p class="sub" style="color:var(--late)">${t('bk_declined_msg')}</p>`:''}
+      ${b.state==='active' && b.checkin_at?`<p class="sub">${t('bk_checked_in',{time:hmOf(b.checkin_at)})}</p>`:''}
+      <div class="brow">
+        ${b.state==='declined'?`<button class="btn" data-act="bk-edit-search">${t('bk_edit_search')}</button>`:''}
+        ${['requested','declined','accepted'].includes(b.state)?`<button class="btn ghost danger" data-act="bk-delete">${b.state==='requested'?t('bk_cancel'):t('bk_delete')}</button>`:''}
+      </div></div>`).join('');
+  const form = (showForm || !list.length) ? `<section class="sec"><h2>${t('bk_when')}</h2><div class="panel">${chips}${when}</div></section>
+      ${picker}
+      <section class="sec"><div class="panel"><button class="btn" data-act="bk-send">${t('bk_send')}</button></div></section>`
+    : `<section class="sec"><button class="btn ghost" data-act="bk-form">${t('bk_new')}</button></section>`;
+  return `${list.length?`<section class="sec"><h2>${t('bk_my')}</h2><div class="cards">${cards}</div></section>`:''}
+    ${form}<section class="sec"><h2>${t('bk_plan')}</h2>${viewIntake()}</section>`;
+}
+/* wat de oppas van een boeking ziet: alle praktische info, geen animatie-instellingen */
+function planSummary(){
+  const P = S.plan, oi = P.owner_info||{};
+  const feed = P.feedings.map(f=>`<div class="dayrow"><span>${f.time}</span><span class="muted">${P.pets.filter(p=>(f.portions[p.id]||'none')!=='none').map(p=>`${esc(p.name)}: ${t('cup_'+f.portions[p.id])}`).join(' · ')||'—'}</span><span></span></div>`).join('');
+  const walks = P.walks.length ? P.walks.map(w=>`<div class="dayrow"><span>${w.time}</span><span class="muted">${w.duration} ${t('minutes')} · ${w.dog_ids.map(id=>esc((P.pets.find(p=>p.id===id)||{}).name||'')).filter(Boolean).join(', ')}</span><span></span></div>`).join('') : `<p class="sub muted">${t('no_dogs')}</p>`;
+  const chores = Object.entries(P.chores).filter(([,c])=>c.on).map(([k,c])=>`<div class="dayrow"><span>${c.time}</span><span class="muted">${t('ch_'+k)}${k==='kliko'?` · ${t('every')} ${t('wdl')[Number(c.weekday)]}`:''}</span><span></span></div>`).join('')
+    + P.meds.map(m=>`<div class="dayrow"><span>${m.time}</span><span class="muted">${t('med',{pet:esc((P.pets.find(p=>p.id===m.pet_id)||{}).name||'')})}: ${esc(m.text)}</span><span></span></div>`).join('')
+    + P.custom.filter(c=>c.text).map(c=>`<div class="dayrow"><span>${c.time}</span><span class="muted">${esc(c.text)}</span><span></span></div>`).join('');
+  return `<div class="panel">
+      <h3>${t('bk_owner_info')}</h3>
+      <div class="kv"><b>${t('name')}</b><span>${esc(oi.name||'—')}</span>
+        <b>${t('bk_address')}</b><span>${esc(oi.address||'—')}</span>
+        <b>${t('bk_hood')}</b><span>${esc(oi.hood||'—')}</span>
+        <b>${t('bk_phone')}</b><span>${esc(oi.phone||'—')}</span>
+        <b>${t('vet_short')}</b><span>${esc(P.vet.name||'—')}${P.vet.phone?` · ${esc(P.vet.phone)}`:''}</span></div>
+    </div>
+    <div class="panel"><h3>${t('bk_plan_pets')}</h3>
+      <div class="daylist">${P.pets.map(p=>`<div class="dayrow"><span>${esc(p.name)}</span><span class="muted">${t(p.species)}</span><span></span></div>`).join('')}</div></div>
+    <div class="panel"><h3>${t('bk_plan_feed')}</h3><div class="daylist">${feed}</div></div>
+    <div class="panel"><h3>${t('bk_plan_walks')}</h3><div class="daylist">${walks}</div></div>
+    <div class="panel"><h3>${t('bk_plan_chores')}</h3><div class="daylist">${chores || `<p class="sub muted">—</p>`}</div></div>
+    ${P.notes?`<div class="panel"><h3>${t('bk_plan_notes')}</h3><p class="sub">${esc(P.notes)}</p></div>`:''}`;
 }
 function bookingSitter(){
-  const b = S.booking, day = bookingToday();
-  let head;
-  if(b.state==='requested') head = `<div class="bcard"><h3>${t('bk_req_from',{name:esc(b.owner)})} <span class="pill note">${t('st_requested')}</span></h3>
-      ${bkSummary()}${bkDays()}
-      <div class="brow"><button class="btn" data-act="bk-accept">${t('bk_accept')}</button><button class="btn ghost danger" data-act="bk-decline">${t('bk_decline')}</button></div></div>`;
-  else if(b.state==='accepted' || b.state==='active') head = `<div class="bcard"><h3>${t('bk_overview')} <span class="pill ${bkPill(b.state)}">${t('st_'+b.state)}</span></h3>
-      ${bkSummary()}${bkDays()}
-      ${b.state==='active' && b.checkin_at ? `<p class="sub">${t('bk_checked_in',{time:hmOf(b.checkin_at)})}</p>` : ''}
-      <div class="brow">${b.state==='active'
-        ? `<button class="btn ghost" data-act="bk-checkout">${t('bk_checkout')}</button>`
-        : day ? `<button class="btn" data-act="bk-checkin">${t('bk_checkin')}</button>` : `<span class="sub muted">${t('bk_not_started_s')}</span>`}</div></div>`;
-  else head = `<div class="bcard"><h3>${t('bk_offer')}</h3><p class="sub">${t('bk_offer_empty')}</p><p class="sub muted">${t('bk_no_req')}</p></div>`;
-  return `${head}<section class="sec"><h2>${t('bk_plan')}</h2>${viewIntake()}</section>`;
+  const reqs = openRequests(), mine = myBookings().sort((a,b)=>(firstDay(a)||'').localeCompare(firstDay(b)||''));
+  if(openBooking){
+    const b = (S.bookings||[]).find(x=>x.id===openBooking);
+    if(b) return `<section class="sec"><h2>${bookingRange(b)}<span><button class="lnk" data-act="bk-back">${t('hide')}</button></span></h2>
+      <div class="bcard"><h3>${t('bk_overview')} <span class="pill ${bkPill(b.state)}">${t('st_'+b.state)}</span></h3>${bkDays(b)}
+      ${b.state==='active' && b.checkin_at?`<p class="sub">${t('bk_checked_in',{time:hmOf(b.checkin_at)})}</p>`:''}
+      <div class="brow">${b.state==='active' ? `<button class="btn ghost" data-act="bk-checkout">${t('bk_checkout')}</button>`
+        : bookingDay() && b.id===(cur()||{}).id ? `<button class="btn" data-act="bk-checkin">${t('bk_checkin')}</button>` : ''}</div></div>
+      ${planSummary()}</section>`;
+  }
+  const reqCards = reqs.map(b=>`<div class="bcard" data-booking="${b.id}">
+      <h3>${t('bk_req_from',{name:esc(ownerName())})} <span class="pill note">${t('st_requested')}</span></h3>
+      <div class="kv"><b>${t('bk_when_short')}</b><span>${bookingRange(b)}</span>
+        <b>${t('bk_hood')}</b><span>${esc((S.plan.owner_info||{}).hood||'—')}</span>
+        <b>${t('pets')}</b><span>${S.plan.pets.map(p=>`${esc(p.name)} (${t(p.species)})`).join(', ')}</span></div>
+      ${bkDays(b)}
+      <p class="sub muted">${t('bk_addr_hidden')}</p>
+      <div class="brow"><button class="btn" data-act="bk-accept">${t('bk_accept')}</button><button class="btn ghost danger" data-act="bk-decline">${t('bk_decline')}</button></div></div>`).join('');
+  const mineCards = mine.map(b=>`<button class="bcard tap" data-booking="${b.id}" data-act="bk-open">
+      <h3>${bookingRange(b)} <span class="pill ${bkPill(b.state)}">${t('st_'+b.state)}</span></h3>
+      <p class="sub">${esc(ownerName())} · ${esc((S.plan.owner_info||{}).hood||'')} · ${S.plan.pets.map(p=>esc(p.name)).join(', ')}</p>
+      <p class="sub muted">${t('bk_detail')} ›</p></button>`).join('');
+  return `${reqs.length?`<section class="sec"><h2>${t('bk_requests')}</h2><div class="cards">${reqCards}</div></section>`:''}
+    ${mine.length?`<section class="sec"><h2>${t('bk_yours')}</h2><div class="cards">${mineCards}</div></section>`:''}
+    ${!reqs.length && !mine.length?`<div class="bcard"><h3>${t('bk_offer')}</h3><p class="sub">${t('bk_offer_empty')}</p><p class="sub muted">${t('bk_no_req')}</p></div>`:''}`;
 }
 
 function viewMore(){
@@ -1399,6 +1545,7 @@ function viewMore(){
   <div class="panel">
     <p class="sub">${t('install')}</p>
     <button class="btn ghost" data-act="export">${t('export')}</button>
+    <button class="btn ghost" data-act="demo-full">${t('demo_full')}</button>
     <button class="btn ghost danger" data-act="reset">${t('reset')}</button>
     <p class="sub muted" style="font-size:12.5px">${t('about')}</p>
   </div>`;
@@ -1413,12 +1560,15 @@ const TABS = [
   ['more', '<svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>'],
 ];
 function renderTabs(){
-  const alert = S.role==='sitter' ? S.booking.state==='requested' : S.booking.state==='accepted' && !S.booking.seen_accept;
+  const alert = S.role==='sitter' ? openRequests().length>0 : (S.bookings||[]).some(b=>b.state==='declined');
   $('#tabbar').innerHTML = TABS.map(([k,ic])=>`<button role="tab" aria-selected="${S.tab===k}" data-tab="${k}">${ic}<span>${t(k)}</span>${k==='booking'&&alert?'<span class="dot"></span>':''}</button>`).join('');
 }
 function renderMain(){
+  const y = window.scrollY;
   $('#main').innerHTML = ({today:viewToday, booking:viewBooking, log:viewLog, more:viewMore}[S.tab] || viewToday)();
   const ms = document.getElementById('msgs'); if(ms) ms.scrollTop = ms.scrollHeight;
+  // de lijst kan van hoogte veranderen: blijf staan waar je was
+  if(y > 0) window.scrollTo({top: Math.min(y, document.body.scrollHeight - window.innerHeight), behavior:'instant'});
 }
 function applyTheme(){
   if(S.theme==='auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', S.theme);
@@ -1430,7 +1580,6 @@ function refresh(){ save(); renderHeader(); renderScene(); renderMain(); }
 
 /* ---------------- actions ---------------- */
 function findTask(id){ return today().tasks.find(x=>x.id===id); }
-function showScene(){ const r = $('#sceneWrap').getBoundingClientRect(); if(r.bottom < 140) window.scrollTo({top:0, behavior:'smooth'}); }
 function setOutcome(x, v){
   const nowIso = nowDate().toISOString();
   if(v==='ate_later'){ x.outcome='ate_later'; x.later_at=nowIso; play(x.pet_ids,'eat',6000); }
@@ -1443,7 +1592,6 @@ function setOutcome(x, v){
     else if(v==='skipped') x.pet_ids.forEach(id=>delete transient[id]);
   }
   refresh();
-  if(v!=='done') showScene();
 }
 function dismissCard(id){
   const d = today(); S.dismissed[d.date+'/'+id] = true; save();
@@ -1468,16 +1616,42 @@ document.addEventListener('click', e=>{
   if(act==='open-chat'){ chatOpen = true; markRead(S.role); renderScene(); renderMain(); setTimeout(()=>document.getElementById('chatInput')?.focus(), 60); return; }
   if(act==='chat-close'){ chatOpen = false; chatAll = false; renderMain(); return; }
   if(act==='ut'){ S.user_type = v; S.role = v; save(); render(); return; }
-  if(act==='bk-type'){ S.booking.type = v; save(); renderMain(); return; }
+  if(act==='bk-type'){ bkForm().type = v; save(); renderMain(); return; }
+  if(act==='bk-form'){ showForm = true; renderMain(); return; }
+  if(act==='bk-any'){ bkForm().sitter_ids = []; save(); renderMain(); return; }
+  if(act==='bk-sitter-open'){ const id = a.closest('[data-sitter]').dataset.sitter; openSitter = openSitter===id ? null : id; renderMain(); return; }
+  if(act==='bk-pick'){ const id = a.closest('[data-sitter]').dataset.sitter, f = bkForm();
+    f.sitter_ids = f.sitter_ids.includes(id) ? f.sitter_ids.filter(x=>x!==id) : [...f.sitter_ids, id]; save(); renderMain(); return; }
+  if(act==='bk-open'){ openBooking = a.closest('[data-booking]').dataset.booking; renderMain(); window.scrollTo({top:0}); return; }
+  if(act==='bk-back'){ openBooking = null; renderMain(); return; }
+  if(act==='bk-delete'){ const id = a.closest('[data-booking]').dataset.booking;
+    S.bookings = S.bookings.filter(x=>x.id!==id); save(); render(); return; }
+  if(act==='bk-edit-search'){ const id = a.closest('[data-booking]').dataset.booking, b = S.bookings.find(x=>x.id===id);
+    if(b){ const f = bkForm(); f.type = b.type || 'single'; f.sitter_ids = [...(b.sitter_ids||[])];
+      const ds = (b.days||[]).map(x=>x.date).sort();
+      if(ds.length){ f.date = ds[0]; f.date2 = ds[ds.length-1]; f.start = b.days[0].start; f.end = b.days[0].end;
+        f.rows = b.days.map(d=>({date:d.date, start:d.start, end:d.end})); }
+      S.bookings = S.bookings.filter(x=>x.id!==id); }
+    showForm = true; save(); render(); return; }
   if(act==='bk-add-day'){ const f = bkForm(); f.rows.push({date:dateKey(nowDate()), start:'08:00', end:'18:00'}); save(); renderMain(); return; }
   if(act==='bk-del-day'){ const f = bkForm(); f.rows.splice(Number(a.closest('[data-row]').dataset.row),1); save(); renderMain(); return; }
-  if(act==='bk-send'){ const b = S.booking; b.days = buildDays(); if(!b.days.length) return;
-    b.state='requested'; b.requested_at = nowDate().toISOString(); b.checkin_at = null; save(); render(); toast(t('bk_sent')); return; }
-  if(act==='bk-accept'){ const b = S.booking; b.state='accepted'; b.accepted_at = nowDate().toISOString(); save(); render(); toast(t('bk_accepted_by',{name:b.sitter})); return; }
-  if(act==='bk-decline'){ const b = S.booking; b.state='none'; b.checkin_at=null; save(); render(); toast(t('bk_declined')); return; }
-  if(act==='bk-checkin'){ const b = S.booking; b.state='active'; b.checkin_at = nowDate().toISOString(); save(); render(); toast(t('bk_checked_in',{time:hmOf(b.checkin_at)})); return; }
-  if(act==='bk-checkout'){ const b = S.booking; b.state='accepted'; b.checkin_at = null; save(); render(); return; }
-  if(act==='bk-change'){ S.booking.state='none'; save(); render(); return; }
+  if(act==='bk-send'){ const f = bkForm(), days = buildDays(); if(!days.length) return;
+    S.bookings.push({id:uid('bk_'), state:'requested', type:f.type, days, sitter_ids:[...f.sitter_ids], declined_by:[], accepted_by:null,
+      owner:ownerName(), requested_at:nowDate().toISOString(), checkin_at:null});
+    showForm = false; save(); render(); toast(t('bk_sent')); return; }
+  if(act==='bk-accept'){ const id = a.closest('[data-booking]').dataset.booking, b = S.bookings.find(x=>x.id===id); if(!b) return;
+    b.state='accepted'; b.accepted_by = ME_SITTER; b.sitter = sitterById(ME_SITTER).name; b.accepted_at = nowDate().toISOString();
+    save(); render(); toast(t('bk_accepted_by',{name:b.sitter})); return; }
+  if(act==='bk-decline'){ const id = a.closest('[data-booking]').dataset.booking, b = S.bookings.find(x=>x.id===id); if(!b) return;
+    b.declined_by = [...(b.declined_by||[]), ME_SITTER];
+    const left = b.sitter_ids.length ? b.sitter_ids.filter(x=>!b.declined_by.includes(x)) : goodSitters().filter(x=>!b.declined_by.includes(x.id));
+    if(!left.length){ b.state='declined';
+      S.chat.push({id:uid('m_'), from:'sitter', system:true, text:t('bk_declined_msg'), at:nowDate().toISOString()}); }
+    save(); render(); toast(t('bk_declined')); return; }
+  if(act==='bk-checkin'){ const el = a.closest('[data-booking]'); const b = el ? S.bookings.find(x=>x.id===el.dataset.booking) : cur(); if(!b) return;
+    b.state='active'; b.checkin_at = nowDate().toISOString(); save(); render(); toast(t('bk_checked_in',{time:hmOf(b.checkin_at)})); return; }
+  if(act==='bk-checkout'){ const el = a.closest('[data-booking]'); const b = el ? S.bookings.find(x=>x.id===el.dataset.booking) : cur(); if(!b) return;
+    b.state='accepted'; b.checkin_at = null; save(); render(); return; }
   const tEl = a.closest('[data-task]');
   if(tEl){
     const x = findTask(tEl.dataset.task); if(!x) return;
@@ -1498,7 +1672,8 @@ document.addEventListener('click', e=>{
   if(act==='set-season'){ S.season=v; save(); render(); return; }
   if(act==='set-demo'){ S.demo_time = v||null; save(); render(); return; }
   if(act==='export'){ exportJSON(); return; }
-  if(act==='reset'){ if(confirm(t('reset_q'))){ S = seed(); save(); render(); } return; }
+  if(act==='reset'){ if(confirm(t('reset_q'))){ S = seedClean(); openBooking = null; openSitter = null; showForm = true; chatOpen = false; save(); render(); window.scrollTo({top:0}); } return; }
+  if(act==='demo-full'){ if(confirm(t('demo_full_q'))){ S = seed(); openBooking = null; showForm = false; chatOpen = false; save(); render(); window.scrollTo({top:0}); } return; }
   if(S.role!=='owner') return;
   const P = S.plan, petEl = a.closest('[data-pet]'), pet = petEl && P.pets.find(p=>p.id===petEl.dataset.pet);
   if(act==='add-pet'){ P.pets.push({id:uid('pet_'), name:S.lang==='en'?'New pet':'Nieuw', species:'dog', coat:LOOKS.dog.coats[0], pattern:'solid', ears:'flop'}); }
@@ -1565,6 +1740,7 @@ document.addEventListener('input', e=>{
   const P = S.plan, later = fn => { clearTimeout(noteTimer); noteTimer = setTimeout(fn, 400); };
   if(f==='pet.name'){ P.pets.find(p=>p.id===e.target.closest('[data-pet]').dataset.pet).name = e.target.value; later(()=>planChanged(false)); }
   if(f==='notes'){ P.notes = e.target.value; later(save); }
+  if(f && f.startsWith('oi.')){ P.owner_info = P.owner_info||{}; P.owner_info[f.slice(3)] = e.target.value; later(save); }
   if(f==='vet.name'){ P.vet.name = e.target.value; later(save); }
   if(f==='vet.phone'){ P.vet.phone = e.target.value; later(save); }
   if(f==='med.text' || f==='custom.text'){
@@ -1586,6 +1762,7 @@ document.addEventListener('change', e=>{
   else if(f==='chore.weekday') P.chores.kliko.weekday = Number(val);
   else if(f==='med.time') byId(P.meds,'data-med').time = val;
   else if(f==='med.pet') byId(P.meds,'data-med').pet_id = val;
+  else if(f==='oi.hood'){ P.owner_info = P.owner_info||{}; P.owner_info.hood = val; save(); renderMain(); return; }
   else if(f==='custom.time') byId(P.custom,'data-custom').time = val;
   else if(f.startsWith('bk.')){
     const fo = bkForm();
