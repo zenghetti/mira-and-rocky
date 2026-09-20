@@ -109,6 +109,12 @@ main{flex:1;padding:14px 18px calc(env(safe-area-inset-bottom,0px) + 92px);displ
 .card .meta{font-size:12.5px;color:var(--ink-3);font-weight:500}
 .card .meta b{color:var(--ink-2);font-weight:600}
 .card p{margin:3px 0 0;font-size:15px;line-height:1.45}
+.card.empty-card{align-items:center}
+.card.empty-card p{margin:0;font-size:15px}
+button.card{width:100%;text-align:left;border:0;cursor:pointer;align-items:start;font:inherit;color:inherit;grid-template-columns:40px 1fr auto;padding-right:14px}
+button.card .pill{align-self:center}
+.msg.note{border-left:3px solid var(--note)}
+.msg i{display:block;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--note);margin-bottom:2px}
 .card .x{position:absolute;right:8px;top:8px;width:32px;height:32px;border-radius:50%;border:0;background:transparent;color:var(--ink-3);font-size:20px;line-height:1;cursor:pointer}
 .hint{font-size:12.5px;color:var(--ink-3);text-align:center;margin-top:8px}
 .empty{padding:16px;text-align:center;color:var(--ink-3);font-size:14px;background:var(--surface);border-radius:18px}
@@ -362,7 +368,7 @@ const I18N = {
     tasks:'Taken', done:'klaar', no_tasks:'Geen taken. Vul de vragenlijst in.',
     g_feed:'Eten', g_walk:'Uitlaten', g_care:'Verzorging',
     s_ok:'Alles op tijd gedaan', s_note:'Opmerking van de oppas', s_refused:'{pet} heeft niet gegeten', s_late:'Te laat: {task}', s_wait:'Volgende om {time}', s_none:'Nog niets gepland',
-    notes_title:'Van de oppas', yum:'Lekker!', swipe_hint:'Veeg een kaartje weg als je het gelezen hebt', no_cards:'Geen nieuwe opmerkingen.',
+    notes_title:'Van de oppas', notes_title_owner:'Van de eigenaar', yum:'Lekker!', no_cards:'Stuur een bericht…', mark_read:'Gelezen',
     all_tasks:'Alle taken van vandaag ({n})',
     feed_title:'{pet} eten geven', walk_title:'{min} minuten wandelen', walk_with:'met {pets}',
     ate:'Heeft gegeten', ate_s:'bak leeg', refused:'Niet gegeten', refused_s:'bak blijft staan',
@@ -404,7 +410,7 @@ const I18N = {
     tasks:'Tasks', done:'done', no_tasks:'No tasks yet. Fill in the questionnaire.',
     g_feed:'Food', g_walk:'Walks', g_care:'Care',
     s_ok:'All done on time', s_note:'Note from the sitter', s_refused:"{pet} didn't eat", s_late:'Late: {task}', s_wait:'Next at {time}', s_none:'Nothing scheduled yet',
-    notes_title:'From the sitter', yum:'Yummy!', swipe_hint:'Swipe a card away once you have read it', no_cards:'No new notes.',
+    notes_title:'From the sitter', notes_title_owner:'From the owner', yum:'Yummy!', no_cards:'Send a message…', mark_read:'Read',
     all_tasks:"All of today's tasks ({n})",
     feed_title:'Feed {pet}', walk_title:'{min}-minute walk', walk_with:'with {pets}',
     ate:'Ate', ate_s:'bowl empty', refused:"Didn't eat", refused_s:'bowl stays out',
@@ -442,7 +448,7 @@ const I18N = {
   }
 };
 Object.assign(I18N.nl, {
-  booking:'Boeking', pets:'Dieren', bk_when_short:'Periode', me:'Jij', comments:'Opmerkingen', comments_add:'Opmerking toevoegen', hide:'Verbergen',
+  booking:'Boeking', pets:'Dieren', walk_skip:'Wandeling overgeslagen', walk_skipped:'Overgeslagen', about_task:'bij {task}', bk_when_short:'Periode', me:'Jij', comments:'Opmerkingen', comments_add:'Opmerking toevoegen', hide:'Verbergen',
   chat:'Berichten', chat_ph:'Bericht aan {who}…', chat_all:'Alle berichten ({n})', chat_empty:'Nog geen berichten.',
   bk_who:'Waar ben je naar op zoek?', bk_find:'Ik zoek een oppas', bk_find_s:'Vul de vragenlijst in en stuur een aanvraag.',
   bk_offer:'Ik bied oppas aan', bk_offer_s:'Ontvang aanvragen en accepteer wat past.',
@@ -462,7 +468,7 @@ Object.assign(I18N.nl, {
   notif_req:'Nieuwe aanvraag ontvangen', notif_acc:'Je aanvraag is geaccepteerd',
 });
 Object.assign(I18N.en, {
-  booking:'Booking', pets:'Pets', bk_when_short:'Dates', me:'You', comments:'Notes', comments_add:'Add a note', hide:'Hide',
+  booking:'Booking', pets:'Pets', walk_skip:'Walk skipped', walk_skipped:'Skipped', about_task:'about {task}', bk_when_short:'Dates', me:'You', comments:'Notes', comments_add:'Add a note', hide:'Hide',
   chat:'Messages', chat_ph:'Message {who}…', chat_all:'All messages ({n})', chat_empty:'No messages yet.',
   bk_who:'What are you looking for?', bk_find:'I need a sitter', bk_find_s:'Fill in the questionnaire and send a request.',
   bk_offer:'I offer pet sitting', bk_offer_s:'Receive requests and accept the ones that fit.',
@@ -559,16 +565,16 @@ function seed(){
   };
   const dk = d => d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
   const d2 = new Date(today); d2.setDate(d2.getDate()+2);
-  const booking = {state:'active', type:'range', sitter:'Shanti', owner:'Eline',
+  const booking = {state:'active', type:'range', sitter:'Eline', owner:'Mirthe',
     days:[{date:dateKey(today), start:'06:45', end:'21:30'},
           {date:dk(new Date(today.getTime()+864e5)), start:'07:00', end:'21:30'},
           {date:dk(d2), start:'07:00', end:'12:00'}],
     requested_at:null, accepted_at:null, checkin_at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,50).toISOString()};
   const chat = [
-    {id:'m1', from:'owner', text:'Hoi Shanti! De sleutel ligt onder de bloempot bij de achterdeur.', at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,32).toISOString()},
+    {id:'m1', from:'owner', text:'Hoi Eline! De sleutel ligt onder de bloempot bij de achterdeur.', at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,32).toISOString()},
     {id:'m2', from:'sitter', text:'Dank je! Ik ben binnen, de dieren zijn blij. Ik hou je op de hoogte.', at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,54).toISOString()},
   ];
-  const st = {v:1, lang:'nl', role:'sitter', user_type:'sitter', theme:'auto', season:'auto', demo_time:null, tab:'today', plan, days:{}, dismissed:{}, booking, chat};
+  const st = {v:1, lang:'nl', role:'sitter', user_type:'sitter', theme:'auto', season:'auto', demo_time:null, tab:'today', plan, days:{}, dismissed:{}, read:{owner:null, sitter:null}, booking, chat};
   const y = new Date(today); y.setDate(y.getDate()-1);
   const yk = dateKey(y);
   const tasks = generateTasks(plan, y);
@@ -586,7 +592,10 @@ function seed(){
   return st;
 }
 function load(){
-  try{ const raw = localStorage.getItem(SAVE_KEY); if(raw){ const s = JSON.parse(raw); if(s && s.v===1){ s.dismissed = s.dismissed||{}; s.season = s.season||'auto'; s.chat = s.chat||[]; s.booking = s.booking||{state:'none', type:'single', days:[], sitter:'Shanti', owner:'Eline'}; s.user_type = s.user_type||null; return s; } } }catch(e){}
+  try{ const raw = localStorage.getItem(SAVE_KEY); if(raw){ const s = JSON.parse(raw); if(s && s.v===1){ s.dismissed = s.dismissed||{}; s.season = s.season||'auto'; s.chat = s.chat||[]; s.booking = s.booking||{state:'none', type:'single', days:[], sitter:'Eline', owner:'Mirthe'};
+        if(s.booking.sitter==='Shanti') s.booking.sitter='Eline';
+        if(s.booking.owner==='Eline') s.booking.owner='Mirthe';
+        s.read = s.read||{owner:null, sitter:null}; s.user_type = s.user_type||null; return s; } } }catch(e){}
   return null;
 }
 function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch(e){} }
@@ -690,9 +699,20 @@ function outcomeText(x){
    groen  = alles wat tot nu toe gepland stond is gedaan                 */
 const dueEnd = x => x.time_end ?? (x.time_start + 30);
 const dismissKey = (date, x) => date+'/'+x.id;
+const noteAt = x => x.later_at || x.done_at || null;
+function isRead(role, iso){ const r = S.read && S.read[role]; return !!(r && iso && r >= iso); }
+/* alle berichten en opmerkingen door elkaar, op tijd gesorteerd */
+function stream(){
+  const d = today();
+  const notes = d.tasks.filter(x=>x.note && noteAt(x)).map(x=>({id:'n_'+x.id, from:'sitter', text:x.note, at:noteAt(x), task:taskTitle(x)}));
+  return [...(S.chat||[]), ...notes].sort((a,b)=> (a.at||'').localeCompare(b.at||''));
+}
+function unreadItems(role){ return stream().filter(it => it.from !== role && !isRead(role, it.at)); }
+function markRead(role){ S.read = S.read || {}; S.read[role] = nowDate().toISOString(); save(); }
 function taskStatus(x, m, date){
   if(x.state!=='done') return m >= dueEnd(x) ? 'late' : 'open';
-  if((x.note && !S.dismissed[dismissKey(date,x)]) || (x.kind==='feed' && x.outcome==='refused')) return 'note';
+  const unread = x.note && !isRead('owner', noteAt(x));
+  if(unread || x.outcome==='refused' || x.outcome==='skipped') return 'note';
   return 'ok';
 }
 const RANK = {open:0, ok:1, note:2, late:3};
@@ -707,7 +727,7 @@ function groupStatus(tasks, m, date){
 }
 function petStatus(p, d, m){ return groupStatus(d.tasks.filter(x=>x.pet_ids.includes(p.id)), m, d.date).status; }
 function petHasCloud(p, d){
-  const note = d.tasks.some(x=>x.pet_ids.includes(p.id) && x.note && !S.dismissed[dismissKey(d.date,x)]);
+  const note = d.tasks.some(x=>x.pet_ids.includes(p.id) && x.note && !isRead('owner', noteAt(x)));
   const lf = lastFeed(p,d); return note || !!(lf && lf.outcome==='refused');
 }
 
@@ -980,10 +1000,13 @@ function openingsSVG(sky, sleepers, se){
       defs += `<clipPath id="${clip}"><circle cx="${o.cx}" cy="${o.cy}" r="${o.r}"/></clipPath>`;
       out += `<circle cx="${o.cx}" cy="${o.cy}" r="${o.r+2.5}" fill="${frame}"/><circle cx="${o.cx}" cy="${o.cy}" r="${o.r}" fill="${glass}"/>`;
     } else {
-      defs += `<clipPath id="${clip}"><rect x="${o.x}" y="${o.y}" width="${o.w}" height="${o.h}" rx="${o.kind==='door'?o.w/2:3}"/></clipPath>`;
+      const arch = (x,y,w,h) => `M${x} ${y+w/2} a${w/2} ${w/2} 0 0 1 ${w} 0 V${y+h} H${x} Z`;
+      defs += `<clipPath id="${clip}">${o.kind==='door' ? `<path d="${arch(o.x,o.y,o.w,o.h)}"/>` : `<rect x="${o.x}" y="${o.y}" width="${o.w}" height="${o.h}" rx="3"/>`}</clipPath>`;
       const fill = o.kind==='door' ? (pet ? (lit?'#E9C170':'#6B7F8C') : '#2C9CC6') : glass;
-      out += `<rect x="${o.x-2.5}" y="${o.y-2.5}" width="${o.w+5}" height="${o.h+5}" rx="${o.kind==='door'?o.w/2+2.5:4}" fill="${frame}"/>
-        <rect x="${o.x}" y="${o.y}" width="${o.w}" height="${o.h}" rx="${o.kind==='door'?o.w/2:3}" fill="${fill}"/>`;
+      out += o.kind==='door'
+        ? `<path d="${arch(o.x-2.5,o.y-2.5,o.w+5,o.h+2.5)}" fill="${frame}"/><path d="${arch(o.x,o.y,o.w,o.h)}" fill="${fill}"/>`
+        : `<rect x="${o.x-2.5}" y="${o.y-2.5}" width="${o.w+5}" height="${o.h+5}" rx="4" fill="${frame}"/>
+           <rect x="${o.x}" y="${o.y}" width="${o.w}" height="${o.h}" rx="3" fill="${fill}"/>`;
       if(o.kind==='door' && !pet) out += `<circle cx="${o.x+o.w-5}" cy="${o.y+o.h*.6}" r="1.6" fill="#FBFAF6"/>`;
     }
     if(pet){
@@ -1093,7 +1116,20 @@ function renderHeader(){
 let openTask = null;
 const ICON_CHECK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 function viewToday(){
-  return bannerHTML() + chatBox() + (S.role === 'owner' ? viewOwner() : viewSitter());
+  return bannerHTML() + inboxSection() + (S.role === 'owner' ? viewOwner() : viewSitter());
+}
+/* één vak: het laatste ongelezen bericht of de laatste opmerking, of de chat zelf */
+function inboxSection(){
+  const title = S.role === 'owner' ? t('notes_title') : t('notes_title_owner');
+  if(chatOpen) return `<section class="sec" id="cardsSec"><h2>${title}<span><button class="lnk" data-act="chat-close">${t('hide')}</button></span></h2>${chatBox()}</section>`;
+  const un = unreadItems(S.role), last = un[un.length-1];
+  const body = last
+    ? `<button class="card" data-act="open-chat">
+        <div class="av">${last.task ? petAvatar((today().tasks.find(x=>taskTitle(x)===last.task)||{pet_ids:[]}).pet_ids[0]) : ICON_PERSON}</div>
+        <div><div class="meta"><b>${esc(last.from==='owner'?S.booking.owner:S.booking.sitter)}</b> · ${hmOf(last.at)}${last.task?` · ${esc(t('about_task',{task:last.task}))}`:''}</div><p>${esc(last.text)}</p></div>
+        ${un.length>1?`<span class="pill acc">${un.length}</span>`:''}</button>`
+    : `<button class="card empty-card" data-act="open-chat"><div class="av">${ICON_PERSON}</div><div><p class="muted">${t('no_cards')}</p></div></button>`;
+  return `<section class="sec" id="cardsSec"><h2>${title}</h2><div class="cards">${body}</div></section>`;
 }
 
 /* melding bovenaan: geen boeking, nieuwe aanvraag of nog niet ingecheckt */
@@ -1114,16 +1150,17 @@ function bannerHTML(){
 }
 
 /* chat tussen oppas en eigenaar */
-let chatAll = false;
+let chatAll = false, chatOpen = false;
+const ICON_PERSON = '<svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.8"><circle cx="12" cy="9" r="3.4"/><path d="M5 20c.8-3.8 3.6-5.4 7-5.4s6.2 1.6 7 5.4"/></svg>';
 const ICON_SEND = '<svg viewBox="0 0 24 24"><path d="M3.4 20.4 21 12 3.4 3.6 3.4 10l12 2-12 2z"/></svg>';
 function chatBox(){
   const other = S.role==='owner' ? S.booking.sitter : S.booking.owner;
-  const list = chatAll ? S.chat : S.chat.slice(-4);
-  return `<section class="sec"><h2>${t('chat')}${S.chat.length>4?`<span><button class="lnk" data-act="chat-all">${chatAll?t('hide'):t('chat_all',{n:S.chat.length})}</button></span>`:''}</h2>
-    <div class="chat">
-      <div class="msgs" id="msgs">${list.length ? list.map(mm=>`<div class="msg ${mm.from===S.role?'me':''}"><p>${esc(mm.text)}</p><time>${mm.from===S.role ? t('me') : esc(mm.from==='owner'?S.booking.owner:S.booking.sitter)} · ${hmOf(mm.at)}</time></div>`).join('') : `<p class="sub muted" style="padding:4px 2px">${t('chat_empty')}</p>`}</div>
+  const all = stream(), list = chatAll ? all : all.slice(-6);
+  return `<div class="chat">
+      ${all.length>6 && !chatAll ? `<button class="lnk" style="margin:10px 14px 0" data-act="chat-all">${t('chat_all',{n:all.length})}</button>` : ''}
+      <div class="msgs" id="msgs">${list.length ? list.map(mm=>`<div class="msg ${mm.from===S.role?'me':''} ${mm.task?'note':''}">${mm.task?`<i>${esc(mm.task)}</i>`:''}<p>${esc(mm.text)}</p><time>${mm.from===S.role ? t('me') : esc(mm.from==='owner'?S.booking.owner:S.booking.sitter)} · ${hmOf(mm.at)}</time></div>`).join('') : `<p class="sub muted" style="padding:4px 2px">${t('chat_empty')}</p>`}</div>
       <form class="chatin" id="chatForm" autocomplete="off"><input id="chatInput" type="text" placeholder="${t('chat_ph',{who:esc(other)})}"><button class="send" type="submit" aria-label="${t('chat')}">${ICON_SEND}</button></form>
-    </div></section>`;
+    </div>`;
 }
 
 function viewSitter(){
@@ -1157,7 +1194,7 @@ function viewSitter(){
 /* opmerkingen zijn optioneel: standaard alleen afvinken */
 let openCmt = null;
 function taskExpand(x){
-  const special = x.outcome && !['ate','sniff'].includes(x.outcome);
+  const special = x.outcome && !['ate','sniff','done'].includes(x.outcome);
   if(openCmt !== x.id && !x.note && !special)
     return `<div class="task-x"><button class="btn ghost sm" data-act="cmt">${t('comments_add')}</button>
       ${x.state==='done'?`<button class="lnk" data-act="undo">${t('undo')}</button>`:''}</div>`;
@@ -1169,8 +1206,7 @@ function taskExpand(x){
       : `<div class="opts mini"><button class="opt ${x.outcome==='ate'?'sel':''}" data-act="out" data-v="ate">${t('ate')}</button>
          <button class="opt" data-act="out" data-v="refused">${t('refused')}</button></div>`;
   } else if(x.kind==='walk'){
-    opts = `<div class="opts mini"><button class="opt ${x.outcome==='sniff'?'sel':''}" data-act="out" data-v="sniff">${t('sniff')}</button>
-      <button class="opt ${x.outcome==='run'?'sel':''}" data-act="out" data-v="run">${t('run')}</button></div>`;
+    opts = `<div class="opts mini"><button class="opt full ${x.outcome==='skipped'?'sel warn':''}" data-act="out" data-v="${x.outcome==='skipped'?'sniff':'skipped'}">${t('walk_skip')}</button></div>`;
   }
   return `<div class="task-x">${opts}
     <textarea data-note="${x.id}" placeholder="${t('note_ph')}" rows="2">${esc(x.note)}</textarea>
@@ -1191,23 +1227,25 @@ function viewOwner(){
     const gs = groupStatus(tasks, m, d.date);
     let line;
     if(gs.status==='late') line = t('s_late',{task:taskTitle(gs.culprit)+' ('+toHM(gs.culprit.time_start)+')'});
-    else if(gs.status==='note') line = (gs.culprit.kind==='feed' && gs.culprit.outcome==='refused') ? t('s_refused',{pet:currentNames(gs.culprit)[0]}) : t('s_note');
+    else if(gs.status==='note') line = gs.culprit.outcome==='refused' ? t('s_refused',{pet:currentNames(gs.culprit)[0]}) : gs.culprit.outcome==='skipped' ? t('walk_skip') : t('s_note');
     else if(gs.status==='ok') line = t('s_ok') + (gs.next ? ' · '+t('s_wait',{time:toHM(gs.next.time_start)}).toLowerCase() : '');
     else line = gs.next ? t('s_wait',{time:toHM(gs.next.time_start)}) : t('s_none');
     return `<div class="st ${gs.status}"><span class="d"></span><div><b>${t(label)}</b><small>${esc(line)}</small></div><em>${gs.done}/${gs.total}</em></div>`;
   }).join('');
-  const cards = d.tasks.filter(x=>x.note && !S.dismissed[dismissKey(d.date,x)])
-    .sort((a,b)=> (b.later_at||b.done_at||'').localeCompare(a.later_at||a.done_at||''))
-    .map(x=>`<div class="card" data-card="${x.id}">
-      <div class="av">${petAvatar(x.pet_ids[0])}</div>
-      <div><div class="meta"><b>${esc(taskTitle(x))}</b> · ${x.done_at?hmOf(x.later_at||x.done_at):toHM(x.time_start)}</div><p>${esc(x.note)}</p></div>
-      <button class="x" data-act="dismiss" aria-label="${t('dismissed')}">×</button></div>`).join('');
-  const all = d.tasks.map(x=>{ const s = taskStatus(x,m,d.date);
-    return `<div class="lrow"><span class="d ${s==='open'?'':s}"></span><span class="tm">${toHM(x.time_start)}</span><span>${esc(taskTitle(x))}${outcomeText(x)?` <span class="muted">· ${esc(outcomeText(x))}</span>`:''}</span></div>`; }).join('');
+  const all = d.tasks.map(x=>{ const st = taskStatus(x,m,d.date), extra = ownerExtra(x);
+    return `<div class="lrow"><span class="d ${st==='open'?'':st}"></span><span class="tm">${toHM(x.time_start)}</span><span>${esc(taskTitle(x))}${extra?` <span class="muted">· ${esc(extra)}</span>`:''}</span></div>`; }).join('');
   return `<section class="sec"><div class="status">${groups || `<div class="st"><span class="d"></span><div><b>${t('no_tasks')}</b></div></div>`}</div></section>
-    <section class="sec" id="cardsSec"><h2>${t('notes_title')}</h2>
-      ${cards ? `<div class="cards">${cards}</div>` : `<div class="empty">${t('no_cards')}</div>`}</section>
     <details class="all"><summary>${t('all_tasks',{n:d.tasks.length})}</summary><div style="margin-top:6px">${all}</div></details>`;
+}
+
+/* achter een taak alleen wat de oppas echt heeft gekozen of geschreven */
+function ownerExtra(x){
+  if(x.state!=='done') return '';
+  if(x.note) return '“'+x.note+'”';
+  if(x.outcome==='refused') return t('refused');
+  if(x.outcome==='ate_later') return t('ate_later')+' · '+hmOf(x.later_at);
+  if(x.outcome==='skipped') return t('walk_skipped');
+  return '';
 }
 
 function viewLog(){
@@ -1402,7 +1440,7 @@ function setOutcome(x, v){
     else if(v==='refused') play(x.pet_ids,'refuse',100);
     else if(v==='sniff') play(x.pet_ids,'sniff',12000);
     else if(v==='run') play(x.pet_ids,'run',9000);
-    openTask = null;
+    else if(v==='skipped') x.pet_ids.forEach(id=>delete transient[id]);
   }
   refresh();
   if(v!=='done') showScene();
@@ -1427,6 +1465,8 @@ document.addEventListener('click', e=>{
   if(act==='dismiss'){ dismissCard(a.closest('[data-card]').dataset.card); return; }
   if(act==='go-booking'){ S.tab='booking'; save(); renderTabs(); renderMain(); window.scrollTo({top:0}); return; }
   if(act==='chat-all'){ chatAll = !chatAll; renderMain(); return; }
+  if(act==='open-chat'){ chatOpen = true; markRead(S.role); renderScene(); renderMain(); setTimeout(()=>document.getElementById('chatInput')?.focus(), 60); return; }
+  if(act==='chat-close'){ chatOpen = false; chatAll = false; renderMain(); return; }
   if(act==='ut'){ S.user_type = v; S.role = v; save(); render(); return; }
   if(act==='bk-type'){ S.booking.type = v; save(); renderMain(); return; }
   if(act==='bk-add-day'){ const f = bkForm(); f.rows.push({date:dateKey(nowDate()), start:'08:00', end:'18:00'}); save(); renderMain(); return; }
