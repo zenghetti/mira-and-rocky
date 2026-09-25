@@ -9,9 +9,13 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Oppas Curaçao">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F8F6F1" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0B1E27" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232C9CC6'/%3E%3Cellipse cx='32' cy='46' rx='26' ry='9' fill='%23EEDFBF'/%3E%3Cpath d='M22 44 Q20 30 26 20' stroke='%239A7048' stroke-width='3' fill='none'/%3E%3Cpath d='M26 20 Q14 14 8 20 Q16 16 26 22Z M26 20 Q38 12 46 18 Q36 16 26 22Z' fill='%232F9E6E'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%231490B4'/%3E%3Cg%20transform='translate%2832%2C33%29%20scale%281.1%29%20translate%28-32%2C-32%29'%3E%3Cellipse%20cx='32'%20cy='47.5'%20rx='25'%20ry='8.6'%20fill='%23EEDFBF'/%3E%3Cpath%20d='M30%2047%20Q27%2034%2033%2023'%20stroke='%239A7048'%20stroke-width='4.8'%20fill='none'%20stroke-linecap='round'/%3E%3Cpath%20d='M33%2023%20Q20%2015%2010%2022%20Q21%2018%2032%2025%20Z'%20fill='%232BAE78'/%3E%3Cpath%20d='M33%2023%20Q46%2014%2056%2021%20Q45%2018%2034%2025%20Z'%20fill='%232BAE78'/%3E%3Cpath%20d='M33%2023%20Q27%2010%2016%207%20Q27%2013%2032%2025%20Z'%20fill='%231C8A5C'/%3E%3Cpath%20d='M33%2023%20Q40%2010%2051%208%20Q41%2013%2034%2025%20Z'%20fill='%231C8A5C'/%3E%3Ccircle%20cx='30.5'%20cy='26.5'%20r='2.2'%20fill='%237A5A33'/%3E%3Ccircle%20cx='35'%20cy='27.5'%20r='1.9'%20fill='%236B4E2C'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap">
@@ -91,7 +95,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 .prog i{display:block;height:100%;background:var(--ok);border-radius:9px;transition:width .5s ease}
 
 main{flex:1;padding:14px 18px calc(env(safe-area-inset-bottom,0px) + 92px);display:flex;flex-direction:column;gap:22px}
-.sec>h2{margin:0 0 8px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between}
+.sec{display:flex;flex-direction:column;gap:14px}
+.sec>h2{margin:0;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between}
 .sec>h2 span{font-weight:600;letter-spacing:0;text-transform:none}
 .sub{margin:0;font-size:14px;color:var(--ink-2)}
 .muted{color:var(--ink-3)}
@@ -160,7 +165,7 @@ button.card .pill{align-self:center}
 .chatin{display:grid;grid-template-columns:1fr 40px;gap:8px;padding:10px 12px 12px;border-top:1px solid var(--line)}
 .chatin input{border-radius:99px}
 .send{border:0;background:var(--accent);color:var(--accent-ink);border-radius:50%;width:40px;height:40px;display:grid;place-items:center;cursor:pointer}
-.send svg{width:18px;height:18px;fill:currentColor}
+.send svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 /* boeking */
 .bcard{background:var(--surface);border-radius:18px;box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:12px}
 .photos{display:flex;gap:8px;flex-wrap:wrap}
@@ -169,6 +174,55 @@ button.card .pill{align-self:center}
 .photo .x{position:absolute;right:2px;top:2px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(0,0,0,.5);color:#fff;font-size:14px;line-height:1;cursor:pointer;padding:0}
 .addphoto{width:78px;height:78px;border-radius:12px;border:1.5px dashed var(--line);display:grid;place-items:center;text-align:center;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;padding:4px}
 .svch{font:700 15px/1.2 inherit;margin:0 0 6px}
+.savebar{padding:12px 14px}
+.savebar.on{position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + 74px);z-index:6;box-shadow:var(--shadow), inset 0 0 0 2px var(--note)}
+.calhead{display:grid;grid-template-columns:36px 1fr 36px;align-items:center;gap:6px}
+.calhead b{text-align:center;font-size:15.5px;font-weight:700}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal>b{font-size:11px;font-weight:700;text-align:center;color:var(--ink-3);padding:2px 0}
+.cal>button{aspect-ratio:1;min-height:34px;border:1.5px solid var(--line);background:var(--surface);border-radius:10px;
+  font:600 13.5px/1 inherit;color:inherit;cursor:pointer;display:grid;place-items:center;padding:0}
+.cal>button.yes{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+.cal>button.part{background:var(--note-soft);border-color:transparent;color:var(--note)}
+.cal>button.no{background:var(--surface-2);border-color:transparent;color:var(--ink-3)}
+.cal>button.now{box-shadow:inset 0 -3px 0 -1px var(--accent)}
+.cal>button.sel{outline:2.5px solid var(--accent);outline-offset:1px}
+.callegend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink-3)}
+.callegend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:5px;vertical-align:-1px}
+.callegend i.yes{background:var(--ok-soft)}.callegend i.part{background:var(--note-soft)}.callegend i.no{background:var(--surface-2)}
+.timerow{display:grid;grid-template-columns:1fr auto 1fr 34px;gap:6px;align-items:center;font-size:13.5px}
+.timerow input{padding:8px 6px}
+.kv s, .dayrow s{color:var(--ink-3);text-decoration-thickness:1.5px;margin-right:6px;font-weight:500}
+.bcard.urgent{box-shadow:var(--shadow), inset 0 0 0 2px var(--late)}
+.bcard.urgent>h3{color:var(--late)}
+.bcard.inner{box-shadow:none;border:1.5px solid var(--late);padding:12px 14px;gap:6px}
+.pill.sm{font-size:10.5px;padding:2px 7px;margin-left:6px;vertical-align:1px}
+.panel.feerow{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;padding:14px}
+.feerow .feeic{width:26px;height:26px;margin-top:1px}
+.feerow b{display:block;font-size:15.5px;font-weight:700;line-height:1.3}
+.feerow span{display:block;font-size:14px;color:var(--ink-2);line-height:1.45;margin-top:3px}
+.lnk.fee{font-size:11.5px;color:var(--accent);padding:0;display:inline}
+.panel.danger, .bcard.danger{box-shadow:var(--shadow), inset 0 0 0 2px var(--late)}
+.panel.danger>h3, .bcard.danger>h3{color:var(--late)}
+.bcard.sign{box-shadow:var(--shadow), inset 0 0 0 2px var(--accent)}
+.keypt{display:grid;grid-template-columns:20px 1fr;gap:9px;align-items:start;font-size:14.5px;line-height:1.4}
+.keypt .tick{width:18px;height:18px;margin-top:2px}
+.term{font-size:14px;line-height:1.45}
+.term b{display:block;font-weight:600;font-size:14.5px}
+.term span{color:var(--ink-2)}
+.term+.term{border-top:1px solid var(--line);padding-top:8px}
+.fineprint{margin:2px 0 0;font-size:11.5px;line-height:1.35;color:var(--ink-3)}
+.acrow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;font-size:14.5px;padding:2px 0}
+.acrow.tap{width:100%;text-align:left;background:none;border:0;cursor:pointer;font:inherit;color:inherit;padding:8px 0}
+.loggedout main{padding-bottom:28px;padding-top:calc(env(safe-area-inset-top,0px) + 28px);justify-content:center}
+.login{max-width:420px;width:100%;margin:0 auto}
+.loginhead{display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:center}
+.loginhead .mark{width:52px;height:52px}
+.loginhead .mark svg{width:100%;height:100%;display:block;border-radius:16px}
+.loginhead h1{margin:0;font-size:21px;font-weight:700;letter-spacing:-.01em}
+.acrow+.acrow{border-top:1px solid var(--line);padding-top:8px;margin-top:4px}
+.bcard.unsaved{box-shadow:var(--shadow), inset 0 0 0 2px var(--note)}
+.bcard.unsaved h3{color:var(--note)}
 .pricerow{display:grid;grid-template-columns:1fr 130px auto;gap:8px;align-items:center;font-size:14.5px}
 .pricerow input{text-align:right}
 .discrow{display:grid;grid-template-columns:auto 62px auto 56px auto auto;gap:6px;align-items:center;font-size:14px}
@@ -217,6 +271,7 @@ textarea:focus,input:focus,select:focus{border-color:var(--accent)}
 .btn.ghost{background:var(--surface);color:var(--accent);border:1.5px solid var(--line)}
 .btn.sm{padding:8px 12px;font-size:13.5px}
 .btn.danger{color:var(--late)}
+.btn[disabled]{opacity:.45;cursor:default}
 details.all>summary{cursor:pointer;list-style:none;font-size:14px;font-weight:600;color:var(--accent);padding:4px 0}
 details.all>summary::-webkit-details-marker{display:none}
 .lrow{display:grid;grid-template-columns:12px 48px 1fr;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px;align-items:baseline}
@@ -482,19 +537,185 @@ const I18N = {
 };
 Object.assign(I18N.nl, {
   need:'Wat heb je nodig?', sv_day_s:'Oppas aan huis', sv_visit_s:'Korte visite', sv_walk_s:'Hondenuitlaatservice',
+  sv_host_s:'Opvang bij de oppas', sv_hotel_s:'Hondenhotel',
+  sv_host:'Opvang bij de oppas (per dag)', sv_hotel:'Hondenhotel (per dag)',
+  q_hosts:'{n}× opvang bij de oppas', q_hotels:'{n}× hondenhotel',
+  fee_note:'Inclusief servicekosten en 6% OB.',
+  q_net:'Jij ontvangt',
+  av_title:'Jouw beschikbaarheid', av_base:'Standaard sta je op', av_yes:'Beschikbaar', av_no:'Niet beschikbaar',
+  av_base_s:'Dit geldt voor je hele kalender.', av_custom:'Per dag aanpassen',
+  av_day_yes:'Hele dag beschikbaar', av_day_no:'Hele dag niet', av_day_part:'Bepaalde tijden niet',
+  av_for:'Geldt voor', av_add_time:'+ Tijd toevoegen', av_clear:'Terug naar standaard',
+  av_legend_part:'Deels', av_pick:'Tik op een dag om er een uitzondering voor te maken.',
+  av_note:'De kalender is voorlopig alleen informatief: aanvragen worden er nog niet op gefilterd.',
+  av_from:'van', av_to:'tot', av_svc_hint:'Laat je alle diensten aan staan, dan geldt het voor de hele dag.',
+  tm_title:'Platformovereenkomst', tm_sign:'Ondertekenen', tm_head:'Onderteken de platformovereenkomst',
+  tm_why:'Je ziet aanvragen zodra je hebt getekend.',
+  tm_read:'Volledige voorwaarden lezen', tm_version:'Versie {v}',
+  tm_note:'Versie {v} \u00b7 we sturen een kopie naar {mail}.',
+  tm_done:'Getekend', tm_signed_on:'Ondertekend op {date} \u00b7 versie {v}', tm_mailed:'Kopie gestuurd naar {mail}',
+  tm_toast:'Getekend \u00b7 kopie onderweg naar {mail}', tm_view:'Wat je hebt getekend',
+  tm_k1:'Je bepaalt zelf je tarief, je diensten en je beschikbaarheid',
+  tm_k2:'De klant betaalt 50% vooraf; jij krijgt je bedrag binnen twee werkdagen',
+  tm_k3:'Bovenop jouw tarief betaalt de klant 25% servicekosten en OB',
+  tm_k4:'Twaalf maanden relatiebeding na deactivering, af te kopen vanaf XCG 500',
+  tm_locked:'Onderteken eerst de voorwaarden, dan verschijnen hier de aanvragen.',
+  deact:'Account deactiveren', deact_s:'Je account verdwijnt uit de zoekresultaten en je ontvangt geen aanvragen meer. Lopende boekingen maak je nog af.',
+  deact_term:'Na deactivering geldt het relatiebeding nog twaalf maanden, dus tot {date}.',
+  deact_q:'Weet je zeker dat je je account wilt deactiveren? Je wordt uitgelogd.',
+  deact_done:'Account gedeactiveerd', deact_on:'Gedeactiveerd op {date}',
+  react:'Account heractiveren', react_done:'Account weer actief',
+  q_health:'Klachten of behandeling op dit moment', q_health_ph:'Bijv. hinkt sinds vorige week, of krijgt een kuur tot vrijdag',
+  q_health_s:'Meld wat er nu speelt. De oppas kan er rekening mee houden. Bestaande klachten vallen buiten de dierenartsdekking \u2014 die is voor wat er tijdens de oppasperiode ontstaat.',
+  q_health_none:'Niets gemeld', vet_trip:'Vergoeding dierenartsrit',
+  ur_pill:'Spoed', ur_drop:'Ik val uit', ur_need:'Vervanging nodig',
+  ur_drop_q:'De resterende dagen worden als spoedaanvraag naar andere oppassers gestuurd. Doorgaan?',
+  ur_title:'Spoedaanvraag', ur_from:'Spoedaanvraag van {name}',
+  ur_looking:'We zoeken een vervanger', ur_looking_s:'Je hoort binnen 24 uur van ons.',
+  ur_cap:'Je betaalt over de resterende dagen nooit meer dan je al betaalde: {n} XCG.',
+  ur_capped:'Prijsplafond toegepast', ur_reason:'Reden', ur_handover:'Overgenomen van {name}',
+  ur_bonus:'Spoedtoeslag +{pct}%', ur_bonus_s:'De spoedtoeslag betaalt het platform, niet de klant.',
+  ur_done:'Spoedaanvraag verstuurd', ur_ok:'Ik neem spoedaanvragen aan',
+  ur_ok_s:'Je krijgt aanvragen van boekingen waarvan de oppas is uitgevallen. Daar staat een spoedtoeslag van {pct}% op je eigen tarief tegenover, betaald door het platform.',
+  ur_badge:'Neemt spoed aan', ur_none:'Geen spoedaanvragen op dit moment.',
+  ur_since:'Uitgevallen op {date}', ur_days_left:'{n} dagen over',
+  fee_what:'Wat zit daarin?', fee_title:'Wat je krijgt voor de servicekosten',
+  fee_lead_owner:'Bovenop het tarief van de oppas betaal je 25% servicekosten en 6% OB. Dit krijg je daarvoor.',
+  fee_lead_sitter:'De klant betaalt 25% servicekosten bovenop jouw tarief. Dit doen wij daarvoor.',
+  fee_more:'Servicekosten: wat krijg je ervoor?',
+  fee_disclaimer:'Bedragen en dekkingen zijn in dit prototype nog een voorstel en moeten nog worden vastgesteld.',
+  fo1:'Veilig betalen, of je geld terug', fo1s:'Je betaalt in de app. Komt er niemand opdagen, dan krijg je je geld terug. De helft betaal je vooraf, de rest pas na afloop.',
+  fo2:'Vervanging als je oppas uitvalt', fo2s:'Valt je oppas uit, dan gaat je aanvraag met \u00e9\u00e9n tik als spoed naar alle oppassers die spoed aannemen. Over de resterende dagen betaal je nooit meer dan je al betaalde.',
+  fo3:'Gecontroleerde oppassers', fo3s:'We controleren de identiteit en spreken iedereen persoonlijk voordat het profiel online komt. Beoordelingen komen alleen van echte boekingen.',
+  fo4:'Dierenartsdekking', fo4s:'Tot XCG 250 per boeking voor spoedeisende hulp: maximaal XCG 200 naar de dierenarts en XCG 50 naar de oppas voor de rit en de tijd. Alleen voor klachten die tijdens de oppasperiode ontstaan; wat je vooraf meldt valt erbuiten.',
+  fo5:'Hulp van een mens', fo5s:'Loopt er iets mis, dan hoor je binnen 24 uur van ons. Bel of app +599 9 694 7642.',
+  fo6:'Elke dag zien wat er gedaan is', fo6s:'Je volgt de takenlijst live, met opmerkingen en foto\u2019s van de oppas, en je kunt meteen reageren.',
+  fs1:'Je krijgt altijd betaald', fs1s:'De klant betaalt vooraf de helft. Jouw bedrag staat binnen twee werkdagen na de eindfactuur op je rekening, ook als de klant traag is.',
+  fs2:'Vervanging als je uitvalt', fs2s:'Ziek of iets tussengekomen? Met \u00e9\u00e9n tik zetten wij de resterende dagen als spoed uit. Jouw beoordeling lijdt er niet onder.',
+  fs3:'Klanten die al rond zijn', fs3s:'Je krijgt alleen aanvragen die bij je profiel passen, met de dieren, de buurt en de datums al ingevuld.',
+  fs4:'Je administratie geregeld', fs4s:'Wij maken de factuur namens jou en geven je een jaaroverzicht van je omzet en OB voor je aangifte.',
+  fs5:'Hulp van een mens', fs5s:'Zit je ergens mee tijdens een boeking, dan hoor je binnen 24 uur van ons: +599 9 694 7642.',
+  fs6:'Vergoed voor een ritje naar de dierenarts', fs6s:'Moet je met spoed naar de dierenarts, dan krijg je XCG 50 voor de rit en de tijd, bovenop je tarief. De rekening zelf gaat tot XCG 200 naar de dierenarts.',
+  react_s:'Je ontvangt geen aanvragen zolang je account gedeactiveerd is.',
+  pr_net_s:'Dit is jouw tarief: het bedrag dat jij overhoudt. De klant betaalt hierover nog servicekosten en OB.',
+  need_host_s:'De dieren logeren bij de oppas. De begintijd geldt voor de eerste dag, de eindtijd voor de laatste.',
   need_day_s:'De oppas blijft slapen. De begintijd geldt voor de eerste dag, de eindtijd voor de laatste.',
   alone:'Hoe lang kunnen de dieren alleen zijn?', alone_u:'uur', per_day:'per dag',
   visits_n:'Aantal visites per dag', walks_n:'Aantal wandelingen per dag',
   q_walks:'{n}× hondenuitlaatservice', sp_offer:'Wat ik aanbied', sp_offer_s:'Hier wordt op gefilterd bij nieuwe aanvragen.',
   bk_services:'Diensten', bk_alone:'Alleen thuis', sp_off:'staat uit',
+  bk_newreq:'Nieuwe aanvragen', bk_newreq_s:'Bekijk nieuwe aanvragen in het boekingsscherm.',
+  bk_none_s_owner:'Maak een aanvraag in het boekingsscherm.',
+  st_pending:'In afwachting eigenaar', st_notchosen:'Niet gekozen',
+  st_notchosen_s:'De eigenaar heeft een andere oppas gekozen.',
+  bk_pending_s:'Je hebt geaccepteerd. De eigenaar kiest nu wie het wordt; je kunt alvast berichten uitwisselen.',
+  bk_accepted_list:'Oppassers die hebben geaccepteerd', bk_msg:'Bericht', bk_choose_one:'Kies',
+  bk_await_toast:'Geaccepteerd · in afwachting van de eigenaar',
+  th_ph:'Bericht aan {who}…', th_empty:'Nog geen berichten.',
+  more_alerts:'Meldingen', flag_phone:'Mogelijk telefoonnummer gedeeld', flag_clear:'Meldingen wissen',
+  flag_hint:'In Odoo wordt dit een notificatie voor het platform; het gesprek blijft zichtbaar.',
+  form_save:'Opslaan', form_undo:'Ongedaan maken', form_undone:'Wijzigingen teruggedraaid',
+  unsaved:'Nog niet opgeslagen', unsaved_s:'Sla je wijzigingen op of maak ze ongedaan.',
+  q_owner_photos:'Foto\u2019s van jou of je dieren',
+  lg_sub:'Log in of maak een account aan.', lg_signin:'Inloggen', lg_signup:'Nieuw account',
+  lg_email:'E-mailadres', lg_pass:'Wachtwoord', lg_name:'Naam', lg_phone:'Telefoonnummer',
+  lg_role:'Wat kom je doen?', lg_create:'Account aanmaken', lg_demo:'Demo-accounts',
+  lg_hint:'In deze demo mag het wachtwoord leeg blijven.',
+  lg_unknown:'Onbekend account. Kies een demo-account of maak een nieuw account aan.',
+  lg_need:'Vul je naam en e-mailadres in.', lg_exists:'Dit e-mailadres is al in gebruik.',
+  lg_welcome:'Welkom, {name}!', lg_partner:'Bij een nieuw account maakt Odoo straks een contact (res.partner) aan.',
+  lg_signed:'Ingelogd als {name} ({mail})', logout:'Uitloggen',
 });
 Object.assign(I18N.en, {
   need:'What do you need?', sv_day_s:'House sitting', sv_visit_s:'Short visit', sv_walk_s:'Dog walking',
+  sv_host_s:'At the sitter\u2019s home', sv_hotel_s:'Dog boarding',
+  sv_host:'At the sitter\u2019s home (per day)', sv_hotel:'Dog boarding (per day)',
+  q_hosts:'{n}× at the sitter\u2019s home', q_hotels:'{n}× dog boarding',
+  fee_note:'Includes service fee and 6% OB.',
+  q_net:'You receive',
+  av_title:'Your availability', av_base:'By default you are', av_yes:'Available', av_no:'Unavailable',
+  av_base_s:'This applies to your whole calendar.', av_custom:'Adjust per day',
+  av_day_yes:'Available all day', av_day_no:'Unavailable all day', av_day_part:'Certain hours unavailable',
+  av_for:'Applies to', av_add_time:'+ Add hours', av_clear:'Back to default',
+  av_legend_part:'Partly', av_pick:'Tap a day to make an exception for it.',
+  av_note:'For now the calendar is informative only: requests are not filtered on it yet.',
+  av_from:'from', av_to:'to', av_svc_hint:'Leave every service on and it applies to the whole day.',
+  tm_title:'Platform agreement', tm_sign:'Sign', tm_head:'Sign the platform agreement',
+  tm_why:'Requests appear once you have signed.',
+  tm_read:'Read the full terms', tm_version:'Version {v}',
+  tm_note:'Version {v} \u00b7 we send a copy to {mail}.',
+  tm_done:'Signed', tm_signed_on:'Signed on {date} \u00b7 version {v}', tm_mailed:'Copy sent to {mail}',
+  tm_toast:'Signed \u00b7 copy on its way to {mail}', tm_view:'What you signed',
+  tm_k1:'You set your own rates, services and availability',
+  tm_k2:'The customer pays 50% up front; you are paid within two working days',
+  tm_k3:'On top of your rate the customer pays a 25% service fee and OB',
+  tm_k4:'A twelve-month non-solicitation clause after deactivation, buyable from XCG 500',
+  tm_locked:'Sign the terms first and requests will appear here.',
+  deact:'Deactivate account', deact_s:'Your account disappears from search results and you stop receiving requests. Bookings already running are finished as agreed.',
+  deact_term:'After deactivation the non-solicitation clause runs for another twelve months, until {date}.',
+  deact_q:'Are you sure you want to deactivate your account? You will be signed out.',
+  deact_done:'Account deactivated', deact_on:'Deactivated on {date}',
+  react:'Reactivate account', react_done:'Account active again',
+  q_health:'Current complaints or treatment', q_health_ph:'E.g. limping since last week, or on a course of pills until Friday',
+  q_health_s:'Tell us what is going on now so the sitter can take it into account. Existing complaints fall outside the veterinary cover, which is for what arises during the booking.',
+  q_health_none:'Nothing reported', vet_trip:'Vet trip compensation',
+  ur_pill:'Urgent', ur_drop:'I have to drop out', ur_need:'I need a replacement',
+  ur_drop_q:'The remaining days go out as an urgent request to other sitters. Continue?',
+  ur_title:'Urgent request', ur_from:'Urgent request from {name}',
+  ur_looking:'We are finding a replacement', ur_looking_s:'You hear from us within 24 hours.',
+  ur_cap:'For the remaining days you never pay more than you already did: {n} XCG.',
+  ur_capped:'Price cap applied', ur_reason:'Reason', ur_handover:'Taken over from {name}',
+  ur_bonus:'Urgent surcharge +{pct}%', ur_bonus_s:'The platform pays the urgent surcharge, not the customer.',
+  ur_done:'Urgent request sent', ur_ok:'I take urgent requests',
+  ur_ok_s:'You receive requests for bookings whose sitter dropped out. They carry an urgent surcharge of {pct}% on your own rate, paid by the platform.',
+  ur_badge:'Takes urgent work', ur_none:'No urgent requests right now.',
+  ur_since:'Dropped out on {date}', ur_days_left:'{n} days left',
+  fee_what:'What does that cover?', fee_title:'What the service fee covers',
+  fee_lead_owner:'On top of the sitter\u2019s rate you pay a 25% service fee and 6% OB. This is what it buys.',
+  fee_lead_sitter:'The customer pays a 25% service fee on top of your rate. This is what we do for it.',
+  fee_more:'Service fee: what does it cover?',
+  fee_disclaimer:'In this prototype the amounts and cover are still a proposal and have yet to be fixed.',
+  fo1:'Pay safely, or get your money back', fo1s:'You pay in the app. If nobody turns up, you get your money back. Half up front, the rest only after the booking ends.',
+  fo2:'A replacement if your sitter drops out', fo2s:'If your sitter drops out, one tap sends your request as urgent to every sitter who takes urgent work. For the remaining days you never pay more than you already did.',
+  fo3:'Checked sitters', fo3s:'We verify identity and speak to everyone in person before a profile goes live. Reviews only come from real bookings.',
+  fo4:'Veterinary cover', fo4s:'Up to XCG 250 per booking for emergency care: up to XCG 200 to the vet and XCG 50 to the sitter for the trip and the time. Only for complaints arising during the booking; anything reported beforehand falls outside it.',
+  fo5:'A real person to call', fo5s:'If something goes wrong you hear from us within 24 hours. Call or message +599 9 694 7642.',
+  fo6:'See what was done, every day', fo6s:'You follow the task list live, with notes and photos from the sitter, and can reply straight away.',
+  fs1:'You always get paid', fs1s:'The customer pays half up front. Your amount lands within two working days of the final invoice, even if the customer is slow.',
+  fs2:'A replacement if you drop out', fs2s:'Ill or something came up? One tap puts the remaining days out as urgent. Your rating is not affected.',
+  fs3:'Requests that are already sorted', fs3s:'You only get requests that match your profile, with the pets, the area and the dates already filled in.',
+  fs4:'Your paperwork handled', fs4s:'We invoice on your behalf and give you a yearly overview of your turnover and OB for your tax return.',
+  fs5:'A real person to call', fs5s:'Stuck during a booking? You hear from us within 24 hours: +599 9 694 7642.',
+  fs6:'Paid for an emergency vet trip', fs6s:'If you have to rush to the vet you get XCG 50 for the trip and the time, on top of your rate. The bill itself is covered up to XCG 200.',
+  react_s:'You receive no requests while your account is deactivated.',
+  pr_net_s:'This is your rate: what you keep. On top of it the customer pays a service fee and OB.',
+  need_host_s:'The pets stay at the sitter\u2019s place. The start time applies to the first day, the end time to the last.',
   need_day_s:'The sitter stays over. The start time applies to the first day, the end time to the last.',
   alone:'How long can the pets be alone?', alone_u:'hours', per_day:'per day',
   visits_n:'Visits per day', walks_n:'Walks per day',
   q_walks:'{n}× dog walking', sp_offer:'What I offer', sp_offer_s:'New requests are filtered on this.',
   bk_services:'Services', bk_alone:'Alone at home', sp_off:'switched off',
+  bk_newreq:'New requests', bk_newreq_s:'Check the new requests in the booking screen.',
+  bk_none_s_owner:'Send a request in the booking screen.',
+  st_pending:'Waiting for the owner', st_notchosen:'Not chosen',
+  st_notchosen_s:'The owner picked another sitter.',
+  bk_pending_s:'You accepted. The owner now picks a sitter; you can exchange messages in the meantime.',
+  bk_accepted_list:'Sitters who accepted', bk_msg:'Message', bk_choose_one:'Choose',
+  bk_await_toast:'Accepted · waiting for the owner',
+  th_ph:'Message {who}…', th_empty:'No messages yet.',
+  more_alerts:'Alerts', flag_phone:'Possible phone number shared', flag_clear:'Clear alerts',
+  flag_hint:'In Odoo this becomes a platform notification; the conversation stays visible.',
+  form_save:'Save', form_undo:'Undo changes', form_undone:'Changes reverted',
+  unsaved:'Not saved yet', unsaved_s:'Save your changes or undo them.',
+  q_owner_photos:'Photos of you or your pets',
+  lg_sub:'Sign in or create an account.', lg_signin:'Sign in', lg_signup:'New account',
+  lg_email:'Email address', lg_pass:'Password', lg_name:'Name', lg_phone:'Phone number',
+  lg_role:'What brings you here?', lg_create:'Create account', lg_demo:'Demo accounts',
+  lg_hint:'In this demo the password can stay empty.',
+  lg_unknown:'Unknown account. Pick a demo account or create a new one.',
+  lg_need:'Fill in your name and email address.', lg_exists:'That email address is already in use.',
+  lg_welcome:'Welcome, {name}!', lg_partner:'For a new account Odoo will create a contact (res.partner).',
+  lg_signed:'Signed in as {name} ({mail})', logout:'Sign out',
 });
 Object.assign(I18N.nl, {
   q_total:'Totaalprijs', q_days:'{n}× oppas aan huis', q_visits:'{n}× korte visite', q_unit:'{n} × {u} XCG',
@@ -535,7 +756,7 @@ Object.assign(I18N.en, {
   price_from:'from {n} XCG per day', price_visit:'{n} XCG per visit', sp_saved:'Profile saved',
 });
 Object.assign(I18N.nl, {
-  bk_addr_hidden:'Het volledige adres zie je zodra je de aanvraag accepteert.', bk_sitters:'Wie mag de aanvraag ontvangen?', bk_any:'Geen voorkeur', bk_any_s:'Iedereen in je buurt die met jouw dieren werkt en goede beoordelingen heeft.',
+  bk_addr_hidden:'Het volledige adres zie je zodra je de aanvraag accepteert.', bk_sitters:'Wie wil je dat er voor jouw dieren zorgt?', bk_any:'Geen voorkeur', bk_any_s:'Iedereen in je buurt die met jouw dieren werkt en goede beoordelingen heeft.',
   bk_match:'Past bij je dieren en buurt', bk_no_match:'Nog geen oppas gevonden die bij je dieren en buurt past.',
   bk_profile:'Profiel', bk_years:'{n} jaar ervaring', bk_bookings:'{n} boekingen', bk_hoods:'Buurten', bk_choose:'Kies deze oppas', bk_chosen:'Gekozen',
   bk_new:'+ Nieuwe aanvraag', bk_my:'Jouw aanvragen', bk_requests:'Nieuwe aanvragen', bk_yours:'Jouw boekingen', bk_detail:'Bekijk gegevens',
@@ -546,7 +767,7 @@ Object.assign(I18N.nl, {
   q_owner:'Jouw gegevens', q_owner_s:'De oppas ziet deze gegevens zodra de boeking is geaccepteerd.',
 });
 Object.assign(I18N.en, {
-  bk_addr_hidden:'You will see the full address once you accept the request.', bk_sitters:'Who may receive this request?', bk_any:'No preference', bk_any_s:'Anyone in your area who works with your kind of pets and has good reviews.',
+  bk_addr_hidden:'You will see the full address once you accept the request.', bk_sitters:'Who would you like to care for your pets?', bk_any:'No preference', bk_any_s:'Anyone in your area who works with your kind of pets and has good reviews.',
   bk_match:'Matches your pets and area', bk_no_match:'No sitter matches your pets and area yet.',
   bk_profile:'Profile', bk_years:'{n} years of experience', bk_bookings:'{n} bookings', bk_hoods:'Areas', bk_choose:'Choose this sitter', bk_chosen:'Chosen',
   bk_new:'+ New request', bk_my:'Your requests', bk_requests:'New requests', bk_yours:'Your bookings', bk_detail:'View details',
@@ -569,7 +790,7 @@ Object.assign(I18N.nl, {
   bk_checkin:'Inchecken', bk_checkout:'Uitchecken', bk_checked_in:'Ingecheckt om {time}',
   bk_not_started:'Nog niet ingecheckt', bk_not_started_s:'De animatie start zodra de oppas incheckt.',
   bk_before:'voor het inchecken', bk_outside:'buiten de oppastijd',
-  bk_none:'Geen actieve boeking', bk_none_s:'Maak een aanvraag of accepteer er een in het boekingsscherm.', bk_to_booking:'Naar boeking',
+  bk_none:'Geen actieve boeking', bk_none_s:'Pas je profiel aan om meer aanvragen te tonen of neem contact op met +599 9 694 7642 voor support.', bk_to_booking:'Naar boeking',
   bk_offer_empty:'Je oppasprofiel komt hier later. Aanvragen verschijnen hier zodra ze binnenkomen.', bk_no_req:'Geen openstaande aanvragen.',
   bk_pets:'{n} dieren', bk_days:'{n} dagen', bk_period:'{from} t/m {to}', bk_overview:'Boeking', bk_plan:'Vragenlijst',
   bk_sitter:'Oppas', bk_owner:'Eigenaar', bk_change:'Aanpassen', bk_status:'Status',
@@ -589,7 +810,7 @@ Object.assign(I18N.en, {
   bk_checkin:'Check in', bk_checkout:'Check out', bk_checked_in:'Checked in at {time}',
   bk_not_started:'Not checked in yet', bk_not_started_s:'The scene starts once the sitter checks in.',
   bk_before:'before check-in', bk_outside:'outside sitting hours',
-  bk_none:'No active booking', bk_none_s:'Send a request or accept one in the booking screen.', bk_to_booking:'Go to booking',
+  bk_none:'No active booking', bk_none_s:'Update your profile to receive more requests, or contact +599 9 694 7642 for support.', bk_to_booking:'Go to booking',
   bk_offer_empty:'Your sitter profile will live here later. Requests show up here as they come in.', bk_no_req:'No open requests.',
   bk_pets:'{n} pets', bk_days:'{n} days', bk_period:'{from} to {to}', bk_overview:'Booking', bk_plan:'Questionnaire',
   bk_sitter:'Sitter', bk_owner:'Owner', bk_change:'Edit', bk_status:'Status',
@@ -649,38 +870,59 @@ const HOODS = ['Punda','Otrobanda','Scharloo','Pietermaai','Saliña','Mahaai','J
 const CARE_KINDS = ['dog','puppy','cat','kitten','turtle','chicken','bird','fish'];
 const CARE_BASE = {dog:'dog', puppy:'dog', cat:'cat', kitten:'cat', turtle:'turtle'};   // waar de dieren van de klant onder vallen
 const SITTER_TASKS = ['feed','walk','plants'];
+/* de oppas bepaalt het eigen tarief; de klant betalt dat plus marge en OB */
+const MARGIN = 0.25, OB = 0.06;
+const gross = n => Math.round(n * (1 + MARGIN) * (1 + OB));
+const SERVICES = ['day','host','hotel','visit','walk'];
+const SV_LBL = {day:'sv_day_s', host:'sv_host_s', hotel:'sv_hotel_s', visit:'sv_visit_s', walk:'sv_walk_s'};
+const SV_LONG = {day:'sv_day', host:'sv_host', hotel:'sv_hotel', visit:'sv_visit', walk:'sv_walk'};
+const SV_LINE = {day:'q_days', host:'q_hosts', hotel:'q_hotels', visit:'q_visits', walk:'q_walks'};
+const DAILY = ['day','host','hotel'];   // per oppasdag — aankomst- en vertrekdag tellen allebei mee; de rest per keer
 const emptyPrices = () => ({
   day:  {on:true,  base:90, extra:10, other:0, discounts:[{days:5, pct:5},{days:10, pct:10}]},
+  host: {on:false, base:70, extra:15, other:0, discounts:[]},
+  hotel:{on:false, base:65, extra:20, other:0, discounts:[]},
   visit:{on:true,  base:60, extra:5,  other:0, discounts:[]},
   walk: {on:false, base:30, extra:5,  other:0, discounts:[]},
 });
 function defaultProfiles(){
+  const signedDemo = () => ({version:TERMS_VERSION, at:new Date(Date.now()-86400e3*30).toISOString(), name:'', mail:'', ua:'demo', mailed_at:new Date(Date.now()-86400e3*30).toISOString()});
+  const dk = n => { const d = new Date(); d.setDate(d.getDate()+n); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); };
+  const demoAvail = {base:'yes', custom:true, days:{
+    [dk(3)]: {mode:'no', services:[], times:[]},
+    [dk(5)]: {mode:'part', services:['day','host'], times:[{from:'12:00', to:'15:00'}]},
+  }};
   return {
     s_eline:{first:'Eline', last:'', phone:'+599 694 7642', email:'info@huisdierenoppascuracao.com',
       about:'Ik pas al jaren op honden, katten en af en toe een schildpad. Ik stuur graag korte updates en een foto tussendoor.',
-      photos:[], care:['dog','puppy','cat','kitten','turtle'], tasks:['feed','walk','plants'],
-      hoods:['Pietermaai','Punda','Scharloo','Saliña'],
+      photos:[], care:['dog','puppy','cat','kitten','turtle'], tasks:['feed','walk','plants'], signed:signedDemo(),
+      hoods:['Pietermaai','Punda','Scharloo','Saliña'], avail:demoAvail, urgent_ok:true,
       prices:{day:{on:true, base:90, extra:10, other:0, discounts:[{days:5, pct:5},{days:10, pct:10}]},
+              host:{on:true, base:70, extra:15, other:0, discounts:[{days:7, pct:5}]},
+              hotel:{on:false, base:65, extra:20, other:0, discounts:[]},
               visit:{on:true, base:60, extra:5, other:0, discounts:[]},
               walk:{on:true, base:30, extra:5, other:0, discounts:[]}}},
-    s_naomi:{first:'Naomi', last:'', phone:'', email:'', about:'Kattenmens in hart en nieren. Rustig aan huis en ik blijf graag even hangen voor een knuffel.',
-      photos:[], care:['cat','kitten'], tasks:['feed'], hoods:['Pietermaai','Mahaai'],
-      prices:{day:{on:true, base:85, extra:10, other:0, discounts:[{days:7, pct:5}]}, visit:{on:true, base:55, extra:5, other:0, discounts:[]}, walk:{on:false, base:30, extra:5, other:0, discounts:[]}}},
-    s_ruben:{first:'Ruben', last:'', phone:'', email:'', about:'Sportief en actief: lange strandwandelingen zijn mijn ding.',
-      photos:[], care:['dog','puppy'], tasks:['feed','walk'], hoods:['Jan Thiel','Willibrordus'],
-      prices:{day:{on:false, base:90, extra:10, other:0, discounts:[]}, visit:{on:true, base:60, extra:5, other:0, discounts:[]}, walk:{on:true, base:35, extra:5, other:0, discounts:[]}}},
-    s_kim:{first:'Kim', last:'', phone:'', email:'', about:'Net begonnen als oppas en leer graag bij. Vooral in het weekend beschikbaar.',
-      photos:[], care:['dog','cat'], tasks:['feed','walk'], hoods:['Punda','Otrobanda','Scharloo'],
-      prices:{day:{on:false, base:80, extra:10, other:0, discounts:[]}, visit:{on:true, base:50, extra:5, other:0, discounts:[]}, walk:{on:true, base:25, extra:5, other:0, discounts:[]}}},
+    s_naomi:{first:'Naomi', last:'', phone:'', email:'naomi@voorbeeld.com', about:'Kattenmens in hart en nieren. Rustig aan huis en ik blijf graag even hangen voor een knuffel.',
+      photos:[], care:['cat','kitten'], tasks:['feed'], hoods:['Pietermaai','Mahaai'], signed:signedDemo(),
+      prices:{day:{on:true, base:85, extra:10, other:0, discounts:[{days:7, pct:5}]}, host:{on:true, base:60, extra:12, other:0, discounts:[]},
+              hotel:{on:false, base:65, extra:20, other:0, discounts:[]}, visit:{on:true, base:55, extra:5, other:0, discounts:[]}, walk:{on:false, base:30, extra:5, other:0, discounts:[]}}},
+    s_ruben:{first:'Ruben', last:'', phone:'', email:'ruben@voorbeeld.com', about:'Sportief en actief: lange strandwandelingen zijn mijn ding.',
+      photos:[], care:['dog','puppy'], tasks:['feed','walk'], hoods:['Jan Thiel','Willibrordus'], signed:signedDemo(), urgent_ok:true,
+      prices:{day:{on:false, base:90, extra:10, other:0, discounts:[]}, host:{on:false, base:70, extra:15, other:0, discounts:[]},
+              hotel:{on:true, base:75, extra:25, other:0, discounts:[{days:7, pct:10}]}, visit:{on:true, base:60, extra:5, other:0, discounts:[]}, walk:{on:true, base:35, extra:5, other:0, discounts:[]}}},
+    s_kim:{first:'Kim', last:'', phone:'', email:'kim@voorbeeld.com', about:'Net begonnen als oppas en leer graag bij. Ik spring graag in als er met spoed iemand nodig is.',
+      photos:[], care:['dog','cat','turtle'], tasks:['feed','walk'], hoods:['Punda','Otrobanda','Scharloo'], signed:signedDemo(), urgent_ok:true,
+      prices:{day:{on:true, base:80, extra:10, other:0, discounts:[]}, host:{on:true, base:55, extra:10, other:0, discounts:[]},
+              hotel:{on:false, base:65, extra:20, other:0, discounts:[]}, visit:{on:true, base:50, extra:5, other:0, discounts:[]}, walk:{on:true, base:25, extra:5, other:0, discounts:[]}}},
   };
 }
 /* profiel + vaste demo-cijfers samen */
 function profile(id){ return (S.sitters && S.sitters[id]) || defaultProfiles()[id] || {care:[], tasks:[], hoods:[], prices:emptyPrices(), photos:[]}; }
 function sitterInfo(id){
-  const base = SITTERS.find(x=>x.id===id) || {id, years:0, bookings:0, rating:5}, pr = profile(id);
+  const base = allSitters().find(x=>x.id===id) || {id, years:0, bookings:0, rating:5}, pr = profile(id);
   const species = [...new Set((pr.care||[]).map(k=>CARE_BASE[k]).filter(Boolean))];
   const prices = pr.prices||emptyPrices();
-  const services = ['day','visit','walk'].filter(k=>prices[k] && prices[k].on);
+  const services = SERVICES.filter(k=>prices[k] && prices[k].on);
   return {...base, name:(pr.first||base.name||'').trim(), hoods:pr.hoods||[], species, intro:pr.about||base.intro||'', prices, services, care:pr.care||[], tasks:pr.tasks||[], photos:pr.photos||[]};
 }
 const SITTERS = [
@@ -690,23 +932,40 @@ const SITTERS = [
    intro:'Kattenmens in hart en nieren. Rustig aan huis en ik blijf graag even hangen voor een knuffel.'},
   {id:'s_ruben', name:'Ruben', hoods:['Jan Thiel','Willibrordus'], species:['dog'], years:2, bookings:41, rating:4.6,
    intro:'Sportief en actief: lange strandwandelingen zijn mijn ding.'},
-  {id:'s_kim', name:'Kim', hoods:['Punda','Otrobanda','Scharloo'], species:['dog','cat'], years:1, bookings:12, rating:3.2,
-   intro:'Net begonnen als oppas en leer graag bij. Vooral in het weekend beschikbaar.'},
+  {id:'s_kim', name:'Kim', hoods:['Punda','Otrobanda','Scharloo'], species:['dog','cat','turtle'], years:1, bookings:12, rating:3.2,
+   intro:'Net begonnen als oppas en leer graag bij. Ik spring graag in als er met spoed iemand nodig is.'},
 ];
 const DEFAULT_ME = 's_eline';
 /* in de demo kun je kiezen welke oppas je bent */
 const me = () => (S && S.me_sitter) || DEFAULT_ME;
+/* oppassers uit de catalogus plus wie er via een nieuw account bij komt */
+const allSitters = () => [...SITTERS, ...((S && S.extra_sitters) || [])];
 const meSitter = () => sitterById(me()) || SITTERS[0];
-const sitterById = id => SITTERS.some(x=>x.id===id) ? sitterInfo(id) : null;
+const sitterById = id => allSitters().some(x=>x.id===id) ? sitterInfo(id) : null;
 /* voorfilter: past bij de buurt van de eigenaar én bij alle diersoorten */
-function matchingSitters(services){
-  const hood = (S.plan.owner_info||{}).hood, kinds = [...new Set(S.plan.pets.map(p=>p.species))];
+function matchingSitters(services, anyHood){
+  const hood = anyHood ? null : (S.plan.owner_info||{}).hood, kinds = [...new Set(S.plan.pets.map(p=>p.species))];
   const want = services && services.length ? services : [];
-  return SITTERS.map(x=>sitterInfo(x.id)).filter(x =>
+  return allSitters().map(x=>sitterInfo(x.id)).filter(x => !deactivatedOf(x.id) && isSigned(x.id)).filter(x =>
     (!hood || x.hoods.includes(hood)) && kinds.every(k=>x.species.includes(k)) && want.every(sv=>x.services.includes(sv)));
 }
 const goodSitters = () => matchingSitters().filter(x=>x.rating >= 4);
 function stars(r){ const full = Math.round(r); return '★'.repeat(full) + '☆'.repeat(5-full); }
+
+/* ---------------- accounts (in Odoo: res.users op res.partner) ---------------- */
+const OWNER_MAIL = 'mirthe@voorbeeld.com';
+function accounts(){
+  const oi = S.plan.owner_info || {};
+  return [{email:(oi.email || OWNER_MAIL).toLowerCase(), name:oi.name || 'Mirthe', role:'owner'},
+    ...allSitters().map(x=>{ const p = profile(x.id);
+      return {email:(p.email || x.id.slice(2)+'@voorbeeld.com').toLowerCase(), name:(p.first || x.name || '').trim(), role:'sitter', sitter:x.id}; })];
+}
+function signIn(acc){
+  S.auth = {email:acc.email, name:acc.name, role:acc.role, sitter:acc.sitter || null};
+  S.role = acc.role; S.user_type = acc.role;
+  if(acc.role==='sitter') S.me_sitter = acc.sitter;
+  S.tab = isActive() ? 'today' : 'booking';
+}
 
 /* ---------------- state ---------------- */
 let S = null;
@@ -729,8 +988,8 @@ function seed(){
     ],
     chores:{
       water:{on:true,time:'08:00'}, litter:{on:false,time:'09:00'},
-      lamp:{on:true,time:'08:00',time_off:'19:00'}, plants:{on:true,time:'19:30'},
-      mail:{on:false,time:'12:00'}, close:{on:true,time:'21:30'},
+      lamp:{on:false,time:'08:00',time_off:'19:00'}, plants:{on:true,time:'19:30'},
+      mail:{on:false,time:'12:00'}, close:{on:false,time:'21:30'},
       kliko:{on:true,time:'20:00',weekday:today.getDay()},
     },
     meds:[], custom:[],
@@ -741,7 +1000,7 @@ function seed(){
   const dk = d => d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
   const d2 = new Date(today); d2.setDate(d2.getDate()+2);
   const booking = {id:'bk_1', state:'active', type:'range', sitter:'Eline', owner:'Mirthe', sitter_ids:[DEFAULT_ME], accepted_by:DEFAULT_ME, declined_by:[],
-    services:['day','walk'], visits:1, walks:2, alone:4,
+    services:['day','walk'], visits:1, walks:2, alone:4, accepted_list:[DEFAULT_ME],
     days:[{date:dateKey(today), start:'06:45', end:'21:30'},
           {date:dk(new Date(today.getTime()+864e5)), start:'07:00', end:'21:30'},
           {date:dk(d2), start:'07:00', end:'12:00'}],
@@ -750,7 +1009,8 @@ function seed(){
     {id:'m1', from:'owner', text:'Hoi Eline! De sleutel ligt onder de bloempot bij de achterdeur.', at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,32).toISOString()},
     {id:'m2', from:'sitter', text:'Dank je! Ik ben binnen, de dieren zijn blij. Ik hou je op de hoogte.', at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,54).toISOString()},
   ];
-  const st = {v:1, lang:'nl', role:'sitter', user_type:'sitter', theme:'auto', season:'auto', demo_time:null, tab:'today', plan, days:{}, dismissed:{}, read:{owner:null, sitter:null}, me_sitter:DEFAULT_ME, sitters:defaultProfiles(), bookings:[booking], bkform:null, chat};
+  const st = {v:1, lang:'nl', role:'sitter', user_type:'sitter', theme:'auto', season:'auto', demo_time:null, tab:'today', plan, days:{}, dismissed:{}, read:{owner:null, sitter:null}, me_sitter:DEFAULT_ME, sitters:defaultProfiles(), bookings:[booking], bkform:null, chat, threads:{}, flags:[], extra_sitters:[], contacts:[],
+    auth:{email:'info@huisdierenoppascuracao.com', name:'Eline', role:'sitter', sitter:DEFAULT_ME}};
   const y = new Date(today); y.setDate(y.getDate()-1);
   const yk = dateKey(y);
   const tasks = generateTasks(plan, y);
@@ -770,7 +1030,8 @@ function seed(){
 /* Voorbeelddata herstellen: vragenlijst ingevuld, maar nog geen boekingen en berichten */
 function seedClean(){
   const st = seed();
-  st.bookings = []; st.bkform = null; st.chat = []; st.days = {}; st.dismissed = {}; st.read = {owner:null, sitter:null};
+  st.bookings = []; st.bkform = null; st.chat = []; st.days = {}; st.dismissed = {}; st.read = {owner:null, sitter:null}; st.threads = {}; st.flags = [];
+  st.extra_sitters = []; st.contacts = []; st.auth = null;
   st.role = 'owner'; st.user_type = 'owner'; st.tab = 'booking';
   return st;
 }
@@ -778,7 +1039,10 @@ function load(){
   try{ const raw = localStorage.getItem(SAVE_KEY); if(raw){ const s = JSON.parse(raw); if(s && s.v===1){ s.dismissed = s.dismissed||{}; s.season = s.season||'auto'; s.chat = s.chat||[]; if(s.booking){ s.booking.id = s.booking.id||'bk_1'; s.bookings = s.bookings||[s.booking]; delete s.booking; }
         s.bookings = s.bookings||[]; s.plan.owner_info = s.plan.owner_info||{name:'Mirthe', address:'', hood:'Pietermaai', phone:''};
         s.bookings.forEach(b=>{ b.sitter_ids = b.sitter_ids||[]; b.declined_by = b.declined_by||[]; if(b.sitter==='Shanti') b.sitter='Eline'; b.owner = s.plan.owner_info.name || 'Mirthe'; });
-        s.read = s.read||{owner:null, sitter:null}; s.me_sitter = s.me_sitter||DEFAULT_ME; s.sitters = s.sitters||defaultProfiles(); s.user_type = s.user_type||null; return s; } } }catch(e){}
+        s.read = s.read||{owner:null, sitter:null}; s.me_sitter = s.me_sitter||DEFAULT_ME; s.sitters = s.sitters||defaultProfiles(); s.user_type = s.user_type||null;
+        s.threads = s.threads||{}; s.flags = s.flags||[]; s.extra_sitters = s.extra_sitters||[]; s.contacts = s.contacts||[];
+        if(s.auth === undefined) s.auth = {email:'info@huisdierenoppascuracao.com', name:'Eline', role:'sitter', sitter:DEFAULT_ME}; s.bookings.forEach(b=>{ b.accepted_list = b.accepted_list || (b.accepted_by ? [b.accepted_by] : []); });
+        return s; } } }catch(e){}
   return null;
 }
 function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch(e){} }
@@ -800,11 +1064,9 @@ function generateTasks(plan, date){
   const chore = (key, hm) => out.push({id:`chore:${key}`, kind:'chore', time_start:toMin(hm), time_end:null, pet_ids:[], pet_names:[], params:{chore:key}});
   if(C.water.on) chore('water', C.water.time);
   if(C.litter.on && has('cat')) chore('litter', C.litter.time);
-  if(C.lamp.on && has('turtle')){ chore('lamp', C.lamp.time); chore('lamp_off', C.lamp.time_off); }
   if(C.plants.on) chore('plants', C.plants.time);
   if(C.mail.on) chore('mail', C.mail.time);
   if(C.kliko.on && Number(C.kliko.weekday)===wd) chore('kliko', C.kliko.time);
-  if(C.close.on) chore('close', C.close.time);
   for(const m of plan.meds){ const p = petById(m.pet_id); if(!p) continue;
     out.push({id:`med:${m.id}`, kind:'med', time_start:toMin(m.time), time_end:null, pet_ids:[p.id], pet_names:[p.name], params:{text:m.text}}); }
   for(const c of plan.custom){ if(!c.text) continue;
@@ -844,9 +1106,52 @@ function bookingName(b){ return b && b.accepted_by ? (sitterById(b.accepted_by)|
 const ownerName = () => (S.plan.owner_info||{}).name || 'Mirthe';
 function sitterName(){ const c = cur(); return c ? bookingName(c) : (S.role==='sitter' ? meSitter().name : ((S.bookings||[]).filter(b=>b.accepted_by).map(bookingName)[0] || meSitter().name)); }
 /* aanvragen die bij deze oppas (Eline) horen */
-const forMe = b => !b.sitter_ids.length ? (goodSitters().some(x=>x.id===me()) && !b.declined_by.includes(me())) : b.sitter_ids.includes(me()) && !b.declined_by.includes(me());
-const openRequests = () => (S.bookings||[]).filter(b=>b.state==='requested' && forMe(b));
+const forMe = b => {
+  if((b.declined_by||[]).includes(me())) return false;
+  /* een spoedaanvraag gaat naar iedereen die spoed aanneemt en bij de klant past, ook zonder topbeoordeling */
+  if(b.urgent) return takesUrgent(me()) && matchingSitters(b.services||['day'], true).some(x=>x.id===me());
+  return !b.sitter_ids.length ? goodSitters().some(x=>x.id===me()) : b.sitter_ids.includes(me());
+};
+const URGENT_BONUS = 25;   /* % bovenop het eigen tarief, betaald door het platform */
+const acceptedBy = b => b.accepted_list || (b.accepted_by ? [b.accepted_by] : []);
+const takesUrgent = id => !!(profile(id) || {}).urgent_ok;
+/* de dagen die na vandaag nog komen */
+const daysLeft = b => (b.days||[]).filter(d => d.date >= dateKey(nowDate()));
+/* prijs bij een spoedaanvraag: de klant betaalt de laagste van oud en nieuw */
+function urgentQuote(b, sitterId){
+  const q = quote(sitterId, b.days, bkOpt(b));
+  if(!q) return null;
+  const cap = b.cap ?? null;
+  const capped = cap != null && q.total > cap;
+  return {...q, shown: capped ? cap : q.total, cap, capped, bonus: Math.round(q.net * URGENT_BONUS / 100)};
+}
+/* de resterende dagen als spoed uitzetten */
+function handover(b, from, reason){
+  const left = daysLeft(b);
+  if(!left.length) return false;
+  const old = quote(from, left, bkOpt(b));
+  b.handover = {from, at:nowDate().toISOString(), reason:reason||'', days_done:(b.days||[]).length - left.length};
+  b.days = left;
+  b.cap = old ? old.total : null;
+  b.urgent = true; b.state = 'requested'; b.sitter_ids = []; b.accepted_list = []; b.accepted_by = null;
+  b.declined_by = [from]; b.sitter = null; b.checkin_at = null;
+  return true;
+}
+const openRequests = () => (S.bookings||[]).filter(b=>['requested','pending'].includes(b.state) && forMe(b) && !acceptedBy(b).includes(me()));
+const pendingForMe = () => (S.bookings||[]).filter(b=>b.state==='pending' && acceptedBy(b).includes(me()));
+const notChosenForMe = () => (S.bookings||[]).filter(b=>b.accepted_by && b.accepted_by!==me() && acceptedBy(b).includes(me()));
 const myBookings = () => (S.bookings||[]).filter(b=>['accepted','active'].includes(b.state) && b.accepted_by===me());
+/* gesprekken per aanvraag én per oppas, zodat de eigenaar met meerdere kan praten */
+const thKey = (bid, sid) => bid+'|'+sid;
+function thread(bid, sid){ S.threads = S.threads || {}; const k = thKey(bid,sid); return S.threads[k] = S.threads[k] || []; }
+/* screening: deelt iemand een telefoonnummer? */
+const PHONE_RE = /(\+\s?\d{2,4}\b)|(\b\d{3}[\s.\-]\d{4}\b)|(\b\d{7,}\b)|(\b\d{2,4}[\s.\-]\d{2,4}[\s.\-]\d{2,4}\b)/;
+function screen(text, from, bid, sid){
+  if(!PHONE_RE.test(text)) return false;
+  S.flags = S.flags || [];
+  S.flags.push({id:uid('fl_'), at:nowDate().toISOString(), from, booking:bid||null, sitter:sid||null, text});
+  return true;
+}
 function firstDay(b){ return (b.days||[]).map(x=>x.date).sort()[0]; }
 function bookingDay(key){ return (bk().days||[]).find(x=>x.date===key) || null; }
 function bookingToday(){ return bookingDay(dateKey(nowDate())); }
@@ -1153,7 +1458,7 @@ function skyAt(m){
 }
 
 /* ---------------- vogels die komen drinken ---------------- */
-const BATH = {x:196, y:302};
+const BATH = {x:142, y:302};
 /* veelgeziene vogels op Curaçao */
 const BIRDS = [
   {id:'trupial',   sc:1.25,  body:'#F2A02A', back:'#23252A', head:'#23252A', belly:'#F7B94B', tail:'#23252A', beak:'#3A3A3A', bar:'#FFFFFF'},
@@ -1396,6 +1701,7 @@ function renderHeader(){
 /* ---------------- views ---------------- */
 let openTask = null;
 const ICON_CHECK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const ICON_TICK = '<svg class="tick" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 function viewToday(){
   /* zonder boeking voor vandaag: geen takenlijst en geen berichten */
   if(!cur() || !bookingToday()) return bannerHTML();
@@ -1418,19 +1724,27 @@ function inboxSection(){
 /* melding bovenaan: geen boeking, nieuwe aanvraag of nog niet ingecheckt */
 function bannerHTML(){
   const c = cur(), day = bookingToday();
+  const newReq = S.role==='sitter' && openRequests().length
+    ? `<div class="bcard"><h3>${t('bk_newreq')}</h3><p class="sub">${t('bk_newreq_s')}</p>
+        <div class="brow"><button class="btn ghost" data-act="go-booking">${t('bk_to_booking')}</button></div></div>` : '';
+  const urg = (S.bookings||[]).find(b=>b.urgent && b.state==='requested');
+  if(urg && S.role==='owner')
+    return `<div class="bcard urgent"><h3>${t('ur_looking')} <span class="pill warn">${t('ur_pill')}</span></h3>
+      <p class="sub">${t('ur_looking_s')}</p>
+      <div class="brow"><button class="btn ghost" data-act="go-booking">${t('bk_to_booking')}</button></div></div>`;
   if(!c || !day)
-    return `<div class="bcard"><h3>${t('bk_none')}</h3><p class="sub">${t('bk_none_s')}</p>
+    return newReq || `<div class="bcard"><h3>${t('bk_none')}</h3><p class="sub">${S.role==='sitter'?t('bk_none_s'):t('bk_none_s_owner')}</p>
       <div class="brow"><button class="btn ghost" data-act="go-booking">${t('bk_to_booking')}</button></div></div>`;
   if(c.state!=='active')
-    return `<div class="bcard"><h3>${t('bk_not_started')} <span class="pill acc">${fmtShort(day.date)} ${day.start}</span></h3>
+    return newReq + `<div class="bcard"><h3>${t('bk_not_started')} <span class="pill acc">${fmtShort(day.date)} ${day.start}</span></h3>
       ${S.role==='sitter' ? `<div class="brow"><button class="btn" data-act="bk-checkin">${t('bk_checkin')}</button></div>` : ''}</div>`;
-  return '';
+  return newReq;
 }
 
 /* chat tussen oppas en eigenaar */
 let chatAll = false, chatOpen = false;
 const ICON_PERSON = '<svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.8"><circle cx="12" cy="9" r="3.4"/><path d="M5 20c.8-3.8 3.6-5.4 7-5.4s6.2 1.6 7 5.4"/></svg>';
-const ICON_SEND = '<svg viewBox="0 0 24 24"><path d="M3.4 20.4 21 12 3.4 3.6 3.4 10l12 2-12 2z"/></svg>';
+const ICON_SEND = '<svg viewBox="0 0 24 24"><path d="M12 19.5V5.5"/><path d="M5.8 11.7 12 5.4l6.2 6.3"/></svg>';
 function chatBox(){
   const other = S.role==='owner' ? sitterName() : ownerName();
   const all = stream(), list = chatAll ? all : all.slice(-6);
@@ -1441,6 +1755,25 @@ function chatBox(){
     </div>`;
 }
 
+let openThread = null;
+function threadBox(bid, sid){
+  const msgs = thread(bid, sid), other = S.role==='owner' ? ((sitterById(sid)||{}).name || '') : ownerName();
+  return `<div class="chat" style="margin-top:8px">
+      <div class="msgs">${msgs.length ? msgs.map(mm=>`<div class="msg ${mm.from===S.role?'me':''}"><p>${esc(mm.text)}</p>
+        <time>${mm.from===S.role ? t('me') : esc(mm.from==='owner'?ownerName():(sitterById(sid)||{}).name||'')} · ${hmOf(mm.at)}</time></div>`).join('')
+        : `<p class="sub muted" style="padding:4px 2px">${t('th_empty')}</p>`}</div>
+      <form class="chatin" data-thform="${thKey(bid,sid)}" autocomplete="off">
+        <input type="text" placeholder="${t('th_ph',{who:esc(other)})}"><button class="send" type="submit" aria-label="${t('chat')}">${ICON_SEND}</button></form>
+    </div>`;
+}
+function threadRow(b, sid, canChoose){
+  const q = b.urgent ? urgentQuote(b, sid) : quote(sid, b.days, bkOpt(b)), key = thKey(b.id, sid), s = sitterById(sid) || {};
+  const price = !q ? '' : (q.capped ? `<s>${q.total} XCG</s> ${q.shown} XCG` : `${b.urgent ? q.shown : q.total} XCG`);
+  return `<div class="acrow"><span><b>${esc(s.name||'')}</b>${price?`<span class="muted"> · ${price}</span>`:''}</span>
+      <span class="brow"><button class="btn ghost sm" data-act="th-open" data-v="${sid}">${t('bk_msg')}</button>
+      ${canChoose?`<button class="btn sm" data-act="bk-choose" data-v="${sid}">${t('bk_choose_one')}</button>`:''}</span></div>
+    ${openThread===key ? threadBox(b.id, sid) : ''}`;
+}
 function viewSitter(){
   const d = today(), m = nowMin(), live = liveTasks(d);
   const doneN = live.filter(x=>x.state==='done').length;
@@ -1462,8 +1795,9 @@ function viewSitter(){
       </div>${exp ? taskExpand(x) : ''}</div>`;
   }).join('');
   const P = S.plan;
-  const notes = (P.notes || P.vet.name) ? `<section class="sec"><h2>${t('q_notes')}</h2><div class="panel">
+  const notes = (P.notes || P.vet.name || P.health) ? `<section class="sec"><h2>${t('q_notes')}</h2><div class="panel">
       ${P.notes?`<p class="sub">${esc(P.notes)}</p>`:''}
+      ${P.health?`<p class="sub"><b>${t('q_health')}:</b> ${esc(P.health)}</p>`:''}
       ${P.vet.name?`<p class="sub"><b>${t('vet_short')}:</b> ${esc(P.vet.name)}${P.vet.phone?` · <a href="tel:${esc(P.vet.phone.replace(/\s/g,''))}">${esc(P.vet.phone)}</a>`:''}</p>`:''}
     </div></section>` : '';
   return `<section class="sec"><h2>${t('today')} <span>${doneN} / ${live.length} ${t('done')}</span></h2>
@@ -1534,9 +1868,14 @@ function viewLog(){
       <span>${esc(taskTitle(x))}${outcomeText(x)?` <span class="muted">· ${esc(outcomeText(x))}</span>`:''}${x.note?`<div class="muted">“${esc(x.note)}”</div>`:''}</span></div>`).join('');
     return `<details class="day" ${i===0?'open':''}><summary><b>${fmtDay(k)}</b><span class="muted">${t('tasks_done',{a:done,b:d.tasks.length})}</span></summary><div class="inner">${rows}</div></details>`;
   }).join('');
-  return `<section class="sec"><h2>${t('log')}</h2><p class="sub" style="margin-bottom:10px">${t('log_intro')}</p><div style="display:flex;flex-direction:column;gap:10px">${items}</div></section>`;
+  return `<section class="sec"><h2>${t('log')}</h2><div style="display:flex;flex-direction:column;gap:10px">${items}</div></section>`;
 }
 
+function ownerPhotos(){
+  const list = (S.plan.owner_info||{}).photos || [];
+  return `<div class="photos">${list.map((src,i)=>`<div class="photo" data-photo="${i}"><img src="${src}" alt=""><button class="x" data-act="oi-del-photo" aria-label="${t('remove')}">\u00d7</button></div>`).join('')}
+      ${list.length < 4 ? `<label class="addphoto">${t('sp_add_photo')}<input type="file" accept="image/*" multiple id="ownerPhotoInput" hidden></label>` : ''}</div>`;
+}
 function viewIntake(){
   const P = S.plan, ro = S.role!=='owner', dogs = P.pets.filter(p=>p.species==='dog');
   const petCards = P.pets.map(p=>{ const L = LOOKS[p.species];
@@ -1565,8 +1904,7 @@ function viewIntake(){
   const C = P.chores, has = sp => P.pets.some(p=>p.species===sp);
   const choreRow = key => `<label class="toggle"><input type="checkbox" data-f="chore.on" data-k="${key}" ${C[key].on?'checked':''}><span>${t('ch_'+key)}</span><input type="time" data-f="chore.time" data-k="${key}" value="${C[key].time}"></label>`;
   const chores = [ choreRow('water'), has('cat') ? choreRow('litter') : '',
-    has('turtle') ? choreRow('lamp') + `<label class="toggle"><span></span><span>${t('ch_lamp_off')}</span><input type="time" data-f="chore.time_off" data-k="lamp" value="${C.lamp.time_off}"></label>` : '',
-    choreRow('plants'), choreRow('mail'), choreRow('close'),
+    choreRow('plants'), choreRow('mail'),
     choreRow('kliko') + `<label class="toggle"><span></span><span>${t('every')}</span><select data-f="chore.weekday" data-k="kliko">${t('wdl').map((n,i)=>`<option value="${i}" ${Number(C.kliko.weekday)===i?'selected':''}>${n}</option>`).join('')}</select></label>`].join('');
   const meds = P.meds.map(m=>`<div class="petcard" data-med="${m.id}">
       <div class="line2"><input type="time" data-f="med.time" value="${m.time}"><select data-f="med.pet">${P.pets.map(p=>`<option value="${p.id}" ${m.pet_id===p.id?'selected':''}>${esc(p.name)}</option>`).join('')}</select>
@@ -1575,19 +1913,23 @@ function viewIntake(){
   const custom = P.custom.map(c=>`<div class="line2" data-custom="${c.id}"><input type="time" data-f="custom.time" value="${c.time}">
       <input type="text" data-f="custom.text" value="${esc(c.text)}" placeholder="${t('custom_ph')}"><button class="xbtn" data-act="del-custom" aria-label="${t('remove')}">×</button></div>`).join('');
   const sec = (title, sub, inner) => `<div class="panel"><h3>${title}</h3>${sub?`<p class="sub">${sub}</p>`:''}${inner}</div>`;
-  return `${ro?`<div class="ro-note">${t('ro_intake')}</div>`:`<p class="sub">${t('intake_intro')}</p>`}
+  return `${ro?`<div class="ro-note">${t('ro_intake')}</div>`:''}
     <fieldset ${ro?'disabled':''}>
     ${sec(t('q_owner'), t('q_owner_s'), `<input type="text" data-f="oi.name" value="${esc((P.owner_info||{}).name||'')}" placeholder="${t('name')}">
       <input type="text" data-f="oi.address" value="${esc((P.owner_info||{}).address||'')}" placeholder="${t('bk_address')}">
       <select data-f="oi.hood">${HOODS.map(h=>`<option value="${h}" ${(P.owner_info||{}).hood===h?'selected':''}>${h}</option>`).join('')}</select>
-      <input type="tel" data-f="oi.phone" value="${esc((P.owner_info||{}).phone||'')}" placeholder="${t('bk_phone')}">`)}
-    ${sec(t('q_pets'), t('q_pets_s'), petCards + (P.pets.length<4?`<button class="btn ghost sm" data-act="add-pet">${t('add_pet')}</button>`:''))}
-    ${sec(t('q_feed'), t('q_feed_s'), feeds + `<button class="btn ghost sm" data-act="add-feed">${t('add_feed')}</button>`)}
-    ${sec(t('q_walk'), t('q_walk_s'), walks)}
+      <input type="tel" data-f="oi.phone" value="${esc((P.owner_info||{}).phone||'')}" placeholder="${t('bk_phone')}">
+      <p class="lbl">${t('q_owner_photos')}</p>${ownerPhotos()}`)}
+    ${sec(t('q_pets'), '', petCards + (P.pets.length<4?`<button class="btn ghost sm" data-act="add-pet">${t('add_pet')}</button>`:''))}
+    ${sec(t('q_feed'), '', feeds + `<button class="btn ghost sm" data-act="add-feed">${t('add_feed')}</button>`)}
+    ${sec(t('q_walk'), '', walks)}
     ${sec(t('q_chores'), '', chores)}
     ${sec(t('q_meds'), '', meds + `<button class="btn ghost sm" data-act="add-med" ${P.pets.length?'':'disabled'}>${t('add_med')}</button>`)}
     ${sec(t('q_custom'), '', custom + `<button class="btn ghost sm" data-act="add-custom">${t('add_custom')}</button>`)}
     ${sec(t('q_notes'), '', `<textarea data-f="notes" rows="3" placeholder="${t('notes_ph')}">${esc(P.notes)}</textarea>
+      <p class="lbl">${t('q_health')}</p>
+      <textarea data-f="health" rows="2" placeholder="${t('q_health_ph')}">${esc(P.health||'')}</textarea>
+      <p class="sub muted">${t('q_health_s')}</p>
       <p class="lbl">${t('vet')}</p><input type="text" data-f="vet.name" value="${esc(P.vet.name)}" placeholder="${t('vet')}">
       <input type="tel" data-f="vet.phone" value="${esc(P.vet.phone)}" placeholder="${t('phone')}">`)}
     </fieldset>`;
@@ -1600,13 +1942,13 @@ function bkForm(){
   const f = S.bkform = S.bkform || {type:'single', date:k, start:'08:00', end:'18:00', date2:k, rows:[{date:k, start:'08:00', end:'18:00'}], sitter_ids:[]};
   f.type = f.type || 'single'; f.sitter_ids = f.sitter_ids || [];
   f.services = (f.services && f.services.length) ? f.services : ['day'];
-  if(!hasDogs()) f.services = f.services.filter(x=>x!=='walk');
+  if(!hasDogs()) f.services = f.services.filter(x=>!['walk','hotel'].includes(x));
   f.visits = f.visits || 1; f.walks = f.walks || 1; f.alone = f.alone == null ? 4 : f.alone;
   return f;
 }
 const hasDogs = () => S.plan.pets.some(p=>p.species==='dog');
-const bkSvcList = () => [['day','sv_day_s'],['visit','sv_visit_s']].concat(hasDogs() ? [['walk','sv_walk_s']] : []);
-function svcNames(list){ return (list||[]).map(k=>t(k==='day'?'sv_day_s':k==='visit'?'sv_visit_s':'sv_walk_s')).join(', ');
+const bkSvcList = () => SERVICES.filter(k => hasDogs() || !['walk','hotel'].includes(k)).map(k=>[k, SV_LBL[k]]);
+function svcNames(list){ return (list||[]).map(k=>t(SV_LBL[k]||'sv_day_s')).join(', ');
 }
 function buildDays(){
   const f = bkForm(), out = [];
@@ -1616,7 +1958,7 @@ function buildDays(){
     for(let d = new Date(a), i=0; d <= z && i < 60; d.setDate(d.getDate()+1), i++) out.push({date:dateKey(d), start:f.start, end:f.end});
   } else out.push(...f.rows.filter(r=>r.date).map(r=>({date:r.date, start:r.start, end:r.end})));
   /* oppas aan huis: de begintijd geldt alleen op de eerste dag, de eindtijd alleen op de laatste */
-  if(f.services.includes('day') && out.length > 1){
+  if(f.services.some(k=>DAILY.includes(k)) && out.length > 1){
     out.forEach((d,i)=>{ if(i > 0) d.start = '00:00'; if(i < out.length-1) d.end = '23:59'; });
   }
   return out;
@@ -1628,7 +1970,7 @@ function viewBooking(){
   </div></section>`;
   return S.role==='owner' ? bookingOwner() : bookingSitter();
 }
-const bkPill = st => ({none:'', requested:'note', accepted:'acc', active:'ok', declined:'warn', done:''})[st] || '';
+const bkPill = st => ({none:'', requested:'note', pending:'note', accepted:'acc', active:'ok', declined:'warn', done:''})[st] || '';
 function bkDays(b){
   return `<div class="daylist">${(b.days||[]).map(d=>`<div class="dayrow"><span>${fmtShort(d.date)}</span><span class="muted">${d.start} – ${d.end}</span><span></span></div>`).join('')}</div>`;
 }
@@ -1642,7 +1984,7 @@ function sitterCard(x, picked, showPick, days, opt){
   return `<div class="bcard sitter ${picked?'picked':''}" data-sitter="${x.id}">
     <button class="sitterhead" data-act="bk-sitter-open">
       <span class="ava">${x.photos && x.photos.length ? `<img src="${x.photos[0]}" alt="">` : esc((x.name||'?')[0])}</span>
-      <span><b>${esc(x.name)}</b><span class="sub">${x.hoods.slice(0,3).join(', ')}</span>
+      <span><b>${esc(x.name)}</b>${takesUrgent(x.id)?`<span class="pill acc sm">${t('ur_badge')}</span>`:''}<span class="sub">${x.hoods.slice(0,3).join(', ')}</span>
         <span class="sub price">${days ? (q ? `${q.total} XCG ${t('q_total').toLowerCase()}` : t('q_no_service')) : priceLine(x)}</span></span>
       <span class="rate"><span class="st">${stars(x.rating)}</span><span class="sub">${x.rating.toFixed(1)} · ${t('bk_bookings',{n:x.bookings})}</span></span>
     </button>
@@ -1673,7 +2015,7 @@ function bookingOwner(){
   const opt = {services:f.services, visits:f.visits, walks:f.walks};
   const need = `<section class="sec"><h2>${t('need')}</h2><div class="panel">
     <div class="seg">${bkSvcList().map(([v,l])=>`<button class="chip ${f.services.includes(v)?'sel':''}" data-act="bk-svc" data-v="${v}">${t(l)}</button>`).join('')}</div>
-    ${f.services.includes('day')?`<p class="sub muted">${t('need_day_s')}</p>`:''}
+
     ${f.services.includes('visit')?`<div class="pricerow"><span>${t('visits_n')}</span><input type="number" min="1" max="8" inputmode="numeric" data-f="bk.visits" value="${f.visits}"><span class="muted">${t('per_day')}</span></div>`:''}
     ${f.services.includes('walk')?`<div class="pricerow"><span>${t('walks_n')}</span><input type="number" min="1" max="8" inputmode="numeric" data-f="bk.walks" value="${f.walks}"><span class="muted">${t('per_day')}</span></div>`:''}
     <div class="pricerow" style="margin-top:6px"><span>${t('alone')}</span><input type="number" min="0" max="24" inputmode="numeric" data-f="bk.alone" value="${f.alone}"><span class="muted">${t('alone_u')}</span></div>
@@ -1694,19 +2036,28 @@ function bookingOwner(){
         ${b.accepted_by?`<b>${t('bk_sitter')}</b><span>${esc(bookingName(b))}</span>`:''}
         <b>${t('pets')}</b><span>${S.plan.pets.map(p=>esc(p.name)).join(', ')}</span></div>
       ${bkDays(b)}
-      ${(()=>{ const q = quote(b.accepted_by || (b.sitter_ids[0]) || DEFAULT_ME, b.days, bkOpt(b)); return q ? `<div class="kv"><b>${t('q_total')}</b><span>${q.total} XCG</span></div>` : ''; })()}
+      ${(()=>{ const sid = b.accepted_by || (b.sitter_ids[0]) || DEFAULT_ME;
+        const q = b.urgent ? urgentQuote(b, sid) : quote(sid, b.days, bkOpt(b));
+        if(!q) return '';
+        return `<div class="kv"><b>${t('q_total')}</b><span>${b.urgent && q.capped ? `<s>${q.total} XCG</s> ${q.shown} XCG` : `${b.urgent ? q.shown : q.total} XCG`}</span></div>`; })()}
+      ${b.urgent ? `<div class="bcard urgent inner"><h3>${t('ur_looking')} <span class="pill warn">${t('ur_pill')}</span></h3>
+          <p class="sub">${t('ur_looking_s')}</p></div>` : ''}
+      ${acceptedBy(b).length ? `<p class="lbl">${t('bk_accepted_list')}</p><div class="daylist">${acceptedBy(b).map(sid=>threadRow(b, sid, b.state==='pending')).join('')}</div>` : ''}
       ${b.state==='declined'?`<p class="sub" style="color:var(--late)">${t('bk_declined_msg')}</p>`:''}
       ${b.state==='active' && b.checkin_at?`<p class="sub">${t('bk_checked_in',{time:hmOf(b.checkin_at)})}</p>`:''}
       <div class="brow">
         ${b.state==='declined'?`<button class="btn" data-act="bk-edit-search">${t('bk_edit_search')}</button>`:''}
-        ${['requested','declined','accepted'].includes(b.state)?`<button class="btn ghost danger" data-act="bk-delete">${b.state==='requested'?t('bk_cancel'):t('bk_delete')}</button>`:''}
+        ${!b.urgent && ['accepted','active'].includes(b.state) && daysLeft(b).length?`<button class="btn ghost danger" data-act="ur-need">${t('ur_need')}</button>`:''}
+        ${['requested','pending','declined','accepted'].includes(b.state)?`<button class="btn ghost danger" data-act="bk-delete">${['requested','pending'].includes(b.state)?t('bk_cancel'):t('bk_delete')}</button>`:''}
       </div></div>`).join('');
-  const form = (showForm || !list.length) ? `${need}<section class="sec"><h2>${t('bk_when')}</h2><div class="panel">${chips}${when}</div></section>
+  const preview = (()=>{ const d = buildDays(); return d.length > 1 ? bkDays({days:d}) : ''; })();
+  const form = (showForm || !list.length) ? `${need}<section class="sec"><h2>${t('bk_when')}</h2><div class="panel">${chips}${when}${preview}</div></section>
       ${picker}
       <section class="sec"><div class="panel"><button class="btn" data-act="bk-send">${t('bk_send')}</button></div></section>`
     : `<section class="sec"><button class="btn ghost" data-act="bk-form">${t('bk_new')}</button></section>`;
-  return `${list.length?`<section class="sec"><h2>${t('bk_my')}</h2><div class="cards">${cards}</div></section>`:''}
-    ${form}<section class="sec"><h2>${t('bk_plan')}</h2>${viewIntake()}</section>`;
+  return `<section class="sec"><h2>${t('bk_plan')}</h2>${viewIntake()}${formBar('plan')}</section>
+    ${list.length?`<section class="sec"><h2>${t('bk_my')}</h2><div class="cards">${cards}</div></section>`:''}
+    ${form}`;
 }
 /* wat de oppas van een boeking ziet: alle praktische info, geen animatie-instellingen */
 function planSummary(){
@@ -1722,7 +2073,8 @@ function planSummary(){
         <b>${t('bk_address')}</b><span>${esc(oi.address||'—')}</span>
         <b>${t('bk_hood')}</b><span>${esc(oi.hood||'—')}</span>
         <b>${t('bk_phone')}</b><span>${esc(oi.phone||'—')}</span>
-        <b>${t('vet_short')}</b><span>${esc(P.vet.name||'—')}${P.vet.phone?` · ${esc(P.vet.phone)}`:''}</span></div>
+        <b>${t('vet_short')}</b><span>${esc(P.vet.name||'—')}${P.vet.phone?` · ${esc(P.vet.phone)}`:''}</span>
+        <b>${t('q_health')}</b><span>${esc(P.health || t('q_health_none'))}</span></div>
     </div>
     <div class="panel"><h3>${t('bk_plan_pets')}</h3>
       <div class="daylist">${P.pets.map(p=>`<div class="dayrow"><span>${esc(p.name)}</span><span class="muted">${t(p.species)}</span><span></span></div>`).join('')}</div></div>
@@ -1740,51 +2092,224 @@ function quote(sitterId, days, opt){
   const o = opt || {services:['day'], visits:1, walks:1};
   const pr = sitterInfo(sitterId).prices || {}, {dc, other} = petCounts(), nd = (days||[]).length;
   if(!nd) return null;
-  let total = 0; const lines = [];
+  let total = 0, net = 0; const lines = [];
   for(const key of (o.services||[])){
-    const count = key==='day' ? nd : key==='visit' ? nd*(o.visits||1) : nd*(o.walks||1);
+    const count = DAILY.includes(key) ? nd : key==='visit' ? nd*(o.visits||1) : nd*(o.walks||1);
     if(!count) continue;
     const p = pr[key];
     if(!p || !p.on) return null;
-    const unit = (p.base||0) + (p.extra||0)*Math.max(0, dc-1) + (p.other||0)*other;
+    const unit_net = (p.base||0) + (p.extra||0)*Math.max(0, dc-1) + (p.other||0)*other;
     let pct = 0; (p.discounts||[]).forEach(r=>{ if(count >= r.days) pct = Math.max(pct, r.pct); });
-    const amount = Math.round(unit*count*(1-pct/100));
-    total += amount; lines.push({key, n:count, unit, pct, amount});
+    const amount_net = Math.round(unit_net*count*(1-pct/100));
+    const amount = gross(amount_net);
+    total += amount; net += amount_net;
+    lines.push({key, n:count, unit:gross(unit_net), unit_net, pct, amount, amount_net});
   }
-  return lines.length ? {total, lines} : null;
+  return lines.length ? {total, net, lines} : null;
 }
 const bkOpt = b => ({services: b.services || ['day'], visits: b.visits || 1, walks: b.walks || 1});
-function quoteHTML(q){
+const feeNote = () => `<p class="fineprint">${t('fee_note')} <button class="lnk fee" data-act="fees">${t('fee_what')}</button></p>`;
+/* mode 'gross' = wat de klant betaalt (standaard), 'net' = wat de oppas overhoudt */
+function quoteHTML(q, mode){
   if(!q) return `<p class="sub" style="color:var(--note)">${t('q_no_service')}</p>`;
-  return `<div class="daylist">${q.lines.map(l=>`<div class="dayrow"><span>${t(l.key==='day'?'q_days':l.key==='visit'?'q_visits':'q_walks',{n:l.n})}</span>
-      <span class="muted">${t('q_unit',{n:l.n, u:l.unit})}${l.pct?` · ${t('q_disc',{pct:l.pct})}`:''}</span><span>${l.amount} XCG</span></div>`).join('')}
-    <div class="dayrow total"><span><b>${t('q_total')}</b></span><span></span><span><b>${q.total} XCG</b></span></div></div>`;
+  const netv = mode==='net', cap = !netv && q.capped;
+  return `<div class="daylist">${q.lines.map(l=>`<div class="dayrow"><span>${t(SV_LINE[l.key]||'q_days',{n:l.n})}</span>
+      <span class="muted">${t('q_unit',{n:l.n, u:netv?l.unit_net:l.unit})}${l.pct?` · ${t('q_disc',{pct:l.pct})}`:''}</span><span>${netv?l.amount_net:l.amount} XCG</span></div>`).join('')}
+    <div class="dayrow total"><span><b>${netv?t('q_net'):t('q_total')}</b></span><span></span><span><b>${cap?`<s>${q.total} XCG</s> ${q.shown} XCG`:`${netv?q.net:q.total} XCG`}</b></span></div>
+    </div>${netv ? '' : feeNote()}`;
 }
 
 /* prijsregel voor in het profiel van een oppas */
 function priceLine(info){
   const pr = info.prices || {}, bits = [];
-  if(pr.day && pr.day.on) bits.push(t('price_from',{n:pr.day.base}));
-  if(pr.visit && pr.visit.on) bits.push(t('price_visit',{n:pr.visit.base}));
+  if(pr.day && pr.day.on) bits.push(t('price_from',{n:gross(pr.day.base)}));
+  if(pr.visit && pr.visit.on) bits.push(t('price_visit',{n:gross(pr.visit.base)}));
   return bits.join(' · ');
 }
 function priceDetail(info){
   const pr = info.prices || {};
   const row = (key, lbl) => {
     const p = pr[key]; if(!p || !p.on) return '';
-    const extra = [p.extra?`+${p.extra} ${t('pr_extra').toLowerCase()}`:'', p.other?`+${p.other} ${t('pr_other').toLowerCase()}`:''].filter(Boolean).join(' · ');
+    const extra = [p.extra?`+${gross(p.extra)} ${t('pr_extra').toLowerCase()}`:'', p.other?`+${gross(p.other)} ${t('pr_other').toLowerCase()}`:''].filter(Boolean).join(' · ');
     const disc = (p.discounts||[]).map(d=>t('pr_disc_row',{pct:d.pct, days:d.days})).join(' · ');
-    return `<div class="dayrow"><span>${t(lbl)}</span><span class="muted">${p.base} XCG${extra?` · ${extra}`:''}${disc?` · ${disc}`:''}</span><span></span></div>`;
+    return `<div class="dayrow"><span>${t(lbl)}</span><span class="muted">${gross(p.base)} XCG${extra?` · ${extra}`:''}${disc?` · ${disc}`:''}</span><span></span></div>`;
   };
-  return `<div class="daylist">${row('day','sv_day')}${row('visit','sv_visit')}${row('walk','sv_walk')}</div>`;
+  return `<div class="daylist">${SERVICES.map(k=>row(k, SV_LONG[k])).join('')}</div>${feeNote()}`;
 }
+/* ---------------- servicekosten: wat krijg je ervoor ---------------- */
+let feesOpen = false;
+const FEE_ICON = {
+  shield:'<path d="M12 3.2 5 6v5.4c0 4.2 2.9 7.6 7 8.8 4.1-1.2 7-4.6 7-8.8V6z"/><path d="M9 12.2l2.1 2.1L15.4 10"/>',
+  swap:'<path d="M4 8h13l-3-3M20 16H7l3 3"/>',
+  badge:'<circle cx="12" cy="9.5" r="5.2"/><path d="M9.7 9.6l1.6 1.6 3-3.1"/><path d="M8.6 14.3 7.4 21l4.6-2.3 4.6 2.3-1.2-6.7"/>',
+  cross:'<path d="M12 3.6 5 6.4v5c0 4.2 2.9 7.5 7 8.8 4.1-1.3 7-4.6 7-8.8v-5z"/><path d="M12 8.4v5.6M9.2 11.2h5.6"/>',
+  phone:'<path d="M7.2 3.8h3l1.4 3.6-2 1.4a10.5 10.5 0 0 0 5.2 5.2l1.4-2 3.6 1.4v3a1.8 1.8 0 0 1-2 1.8C11.2 17.6 6.4 12.8 5.4 5.8a1.8 1.8 0 0 1 1.8-2z"/>',
+  list:'<rect x="4.5" y="4" width="15" height="16.5" rx="2.5"/><path d="M8.4 9h7.2M8.4 12.5h7.2M8.4 16h4"/>',
+};
+const feeIcon = k => `<svg class="feeic" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${FEE_ICON[k]}</svg>`;
+const FEE_OWNER = [['shield','fo1'],['swap','fo2'],['badge','fo3'],['cross','fo4'],['phone','fo5'],['list','fo6']];
+const FEE_SITTER = [['shield','fs1'],['swap','fs2'],['badge','fs3'],['list','fs4'],['phone','fs5'],['cross','fs6']];
+function feesPage(){
+  const owner = S.role !== 'sitter', rows = owner ? FEE_OWNER : FEE_SITTER;
+  return `<section class="sec"><h2>${t('fee_title')}<span><button class="lnk" data-act="fees-close">${t('hide')}</button></span></h2>
+    <p class="sub">${owner ? t('fee_lead_owner') : t('fee_lead_sitter')}</p>
+    <div class="cards">${rows.map(([ic,k])=>`<div class="panel feerow">${feeIcon(ic)}<div><b>${t(k)}</b><span>${t(k+'s')}</span></div></div>`).join('')}</div>
+    <p class="fineprint">${t('fee_disclaimer')}</p>
+    <div class="brow"><button class="btn ghost" data-act="fees-close">${t('hide')}</button></div>
+  </section>`;
+}
+
+/* ---------------- platformovereenkomst ---------------- */
+const TERMS_VERSION = '2026-09-25';
+const TERMS = {
+  nl: [
+    ['1. Partijen en rol van het platform', 'Huisdierenoppas Cura\u00e7ao bemiddelt en incasseert namens jou. De oppasovereenkomst zelf sluit je met de klant.'],
+    ['2. Je bent zelfstandig', 'Dit is geen arbeidsovereenkomst. Je bepaalt je eigen tarief, je diensten, je buurten en je beschikbaarheid, en je mag aanvragen weigeren zonder opgaaf van reden.'],
+    ['3. Tarief, servicevergoeding en OB', 'Jouw tarief is het bedrag dat jij overhoudt. De klant betaalt daarbovenop 25% servicekosten en de verschuldigde OB. Over je eigen tarief draag je zelf OB af.'],
+    ['4. Betaling en uitbetaling', 'De klant betaalt 50% bij acceptatie en de rest na afloop. Jij ontvangt je bedrag binnen twee werkdagen na de eindfactuur.'],
+    ['5. Wijzigen en annuleren', 'Tot 24 uur na afloop kun je de einddatum en de omvang van de boeking aanpassen. Daarna staat de factuur vast.'],
+    ['5a. Uitvallen en vervanging', 'Val je uit, dan zet je met \u00e9\u00e9n tik de resterende dagen als spoedaanvraag uit. Neem je zelf een spoedaanvraag aan, dan betaalt het platform je een spoedtoeslag van 25% op je eigen tarief. De klant betaalt over de resterende dagen nooit meer dan het oorspronkelijke bedrag.'],
+    ['6. Wat we van je verwachten', 'Je volgt de zorginstructies, legt de uitvoering dagelijks vast in de app, gaat zorgvuldig om met sleutels en meldt problemen meteen. Belastingen en verzekeringen regel je zelf.'],
+    ['7. Relatiebeding', 'Tot twaalf maanden na het deactiveren van je account werk je niet buiten de app om voor klanten die je via de app hebt leren kennen. Voor alle andere opdrachtgevers ben je vrij.'],
+    ['8. Afkoopsom en boete', 'Wil een klant toch rechtstreeks verder, dan kan dat door het beding af te kopen: XCG 500, of driemaal de servicevergoeding van het afgelopen jaar, tot maximaal XCG 2.500. Zonder afkoop geldt een boete van XCG 1.500 plus XCG 100 per dag.'],
+    ['9. Duur en deactivering', 'Je kunt je account op elk moment deactiveren onder Meer. Lopende boekingen maak je nog af. Vanaf de dag van deactivering loopt de termijn van twaalf maanden.'],
+    ['9a. Dierenarts en spoedkosten', 'Moet je met spoed naar de dierenarts, meld dat dan eerst in de app. Het platform vergoedt tot XCG 200 van de rekening en betaalt jou XCG 50 voor de rit en de tijd. Klachten die de klant vooraf heeft gemeld vallen erbuiten; die kosten zijn voor de klant.'],
+    ['10. Aansprakelijkheid, geheimhouding en gegevens', 'Je bent aansprakelijk voor schade door je eigen tekortkoming. Adressen, sleutelinformatie en de afwezigheid van klanten houd je geheim, ook na afloop.'],
+    ['11. Wijziging en toepasselijk recht', 'Wijzigen we deze voorwaarden, dan hoor je dat minstens dertig dagen van tevoren en vragen we opnieuw je akkoord. Lopende boekingen veranderen niet. Cura\u00e7aos recht is van toepassing.'],
+  ],
+  en: [
+    ['1. Parties and the role of the platform', 'Huisdierenoppas Cura\u00e7ao introduces customers and collects payment on your behalf. The sitting agreement itself is between you and the customer.'],
+    ['2. You are self-employed', 'This is not an employment contract. You set your own rates, services, areas and availability, and you may decline any request without giving a reason.'],
+    ['3. Rate, service fee and OB', 'Your rate is what you keep. On top of it the customer pays a 25% service fee and the OB due. You file and pay OB on your own rate.'],
+    ['4. Payment and payout', 'The customer pays 50% on acceptance and the rest after the booking ends. You are paid within two working days of the final invoice.'],
+    ['5. Changes and cancellation', 'You can adjust the end date and the scope of a booking up to 24 hours after it ends. After that the invoice is final.'],
+    ['5a. Dropping out and replacement', 'If you drop out, one tap puts the remaining days out as an urgent request. If you accept an urgent request yourself, the platform pays you a 25% urgent surcharge on your own rate. The customer never pays more than the original amount for the remaining days.'],
+    ['6. What we expect from you', 'You follow the care instructions, log the work daily in the app, handle keys carefully and report problems at once. Taxes and insurance are your own responsibility.'],
+    ['7. Non-solicitation', 'For twelve months after you deactivate your account you do not work outside the app for customers you met through it. You are free to work for anyone else.'],
+    ['8. Buy-out and penalty', 'A customer may continue with you directly once the clause is bought out: XCG 500, or three times the service fee of the past year, up to XCG 2,500. Without a buy-out the penalty is XCG 1,500 plus XCG 100 per day.'],
+    ['9. Term and deactivation', 'You can deactivate your account at any time under More. Bookings already running are finished as agreed. The twelve months start on the day of deactivation.'],
+    ['9a. Vet and emergency costs', 'If you need an emergency vet visit, report it in the app first. The platform covers up to XCG 200 of the bill and pays you XCG 50 for the trip and the time. Complaints the customer reported beforehand are excluded; those costs are the customer\u2019s.'],
+    ['10. Liability, confidentiality and data', 'You are liable for damage caused by your own shortcoming. Addresses, key information and a customer\u2019s absence stay confidential, also afterwards.'],
+    ['11. Changes and governing law', 'If we change these terms you hear about it at least thirty days in advance and we ask you to agree again. Running bookings are unaffected. Cura\u00e7ao law applies.'],
+  ],
+};
+const termsList = () => TERMS[S.lang] || TERMS.nl;
+const signedOf = id => (profile(id) || {}).signed || null;
+const isSigned = id => { const g = signedOf(id); return !!(g && g.version === TERMS_VERSION); };
+const deactivatedOf = id => (profile(id) || {}).deactivated_at || null;
+/* twaalf maanden relatiebeding vanaf een datum */
+function plusYear(iso){ const d = iso ? new Date(iso) : nowDate(); d.setFullYear(d.getFullYear()+1); return fmtDay(dateKey(d)) + ' ' + d.getFullYear(); }
+function termsHTML(){
+  return `<div class="daylist">${termsList().map(([h,p])=>`<div class="term"><b>${h}</b><span>${p}</span></div>`).join('')}</div>`;
+}
+function signCard(){
+  const mail = (S.auth && S.auth.email) || profile(me()).email || '';
+  return `<section class="sec"><h2>${t('tm_title')}</h2>
+    <div class="bcard sign">
+      <h3>${t('tm_head')}</h3>
+      <p class="sub">${t('tm_why')}</p>
+      <div class="daylist">${['tm_k1','tm_k2','tm_k3','tm_k4'].map(k=>`<div class="keypt">${ICON_TICK}<span>${t(k)}</span></div>`).join('')}</div>
+      <details class="all"><summary>${t('tm_read')}</summary>${termsHTML()}</details>
+      <div class="brow"><button class="btn" data-act="sign">${t('tm_sign')}</button></div>
+      <p class="fineprint">${t('tm_note',{v:TERMS_VERSION, mail:esc(mail)})}</p>
+    </div></section>`;
+}
+function signedPanel(){
+  const g = signedOf(me()); if(!g) return '';
+  return `<div class="panel"><h3>${t('tm_title')} <span class="pill ok">${t('tm_done')}</span></h3>
+    <p class="sub">${t('tm_signed_on',{date:fmtDay(dateKey(new Date(g.at))), v:g.version})}</p>
+    <p class="sub muted">${t('tm_mailed',{mail:esc(g.mail||'')})}</p>
+    <details class="all"><summary>${t('tm_view')}</summary>${termsHTML()}</details></div>`;
+}
+function deactivatedCard(){
+  const at = deactivatedOf(me());
+  return `<div class="bcard danger"><h3>${t('deact_on',{date:fmtDay(dateKey(new Date(at)))})}</h3>
+    <p class="sub muted">${t('deact_term',{date:plusYear(at)})}</p>
+    <div class="brow"><button class="btn" data-act="reactivate">${t('react')}</button></div></div>`;
+}
+
+/* ---------------- beschikbaarheid ---------------- */
+let calY = null, calM = null, calDay = null;
+function calInit(){ if(calY==null){ const d = nowDate(); calY = d.getFullYear(); calM = d.getMonth(); } }
+const blankAvail = () => ({base:'yes', custom:false, days:{}});
+function avOf(){
+  const pr = S.sitters[me()] = S.sitters[me()] || profile(me());
+  pr.avail = pr.avail || blankAvail(); pr.avail.days = pr.avail.days || {};
+  return pr.avail;
+}
+const offeredOf = pr => SERVICES.filter(k=>(pr.prices||{})[k] && pr.prices[k].on);
+/* kleur van een dag: helemaal beschikbaar, helemaal niet, of iets ertussenin */
+function dayAvail(pr, key){
+  const av = pr.avail || blankAvail(), d = (av.days||{})[key];
+  if(!d) return av.base==='yes' ? 'yes' : 'no';
+  const offered = offeredOf(pr);
+  const all = !d.services || !d.services.length || d.services.length >= offered.length;
+  if(d.mode==='part') return 'part';
+  if(d.mode==='yes') return all ? 'yes' : 'part';
+  return all ? 'no' : 'part';
+}
+/* voor later gebruik: is deze oppas op dit moment beschikbaar voor deze dienst? */
+function availOn(sitterId, key, service){
+  const pr = profile(sitterId), av = pr.avail || blankAvail(), d = (av.days||{})[key];
+  if(!d) return av.base==='yes';
+  const svc = (d.services && d.services.length) ? d.services : offeredOf(pr);
+  if(service && !svc.includes(service)) return av.base==='yes';
+  return d.mode==='yes' ? true : d.mode==='no' ? false : 'part';
+}
+function dayEditor(pr, av, offered){
+  const key = calDay, d = (av.days||{})[key] || null;
+  const mode = d ? d.mode : (av.base==='yes' ? 'yes' : 'no');
+  const svc = (d && d.services && d.services.length) ? d.services : offered;
+  const times = (d && d.times) || [];
+  const modes = [['yes','av_day_yes'],['no','av_day_no'],['part','av_day_part']]
+    .map(([v,l])=>`<button class="chip ${mode===v?'sel':''}" data-act="av-mode" data-v="${v}">${t(l)}</button>`).join('');
+  const showSvc = offered.length > 1 && mode !== (av.base==='yes' ? 'yes' : 'no');
+  return `<div class="petcard"><h4 class="svch">${fmtDay(key)}</h4>
+    <div class="seg">${modes}</div>
+    ${mode==='part' ? `<div class="daylist">${times.map((r,i)=>`<div class="timerow" data-time="${i}">
+        <input type="time" data-f="av.from" value="${r.from}" aria-label="${t('av_from')}">
+        <span class="muted">\u2013</span>
+        <input type="time" data-f="av.to" value="${r.to}" aria-label="${t('av_to')}">
+        <button class="xbtn" data-act="av-del-time" aria-label="${t('remove')}">\u00d7</button></div>`).join('')}</div>
+      <button class="btn ghost sm" data-act="av-add-time">${t('av_add_time')}</button>` : ''}
+    ${showSvc ? `<p class="lbl">${t('av_for')}</p>
+      <div class="seg">${offered.map(k=>`<button class="chip ${svc.includes(k)?'sel':''}" data-act="av-svc" data-v="${k}">${t(SV_LBL[k])}</button>`).join('')}</div>
+      <p class="sub muted">${t('av_svc_hint')}</p>` : ''}
+    ${d?`<button class="lnk" data-act="av-clear">${t('av_clear')}</button>`:''}
+  </div>`;
+}
+function availPanel(){
+  calInit();
+  const pr = S.sitters[me()] || profile(me());
+  const av = pr.avail || blankAvail(), offered = offeredOf(pr);
+  const seg = [['yes','av_yes'],['no','av_no']].map(([v,l])=>`<button class="chip ${(av.base||'yes')===v?'sel':''}" data-act="av-base" data-v="${v}">${t(l)}</button>`).join('');
+  let cal = '';
+  if(av.custom){
+    const first = new Date(calY, calM, 1), last = new Date(calY, calM+1, 0), lead = (first.getDay()+6)%7;
+    const tk = dateKey(nowDate()), cells = [];
+    for(let i=0;i<lead;i++) cells.push('<span></span>');
+    for(let n=1; n<=last.getDate(); n++){
+      const key = dateKey(new Date(calY, calM, n));
+      cells.push(`<button class="${dayAvail(pr, key)} ${calDay===key?'sel':''} ${key===tk?'now':''}" data-act="av-day" data-v="${key}">${n}</button>`);
+    }
+    cal = `<div class="calhead"><button class="xbtn" data-act="av-month" data-v="-1" aria-label="&lt;">\u2039</button>
+        <b>${t('mon')[calM]} ${calY}</b><button class="xbtn" data-act="av-month" data-v="1" aria-label="&gt;">\u203a</button></div>
+      <div class="cal">${[1,2,3,4,5,6,0].map(i=>`<b>${t('wd')[i]}</b>`).join('')}${cells.join('')}</div>
+      <div class="callegend"><span><i class="yes"></i>${t('av_yes')}</span><span><i class="part"></i>${t('av_legend_part')}</span><span><i class="no"></i>${t('av_no')}</span></div>
+      ${calDay ? dayEditor(pr, av, offered) : ''}`;
+  }
+  return `<div class="panel"><h3>${t('av_title')}</h3>
+    <p class="lbl">${t('av_base')}</p><div class="seg">${seg}</div>
+    <label class="toggle" style="grid-template-columns:auto 1fr"><input type="checkbox" data-f="av.custom" ${av.custom?'checked':''}><span>${t('av_custom')}</span></label>
+    ${cal}</div>`;
+}
+
 /* de vragenlijst van de oppas */
 function sitterProfileForm(){
   const id = me(), pr = profile(id);
   const chips = (act, list, sel, pre) => `<div class="seg">${list.map(v=>`<button class="chip ${sel.includes(v)?'sel':''}" data-act="${act}" data-v="${v}">${pre?t(pre+v):v}</button>`).join('')}</div>`;
   const photos = `<div class="photos">${(pr.photos||[]).map((src,i)=>`<div class="photo" data-photo="${i}"><img src="${src}" alt=""><button class="x" data-act="sp-del-photo" aria-label="${t('remove')}">×</button></div>`).join('')}
-      ${(pr.photos||[]).length < 4 ? `<label class="addphoto">${t('sp_add_photo')}<input type="file" accept="image/*" multiple id="photoInput" hidden></label>` : ''}</div>
-    <p class="sub muted">${t('sp_photo_hint')}</p>`;
+      ${(pr.photos||[]).length < 4 ? `<label class="addphoto">${t('sp_add_photo')}<input type="file" accept="image/*" multiple id="photoInput" hidden></label>` : ''}</div>`;
   const money = (key, f, lbl) => `<div class="pricerow"><span>${t(lbl)}</span><input type="number" min="0" step="5" inputmode="numeric" data-f="sp.price" data-k="${key}" data-p="${f}" value="${(pr.prices[key]||{})[f] ?? 0}"></div>`;
   const service = (key, lbl) => {
     const p = pr.prices[key] || {};
@@ -1800,6 +2325,7 @@ function sitterProfileForm(){
     </div>`;
   };
   return `<section class="sec"><h2>${t('sp_profile')}</h2>
+    ${signedPanel()}
     <div class="panel"><p class="sub">${t('sp_profile_s')}</p>
       <input type="text" data-f="sp.first" value="${esc(pr.first||'')}" placeholder="${t('sp_first')}">
       <input type="text" data-f="sp.last" value="${esc(pr.last||'')}" placeholder="${t('sp_last')}">
@@ -1811,18 +2337,23 @@ function sitterProfileForm(){
     </div>
     <div class="panel"><h3>${t('sp_care')}</h3>${chips('sp-care', CARE_KINDS, pr.care||[], 'a_')}
       <h3 style="margin-top:6px">${t('sp_offer')}</h3>
-      <div class="seg">${[['day','sv_day_s'],['visit','sv_visit_s'],['walk','sv_walk_s']].map(([k,l])=>`<button class="chip ${(pr.prices[k]||{}).on?'sel':''}" data-act="sp-offer" data-v="${k}">${t(l)}</button>`).join('')}</div>
+      <div class="seg">${SERVICES.map(k=>`<button class="chip ${(pr.prices[k]||{}).on?'sel':''}" data-act="sp-offer" data-v="${k}">${t(SV_LBL[k])}</button>`).join('')}</div>
       <p class="sub muted">${t('sp_offer_s')}</p>
       <h3 style="margin-top:6px">${t('sp_tasks')}</h3>${chips('sp-task', SITTER_TASKS, pr.tasks||[], 'tk_')}
       <h3 style="margin-top:6px">${t('sp_hoods')}</h3>${chips('sp-hood', HOODS, pr.hoods||[], '')}
     </div>
-    <div class="panel"><h3>${t('sp_prices')}</h3><p class="sub">${t('sp_price_s')}</p>
-      ${service('day','sv_day')}${service('visit','sv_visit')}${service('walk','sv_walk')}
+    ${availPanel()}
+    <div class="panel"><label class="toggle" style="grid-template-columns:auto 1fr"><input type="checkbox" data-f="sp.urgent" ${pr.urgent_ok?'checked':''}><span><b>${t('ur_ok')}</b></span></label>
+      <p class="sub muted">${t('ur_ok_s',{pct:URGENT_BONUS})}</p></div>
+    <div class="panel"><h3>${t('sp_prices')}</h3><p class="sub">${t('pr_net_s')}</p>
+      ${SERVICES.map(k=>service(k, SV_LONG[k])).join('')}
     </div></section>`;
 }
 
 function bookingSitter(){
-  const reqs = openRequests(), mine = myBookings().sort((a,b)=>(firstDay(a)||'').localeCompare(firstDay(b)||''));
+  const signed = isSigned(me()), off = deactivatedOf(me());
+  const reqs = (signed && !off) ? openRequests() : [], mine = myBookings().sort((a,b)=>(firstDay(a)||'').localeCompare(firstDay(b)||''));
+  const pend = signed ? pendingForMe() : [], lost = signed ? notChosenForMe() : [];
   if(openBooking){
     const b = (S.bookings||[]).find(x=>x.id===openBooking);
     if(b) return `<section class="sec"><h2>${bookingRange(b)}<span><button class="lnk" data-act="bk-back">${t('hide')}</button></span></h2>
@@ -1831,49 +2362,136 @@ function bookingSitter(){
       ${bkDays(b)}
       ${b.state==='active' && b.checkin_at?`<p class="sub">${t('bk_checked_in',{time:hmOf(b.checkin_at)})}</p>`:''}
       <div class="brow">${b.state==='active' ? `<button class="btn ghost" data-act="bk-checkout">${t('bk_checkout')}</button>`
-        : bookingDay() && b.id===(cur()||{}).id ? `<button class="btn" data-act="bk-checkin">${t('bk_checkin')}</button>` : ''}</div></div>
+        : bookingDay() && b.id===(cur()||{}).id ? `<button class="btn" data-act="bk-checkin">${t('bk_checkin')}</button>` : ''}
+        ${daysLeft(b).length ? `<button class="btn ghost danger" data-act="ur-drop">${t('ur_drop')}</button>` : ''}</div></div>
       ${planSummary()}</section>`;
   }
-  const reqCards = reqs.map(b=>`<div class="bcard" data-booking="${b.id}">
-      <h3>${t('bk_req_from',{name:esc(ownerName())})} <span class="pill note">${t('st_requested')}</span></h3>
+  const reqCards = reqs.map(b=>`<div class="bcard ${b.urgent?'urgent':''}" data-booking="${b.id}">
+      <h3>${b.urgent ? t('ur_from',{name:esc(ownerName())}) : t('bk_req_from',{name:esc(ownerName())})}
+        <span class="pill ${b.urgent?'warn':'note'}">${b.urgent ? t('ur_pill') : t('st_requested')}</span></h3>
+      ${b.urgent && b.handover ? `<p class="sub">${t('ur_handover',{name:esc((sitterById(b.handover.from)||{}).name||'')})}${b.handover.reason?` \u00b7 ${esc(b.handover.reason)}`:''}</p>` : ''}
       <div class="kv"><b>${t('bk_when_short')}</b><span>${bookingRange(b)}</span>
         <b>${t('bk_services')}</b><span>${svcNames(b.services)}</span>
         <b>${t('bk_alone')}</b><span>${b.alone ?? '—'} ${t('alone_u')}</span>
         <b>${t('bk_hood')}</b><span>${esc((S.plan.owner_info||{}).hood||'—')}</span>
         <b>${t('pets')}</b><span>${S.plan.pets.map(p=>`${esc(p.name)} (${t(p.species)})`).join(', ')}</span></div>
       ${bkDays(b)}
-      ${(()=>{ const q = quote(me(), b.days, bkOpt(b)); return q ? quoteHTML(q) : ''; })()}
-      <p class="sub muted">${t('bk_addr_hidden')}</p>
+      ${(()=>{ const q = quote(me(), b.days, bkOpt(b)); if(!q) return '';
+        return quoteHTML(q, 'net') + (b.urgent ? `<div class="daylist"><div class="dayrow total"><span><b>${t('ur_bonus',{pct:URGENT_BONUS})}</b></span><span></span><span><b>+${Math.round(q.net*URGENT_BONUS/100)} XCG</b></span></div></div><p class="fineprint">${t('ur_bonus_s')}</p>` : ''); })()}
       <div class="brow"><button class="btn" data-act="bk-accept">${t('bk_accept')}</button><button class="btn ghost danger" data-act="bk-decline">${t('bk_decline')}</button></div></div>`).join('');
   const mineCards = mine.map(b=>`<button class="bcard tap" data-booking="${b.id}" data-act="bk-open">
       <h3>${bookingRange(b)} <span class="pill ${bkPill(b.state)}">${t('st_'+b.state)}</span></h3>
       <p class="sub">${esc(ownerName())} · ${esc((S.plan.owner_info||{}).hood||'')} · ${S.plan.pets.map(p=>esc(p.name)).join(', ')}</p>
       <p class="sub muted">${t('bk_detail')} ›</p></button>`).join('');
-  return `${reqs.length?`<section class="sec"><h2>${t('bk_requests')}</h2><div class="cards">${reqCards}</div></section>`:''}
+  const pendCards = pend.map(b=>`<div class="bcard" data-booking="${b.id}">
+      <h3>${t('bk_req_from',{name:esc(ownerName())})} <span class="pill note">${t('st_pending')}</span></h3>
+      <div class="kv"><b>${t('bk_when_short')}</b><span>${bookingRange(b)}</span>
+        <b>${t('bk_services')}</b><span>${svcNames(b.services)}</span>
+        <b>${t('bk_hood')}</b><span>${esc((S.plan.owner_info||{}).hood||'—')}</span></div>
+      <p class="sub muted">${t('bk_pending_s')}</p>
+      <div class="brow"><button class="btn ghost" data-act="th-open" data-v="${me()}">${t('bk_msg')}</button></div>
+      ${openThread===thKey(b.id, me()) ? threadBox(b.id, me()) : ''}</div>`).join('');
+  const lostCards = lost.map(b=>`<div class="bcard" data-booking="${b.id}">
+      <h3>${bookingRange(b)} <span class="pill warn">${t('st_notchosen')}</span></h3>
+      <p class="sub muted">${t('st_notchosen_s')}</p></div>`).join('');
+  const none = !reqs.length && !mine.length && !pend.length && !lost.length;
+  return `${signed ? '' : signCard()}${off ? deactivatedCard() : ''}
+    ${reqs.length?`<section class="sec"><h2>${t('bk_requests')}</h2><div class="cards">${reqCards}</div></section>`:''}
+    ${pend.length?`<section class="sec"><h2>${t('st_pending')}</h2><div class="cards">${pendCards}</div></section>`:''}
     ${mine.length?`<section class="sec"><h2>${t('bk_yours')}</h2><div class="cards">${mineCards}</div></section>`:''}
-    ${!reqs.length && !mine.length?`<div class="bcard"><h3>${esc(meSitter().name)} · ${t('bk_offer')}</h3><p class="sub muted">${t('bk_no_req')}</p></div>`:''}
-    ${sitterProfileForm()}`;
+    ${lost.length?`<div class="cards">${lostCards}</div>`:''}
+    ${none && signed && !off?`<div class="bcard"><h3>${esc(meSitter().name)} · ${t('bk_offer')}</h3><p class="sub muted">${t('bk_no_req')}</p></div>`:''}
+    ${sitterProfileForm()}${formBar('profile')}`;
 }
 
 function viewMore(){
   const chips = (act, cur, list) => `<div class="seg">${list.map(([v,l])=>`<button class="chip ${cur===v?'sel':''}" data-act="${act}" data-v="${v}">${l}</button>`).join('')}</div>`;
-  return `<div class="panel">
+  const flags = (S.flags||[]).slice().reverse();
+  const alerts = flags.length ? `<div class="panel"><h3>${t('more_alerts')} <span class="pill warn">${flags.length}</span></h3>
+      <p class="sub muted">${t('flag_hint')}</p>
+      <div class="daylist">${flags.map(f=>`<div class="dayrow"><span>${t('flag_phone')}</span>
+        <span class="muted">${esc(f.from==='owner'?ownerName():((sitterById(f.sitter)||{}).name||t('sitter')))} · ${hmOf(f.at)}</span><span></span></div>
+        <p class="sub" style="margin:-2px 0 4px">“${esc(f.text)}”</p>`).join('')}</div>
+      <button class="btn ghost sm" data-act="flags-clear">${t('flag_clear')}</button></div>` : '';
+  return `${alerts}<div class="panel">
     <p class="lbl">${t('role')}</p>${chips('set-role', S.role, [['sitter',t('sitter')],['owner',t('owner')]])}
     <p class="sub muted">${t('role_hint')}</p>
     <p class="lbl">${t('language')}</p>${chips('set-lang', S.lang, [['nl','Nederlands'],['en','English']])}
     <p class="lbl">${t('theme')}</p>${chips('set-theme', S.theme, [['auto',t('th_auto')],['light',t('th_light')],['dark',t('th_dark')]])}
     <p class="lbl">${t('season')}</p>${chips('set-season', S.season||'auto', [['auto',t('se_auto')],['december',t('se_dec')],['carnival',t('se_carn')],['none',t('se_none')]])}
     <p class="sub muted">${t('season_hint')}</p>
-    <p class="lbl">${t('demo_me')}</p><div class="seg">${SITTERS.map(x=>`<button class="chip ${me()===x.id?'sel':''}" data-act="set-me" data-v="${x.id}">${esc(x.name)}</button>`).join('')}</div>
+    <p class="lbl">${t('demo_me')}</p><div class="seg">${allSitters().map(x=>`<button class="chip ${me()===x.id?'sel':''}" data-act="set-me" data-v="${x.id}">${esc(sitterInfo(x.id).name||x.name)}</button>`).join('')}</div>
     <p class="lbl">${t('demo_time')}</p>${chips('set-demo', S.demo_time||'', [['',t('live')],['07:15','07:15'],['10:20','10:20'],['12:30','12:30'],['18:10','18:10'],['22:30','22:30']])}
   </div>
+  ${S.auth?`<div class="panel danger"><h3>${t('deact')}</h3>
+    <p class="sub">${t('deact_s')}</p>
+    ${S.auth.role==='sitter'?`<p class="sub muted">${t('deact_term',{date:plusYear(null)})}</p>`:''}
+    <button class="btn ghost danger" data-act="deactivate">${t('deact')}</button></div>`:''}
   <div class="panel">
+    <button class="btn ghost" data-act="fees">${t('fee_more')}</button>
     <p class="sub">${t('install')}</p>
+    ${S.auth?`<p class="sub muted">${t('lg_signed',{name:esc(S.auth.name), mail:esc(S.auth.email)})}</p><button class="btn ghost" data-act="logout">${t('logout')}</button>`:''}
     <button class="btn ghost" data-act="export">${t('export')}</button>
     <button class="btn ghost" data-act="demo-full">${t('demo_full')}</button>
     <button class="btn ghost danger" data-act="reset">${t('reset')}</button>
     <p class="sub muted" style="font-size:12.5px">${t('about')}</p>
   </div>`;
+}
+
+/* ---------------- opslaan / ongedaan maken van de vragenlijsten ---------------- */
+let baseline = null;
+const snapNow = () => ({plan:JSON.stringify(S.plan), profile:JSON.stringify(S.sitters[me()]||{})});
+function snapshot(){ baseline = snapNow(); }
+function dirtyKinds(){
+  if(!baseline) return [];
+  const c = snapNow(), out = [];
+  if(c.plan !== baseline.plan) out.push('plan');
+  if(c.profile !== baseline.profile) out.push('profile');
+  return out;
+}
+/* knoppenrij onder een vragenlijst */
+function formBar(kind){
+  const on = dirtyKinds().includes(kind);
+  return `<div class="panel savebar ${on?'on':''}">
+    <div class="brow"><button class="btn" data-act="form-save" data-v="${kind}" ${on?'':'disabled'}>${t('form_save')}</button>
+      <button class="btn ghost" data-act="form-undo" data-v="${kind}" ${on?'':'disabled'}>${t('form_undo')}</button>
+      ${on?`<span class="sub" style="color:var(--note);align-self:center">${t('unsaved')}</span>`:''}</div></div>`;
+}
+/* waarschuwing bovenaan zodra je het scherm verlaat met open wijzigingen */
+function unsavedBanner(){
+  const ks = dirtyKinds();
+  if(!ks.length || S.tab==='booking') return '';
+  return `<div class="bcard unsaved"><h3>${t('unsaved')}</h3><p class="sub">${t('unsaved_s')}</p>
+    <div class="brow">${ks.map(k=>`<button class="btn" data-act="form-save" data-v="${k}">${t('form_save')}</button>
+      <button class="btn ghost" data-act="form-undo" data-v="${k}">${t('form_undo')}</button>`).join('')}</div></div>`;
+}
+
+/* ---------------- inloggen ---------------- */
+let lg = {mode:'in', email:'', pass:'', name:'', phone:'', role:'owner'};
+const ICON_MARK = `<svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="var(--accent)"/><g transform="translate(32,33) scale(1.1) translate(-32,-32)"><ellipse cx="32" cy="47.5" rx="25" ry="8.6" fill="var(--sand)"/><path d="M30 47 Q27 34 33 23" stroke="var(--trunk)" stroke-width="4.8" fill="none" stroke-linecap="round"/><path d="M33 23 Q20 15 10 22 Q21 18 32 25 Z" fill="var(--palm)"/><path d="M33 23 Q46 14 56 21 Q45 18 34 25 Z" fill="var(--palm)"/><path d="M33 23 Q27 10 16 7 Q27 13 32 25 Z" fill="var(--palm-2)"/><path d="M33 23 Q40 10 51 8 Q41 13 34 25 Z" fill="var(--palm-2)"/><circle cx="30.5" cy="26.5" r="2.2" fill="#7A5A33"/><circle cx="35" cy="27.5" r="1.9" fill="#6B4E2C"/></g></svg>`;
+function viewLogin(){
+  const seg = [['in','lg_signin'],['up','lg_signup']].map(([v,l])=>`<button class="chip ${lg.mode===v?'sel':''}" data-act="lg-mode" data-v="${v}">${t(l)}</button>`).join('');
+  const body = lg.mode==='in'
+    ? `<input type="email" inputmode="email" data-f="lg.email" value="${esc(lg.email)}" placeholder="${t('lg_email')}">
+       <input type="password" data-f="lg.pass" value="${esc(lg.pass)}" placeholder="${t('lg_pass')}">
+       <p class="sub muted">${t('lg_hint')}</p>
+       <button class="btn" data-act="lg-in">${t('lg_signin')}</button>
+       <p class="lbl">${t('lg_demo')}</p>
+       <div class="daylist">${accounts().map(a=>`<button class="acrow tap" data-act="lg-pick" data-v="${esc(a.email)}">
+          <span><b>${esc(a.name)}</b><span class="muted"> · ${t(a.role)}</span><span class="sub muted" style="display:block">${esc(a.email)}</span></span>
+          <span class="sub" style="color:var(--accent)">${t('lg_signin')} ›</span></button>`).join('')}</div>`
+    : `<input type="text" data-f="lg.name" value="${esc(lg.name)}" placeholder="${t('lg_name')}">
+       <input type="email" inputmode="email" data-f="lg.email" value="${esc(lg.email)}" placeholder="${t('lg_email')}">
+       <input type="tel" data-f="lg.phone" value="${esc(lg.phone)}" placeholder="${t('lg_phone')}">
+       <p class="lbl">${t('lg_role')}</p>
+       <div class="seg">${[['owner','bk_find'],['sitter','bk_offer']].map(([v,l])=>`<button class="chip ${lg.role===v?'sel':''}" data-act="lg-role" data-v="${v}">${t(l)}</button>`).join('')}</div>
+       <button class="btn" data-act="lg-up">${t('lg_create')}</button>
+       <p class="sub muted">${t('lg_partner')}</p>`;
+  return `<section class="sec login">
+    <div class="loginhead"><span class="mark">${ICON_MARK}</span><div><h1>${t('app_name')}</h1><p class="sub">${t('lg_sub')}</p></div></div>
+    <div class="panel"><div class="seg">${seg}</div>${body}</div>
+    <p class="sub muted" style="text-align:center">${t('about')}</p>
+  </section>`;
 }
 
 /* ---------------- render ---------------- */
@@ -1885,12 +2503,14 @@ const TABS = [
   ['more', '<svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>'],
 ];
 function renderTabs(){
-  const alert = S.role==='sitter' ? openRequests().length>0 : (S.bookings||[]).some(b=>b.state==='declined');
+  const alert = S.role==='sitter' ? openRequests().length>0 : (S.bookings||[]).some(b=>['declined','pending'].includes(b.state));
   $('#tabbar').innerHTML = TABS.map(([k,ic])=>`<button role="tab" aria-selected="${S.tab===k}" data-tab="${k}">${ic}<span>${t(k)}</span>${k==='booking'&&alert?'<span class="dot"></span>':''}</button>`).join('');
 }
 function renderMain(){
   const y = window.scrollY;
-  $('#main').innerHTML = ({today:viewToday, booking:viewBooking, log:viewLog, more:viewMore}[S.tab] || viewToday)();
+  if(!S.auth){ $('#main').innerHTML = viewLogin(); return; }
+  if(feesOpen){ $('#main').innerHTML = feesPage(); return; }
+  $('#main').innerHTML = unsavedBanner() + ({today:viewToday, booking:viewBooking, log:viewLog, more:viewMore}[S.tab] || viewToday)();
   const ms = document.getElementById('msgs'); if(ms) ms.scrollTop = ms.scrollHeight;
   // de lijst kan van hoogte veranderen: blijf staan waar je was
   if(y > 0) window.scrollTo({top: Math.min(y, document.body.scrollHeight - window.innerHeight), behavior:'instant'});
@@ -1899,7 +2519,14 @@ function applyTheme(){
   if(S.theme==='auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', S.theme);
   document.documentElement.lang = S.lang;
 }
-function render(){ applyTheme(); renderHeader(); renderScene(); renderTabs(); renderMain(); }
+function render(){
+  applyTheme();
+  const out = !S.auth;
+  document.body.classList.toggle('loggedout', out);
+  $('#sceneWrap').hidden = out; document.querySelector('.tabs').hidden = out; document.querySelector('.top').hidden = out;
+  if(out){ stopBirds(); $('#main').innerHTML = viewLogin(); return; }
+  renderHeader(); renderScene(); renderTabs(); renderMain();
+}
 function toast(msg){ const el=$('#toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),1600); }
 function refresh(){ save(); renderHeader(); renderScene(); renderMain(); }
 
@@ -1927,7 +2554,7 @@ function dismissCard(id){
 
 document.addEventListener('click', e=>{
   const tab = e.target.closest('[data-tab]');
-  if(tab){ S.tab = tab.dataset.tab; openTask=null; save(); renderTabs(); renderMain(); window.scrollTo({top:0}); return; }
+  if(tab){ S.tab = tab.dataset.tab; openTask=null; feesOpen=false; save(); renderTabs(); renderMain(); window.scrollTo({top:0}); return; }
   if(e.target.closest('#roleBtn')){ S.role = S.role==='owner'?'sitter':'owner'; S.tab='today'; save(); render(); return; }
   const cloud = e.target.closest('[data-cloud]');
   if(cloud && S.role==='owner'){ if(S.tab!=='today'){ S.tab='today'; renderTabs(); renderMain(); } $('#cardsSec')?.scrollIntoView({behavior:'smooth', block:'start'}); return; }
@@ -1947,6 +2574,47 @@ document.addEventListener('click', e=>{
     if(!f.services.length) f.services = [v];
     f.sitter_ids = f.sitter_ids.filter(id=>matchingSitters(f.services).some(x=>x.id===id));
     save(); renderMain(); return; }
+  if(act==='ur-drop' || act==='ur-need'){
+    const el = a.closest('[data-booking]'); const b = el ? S.bookings.find(x=>x.id===el.dataset.booking) : cur(); if(!b) return;
+    if(!confirm(t('ur_drop_q'))) return;
+    const from = b.accepted_by || me();
+    if(!handover(b, from, act==='ur-drop' ? t('ur_drop') : t('ur_need'))) return;
+    openBooking = null; openThread = null; save(); render(); window.scrollTo({top:0}); toast(t('ur_done')); return; }
+  if(act==='fees'){ feesOpen = true; renderMain(); window.scrollTo({top:0}); return; }
+  if(act==='fees-close'){ feesOpen = false; renderMain(); window.scrollTo({top:0}); return; }
+  if(act==='sign'){ const pr = S.sitters[me()] = S.sitters[me()] || profile(me());
+    const mail = (S.auth && S.auth.email) || pr.email || '';
+    pr.signed = {version:TERMS_VERSION, at:nowDate().toISOString(), name:((pr.first||'')+' '+(pr.last||'')).trim(), mail, ua:navigator.userAgent.slice(0,120), mailed_at:nowDate().toISOString()};
+    save(); snapshot(); render(); window.scrollTo({top:0}); toast(t('tm_toast',{mail})); return; }
+  if(act==='deactivate'){ if(!confirm(t('deact_q'))) return;
+    if(S.auth && S.auth.role==='sitter'){ const pr = S.sitters[me()] = S.sitters[me()] || profile(me()); pr.deactivated_at = nowDate().toISOString(); }
+    else { S.plan.owner_info = S.plan.owner_info || {}; S.plan.owner_info.deactivated_at = nowDate().toISOString(); }
+    S.auth = null; openBooking = null; openThread = null; chatOpen = false; calDay = null;
+    save(); snapshot(); render(); window.scrollTo({top:0}); toast(t('deact_done')); return; }
+  if(act==='reactivate'){ const pr = S.sitters[me()] = S.sitters[me()] || profile(me());
+    delete pr.deactivated_at; save(); snapshot(); render(); toast(t('react_done')); return; }
+  if(act==='av-base'){ avOf().base = v; save(); renderMain(); return; }
+  if(act==='av-month'){ calInit(); const d = new Date(calY, calM + Number(v), 1); calY = d.getFullYear(); calM = d.getMonth(); renderMain(); return; }
+  if(act==='av-day'){ calDay = calDay===v ? null : v; renderMain(); return; }
+  if(act==='av-mode'){ const av = avOf(); if(!calDay) return;
+    const d = av.days[calDay] || {services:[], times:[]};
+    d.mode = v; if(v==='part' && !d.times.length) d.times = [{from:'09:00', to:'17:00'}];
+    if(v!=='part') d.times = [];
+    av.days[calDay] = d;
+    if(d.mode===(av.base==='yes'?'yes':'no') && !(d.services||[]).length) delete av.days[calDay];
+    save(); renderMain(); return; }
+  if(act==='av-svc'){ const av = avOf(); if(!calDay) return;
+    const pr = S.sitters[me()], offered = offeredOf(pr);
+    const d = av.days[calDay] || {mode: av.base==='yes'?'no':'yes', services:[], times:[]};
+    const cur = (d.services && d.services.length) ? d.services : [...offered];
+    const next = cur.includes(v) ? cur.filter(x=>x!==v) : [...cur, v];
+    d.services = (!next.length || next.length >= offered.length) ? [] : next;
+    av.days[calDay] = d; save(); renderMain(); return; }
+  if(act==='av-add-time'){ const av = avOf(); const d = av.days[calDay]; if(!d) return;
+    d.times = [...(d.times||[]), {from:'09:00', to:'17:00'}]; save(); renderMain(); return; }
+  if(act==='av-del-time'){ const av = avOf(), d = av.days[calDay]; if(!d) return;
+    d.times.splice(Number(a.closest('[data-time]').dataset.time), 1); save(); renderMain(); return; }
+  if(act==='av-clear'){ const av = avOf(); delete av.days[calDay]; save(); renderMain(); return; }
   if(act==='sp-offer'){ const pr = S.sitters[me()]; pr.prices[v].on = !pr.prices[v].on; save(); renderMain(); return; }
   if(act==='bk-form'){ showForm = true; renderMain(); return; }
   if(act==='bk-any'){ bkForm().sitter_ids = []; save(); renderMain(); return; }
@@ -1973,8 +2641,16 @@ document.addEventListener('click', e=>{
       owner:ownerName(), requested_at:nowDate().toISOString(), checkin_at:null});
     showForm = false; save(); render(); toast(t('bk_sent')); return; }
   if(act==='bk-accept'){ const id = a.closest('[data-booking]').dataset.booking, b = S.bookings.find(x=>x.id===id); if(!b) return;
-    b.state='accepted'; b.accepted_by = me(); b.sitter = meSitter().name; b.accepted_at = nowDate().toISOString();
-    save(); render(); toast(t('bk_accepted_by',{name:b.sitter})); return; }
+    b.accepted_list = [...new Set([...(b.accepted_list||[]), me()])]; b.state='pending'; b.accepted_at = nowDate().toISOString();
+    openThread = thKey(b.id, me()); save(); render(); window.scrollTo({top:0}); toast(t('bk_await_toast')); return; }
+  if(act==='bk-choose'){ const el = a.closest('[data-booking]'), b = el && S.bookings.find(x=>x.id===el.dataset.booking); if(!b) return;
+    b.accepted_by = v; b.sitter = (sitterById(v)||{}).name; b.state='accepted'; b.chosen_at = nowDate().toISOString();
+    if(b.urgent){ const q = urgentQuote(b, v); if(q){ b.charged = q.shown; b.bonus = q.bonus; } }
+    openThread = null; save(); render(); window.scrollTo({top:0}); toast(t('bk_accepted_by',{name:b.sitter})); return; }
+  if(act==='th-open'){ const el = a.closest('[data-booking]'); if(!el) return;
+    const key = thKey(el.dataset.booking, v); openThread = openThread===key ? null : key; renderMain();
+    setTimeout(()=>document.querySelector('[data-thform] input')?.focus(), 60); return; }
+  if(act==='flags-clear'){ S.flags = []; save(); renderMain(); return; }
   if(act==='bk-decline'){ const id = a.closest('[data-booking]').dataset.booking, b = S.bookings.find(x=>x.id===id); if(!b) return;
     b.declined_by = [...(b.declined_by||[]), me()];
     const left = b.sitter_ids.length ? b.sitter_ids.filter(x=>!b.declined_by.includes(x)) : goodSitters().filter(x=>!b.declined_by.includes(x.id));
@@ -1999,6 +2675,36 @@ document.addEventListener('click', e=>{
     if(act==='undo'){ x.state='todo'; x.outcome=null; x.done_at=null; x.later_at=null; x.pet_ids.forEach(id=>delete transient[id]); refresh(); return; }
     return;
   }
+  if(act==='form-save'){ save(); snapshot(); toast(t('saved')); render(); return; }
+  if(act==='form-undo'){ if(!baseline) return;
+    if(v==='plan'){ S.plan = JSON.parse(baseline.plan); rebuildToday(); }
+    else { S.sitters[me()] = JSON.parse(baseline.profile); }
+    save(); render(); toast(t('form_undone')); return; }
+  if(act==='lg-mode'){ lg.mode = v; renderMain(); return; }
+  if(act==='lg-role'){ lg.role = v; renderMain(); return; }
+  if(act==='lg-pick'){ const acc = accounts().find(x=>x.email===v); if(acc){ signIn(acc); snapshot(); save(); render(); window.scrollTo({top:0}); toast(t('lg_welcome',{name:acc.name})); } return; }
+  if(act==='lg-in'){ const mail = (lg.email||'').trim().toLowerCase();
+    const acc = accounts().find(x=>x.email===mail);
+    if(!acc){ toast(t('lg_unknown')); return; }
+    lg.pass=''; signIn(acc); snapshot(); save(); render(); window.scrollTo({top:0}); toast(t('lg_welcome',{name:acc.name})); return; }
+  if(act==='lg-up'){ const name = (lg.name||'').trim(), mail = (lg.email||'').trim().toLowerCase();
+    if(!name || !mail){ toast(t('lg_need')); return; }
+    if(accounts().some(x=>x.email===mail)){ toast(t('lg_exists')); return; }
+    /* in Odoo: een nieuw contact (res.partner) met een portaalgebruiker */
+    S.contacts = [...(S.contacts||[]), {id:uid('res_'), name, email:mail, phone:lg.phone||'', type:lg.role, created:nowDate().toISOString()}];
+    if(lg.role==='owner'){
+      S.plan.owner_info = {...(S.plan.owner_info||{}), name, email:mail, phone:lg.phone||''};
+      signIn({email:mail, name, role:'owner'});
+    } else {
+      const id = uid('s_');
+      S.extra_sitters = [...(S.extra_sitters||[]), {id, name, hoods:[], species:[], years:0, bookings:0, rating:5, intro:''}];
+      S.sitters[id] = {first:name, last:'', phone:lg.phone||'', email:mail, about:'', photos:[], care:[], tasks:[], hoods:[], prices:emptyPrices(), avail:blankAvail(), signed:null};
+      signIn({email:mail, name, role:'sitter', sitter:id});
+    }
+    lg = {mode:'in', email:'', pass:'', name:'', phone:'', role:'owner'};
+    snapshot(); save(); render(); window.scrollTo({top:0}); toast(t('lg_welcome',{name})); return; }
+  if(act==='logout'){ S.auth = null; openBooking = null; openThread = null; chatOpen = false; lg = {mode:'in', email:'', pass:'', name:'', phone:'', role:'owner'};
+    save(); render(); window.scrollTo({top:0}); return; }
   if(act==='set-role'){ S.role=v; save(); render(); return; }
   if(act==='set-lang'){ S.lang=v; save(); render(); return; }
   if(act==='set-theme'){ S.theme=v; save(); render(); return; }
@@ -2015,10 +2721,12 @@ document.addEventListener('click', e=>{
     pr.prices[k].discounts.splice(i,1); save(); renderMain(); return; }
   if(act==='sp-del-photo'){ const pr = S.sitters[me()], i = Number(a.closest('[data-photo]').dataset.photo);
     pr.photos.splice(i,1); save(); renderMain(); return; }
-  if(act==='set-me'){ S.me_sitter = v; openBooking = null; save(); render(); toast(sitterById(v).name); return; }
+  if(act==='oi-del-photo'){ const oi = S.plan.owner_info||{}, i = Number(a.closest('[data-photo]').dataset.photo);
+    (oi.photos||[]).splice(i,1); save(); renderMain(); return; }
+  if(act==='set-me'){ S.me_sitter = v; openBooking = null; openThread = null; calDay = null; save(); snapshot(); render(); toast(sitterById(v).name); return; }
   if(act==='export'){ exportJSON(); return; }
-  if(act==='reset'){ if(confirm(t('reset_q'))){ S = seedClean(); openBooking = null; openSitter = null; showForm = true; chatOpen = false; save(); render(); window.scrollTo({top:0}); } return; }
-  if(act==='demo-full'){ if(confirm(t('demo_full_q'))){ S = seed(); openBooking = null; showForm = false; chatOpen = false; save(); render(); window.scrollTo({top:0}); } return; }
+  if(act==='reset'){ if(confirm(t('reset_q'))){ S = seedClean(); openBooking = null; openSitter = null; openThread = null; showForm = true; chatOpen = false; save(); snapshot(); render(); window.scrollTo({top:0}); } return; }
+  if(act==='demo-full'){ if(confirm(t('demo_full_q'))){ S = seed(); openBooking = null; openThread = null; showForm = false; chatOpen = false; save(); snapshot(); render(); window.scrollTo({top:0}); } return; }
   if(S.role!=='owner') return;
   const P = S.plan, petEl = a.closest('[data-pet]'), pet = petEl && P.pets.find(p=>p.id===petEl.dataset.pet);
   if(act==='add-pet'){ P.pets.push({id:uid('pet_'), name:S.lang==='en'?'New pet':'Nieuw', species:'dog', coat:LOOKS.dog.coats[0], pattern:'solid', ears:'flop'}); }
@@ -2042,8 +2750,9 @@ document.addEventListener('click', e=>{
 
 /* foto's: verkleinen en als data-URL bewaren (blijft op dit apparaat) */
 document.addEventListener('change', e=>{
-  if(e.target.id !== 'photoInput') return;
-  const pr = S.sitters[me()] = S.sitters[me()] || profile(me());
+  if(e.target.id !== 'photoInput' && e.target.id !== 'ownerPhotoInput') return;
+  const owner = e.target.id === 'ownerPhotoInput';
+  const pr = owner ? (S.plan.owner_info = S.plan.owner_info || {}) : (S.sitters[me()] = S.sitters[me()] || profile(me()));
   const files = [...e.target.files].slice(0, 4 - (pr.photos||[]).length);
   let left = files.length; if(!left) return;
   files.forEach(file=>{
@@ -2054,7 +2763,7 @@ document.addEventListener('change', e=>{
         const cv = document.createElement('canvas'); cv.width = img.width*sc; cv.height = img.height*sc;
         cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
         pr.photos = [...(pr.photos||[]), cv.toDataURL('image/jpeg', .6)];
-        if(--left === 0){ save(); renderMain(); toast(t('sp_saved')); }
+        if(--left === 0){ save(); renderMain(); }
       };
       img.onerror = () => { if(--left === 0){ save(); renderMain(); } };
       img.src = fr.result; };
@@ -2064,12 +2773,26 @@ document.addEventListener('change', e=>{
 
 /* chat */
 document.addEventListener('submit', e=>{
+  const th = e.target.closest('[data-thform]');
+  if(th){
+    e.preventDefault();
+    const inp = th.querySelector('input'), text = inp.value.trim(); if(!text) return;
+    const [bid, sid] = th.dataset.thform.split('|');
+    thread(bid, sid).push({id:uid('m_'), from:S.role, text, at:nowDate().toISOString()});
+    const flagged = screen(text, S.role, bid, sid);
+    inp.value=''; save(); renderMain(); renderTabs();
+    if(flagged) toast(t('flag_phone'));
+    document.querySelector(`[data-thform="${bid}|${sid}"] input`)?.focus();
+    return;
+  }
   if(!e.target.matches('#chatForm')) return;
   e.preventDefault();
   const inp = document.getElementById('chatInput'), text = inp.value.trim();
   if(!text) return;
   S.chat.push({id:uid('m_'), from:S.role, text, at:nowDate().toISOString()});
+  const flagged = screen(text, S.role, (cur()||{}).id, (cur()||{}).accepted_by);
   inp.value=''; save(); renderMain();
+  if(flagged) toast(t('flag_phone'));
   document.getElementById('chatInput')?.focus();
 });
 
@@ -2097,17 +2820,18 @@ document.addEventListener('pointercancel', endSwipe);
 function planChanged(rerenderForm){
   rebuildToday(); save(); renderHeader(); renderScene();
   if(rerenderForm){ const y = window.scrollY; renderMain(); window.scrollTo({top:y}); }
-  toast(t('saved'));
 }
 let noteTimer = null;
 document.addEventListener('input', e=>{
   const n = e.target.closest('[data-note]');
   if(n){ const x = findTask(n.dataset.note); if(x){ x.note = n.value; delete S.dismissed[dismissKey(today().date,x)]; clearTimeout(noteTimer); noteTimer = setTimeout(()=>{ save(); renderScene(); }, 400); } return; }
   const f = e.target.dataset.f; if(!f) return;
+  if(f.startsWith('lg.')){ lg[f.slice(3)] = e.target.value; return; }
   const P = S.plan, later = fn => { clearTimeout(noteTimer); noteTimer = setTimeout(fn, 400); };
-  if(!f.startsWith('sp.') && S.role!=='owner') return;
+  if(!f.startsWith('sp.') && !f.startsWith('av.') && S.role!=='owner') return;
   if(f==='pet.name'){ P.pets.find(p=>p.id===e.target.closest('[data-pet]').dataset.pet).name = e.target.value; later(()=>planChanged(false)); }
   if(f==='notes'){ P.notes = e.target.value; later(save); }
+  if(f==='health'){ P.health = e.target.value; later(save); }
   if(f && f.startsWith('sp.')){
     const pr = S.sitters[me()] = S.sitters[me()] || profile(me()), fld = f.slice(3);
     if(['first','last','phone','email','about'].includes(fld)){ pr[fld] = e.target.value; later(()=>{ save(); renderScene(); }); }
@@ -2124,6 +2848,10 @@ document.addEventListener('input', e=>{
 document.addEventListener('focusout', e=>{ if(e.target.matches('[data-note]')){ const x = findTask(e.target.dataset.note); if(x){ x.note = e.target.value; save(); } } });
 document.addEventListener('change', e=>{
   const f = e.target.dataset.f; if(!f) return;
+  if(f==='av.custom'){ const av = avOf(); av.custom = e.target.checked; if(!av.custom) calDay = null; save(); renderMain(); return; }
+  if(f==='av.from' || f==='av.to'){ const av = avOf(), d = av.days[calDay];
+    if(d){ const i = Number(e.target.closest('[data-time]').dataset.time); d.times[i][f==='av.from'?'from':'to'] = e.target.value; save(); renderMain(); }
+    return; }
   if(!f.startsWith('sp.') && S.role!=='owner') return;
   const P = S.plan, val = e.target.value, byId = (list, attr) => list.find(x=>x.id===e.target.closest('['+attr+']').getAttribute(attr));
   if(f==='feed.time') byId(P.feedings,'data-feed').time = val;
@@ -2136,6 +2864,7 @@ document.addEventListener('change', e=>{
   else if(f==='chore.weekday') P.chores.kliko.weekday = Number(val);
   else if(f==='med.time') byId(P.meds,'data-med').time = val;
   else if(f==='med.pet') byId(P.meds,'data-med').pet_id = val;
+  else if(f==='sp.urgent'){ const pr = S.sitters[me()] = S.sitters[me()] || profile(me()); pr.urgent_ok = e.target.checked; save(); renderMain(); return; }
   else if(f==='sp.on'){ const pr = S.sitters[me()]; pr.prices[e.target.dataset.k].on = e.target.checked; save(); renderMain(); return; }
   else if(f==='sp.price'){ const pr = S.sitters[me()]; pr.prices[e.target.dataset.k][e.target.dataset.p] = Number(val)||0; save(); return; }
   else if(f==='sp.disc'){ const pr = S.sitters[me()], i = Number(e.target.closest('[data-disc]').dataset.disc);
@@ -2162,8 +2891,18 @@ function exportJSON(){
   const P = S.plan, f2 = m => Math.round(m/60*100)/100;
   const out = {
     _info:'Huisdierenoppas Curaçao export — veldnamen volgen docs/DATAMODEL.md',
+    'res.partner': (S.contacts||[]).map(c=>({x_id:c.id, name:c.name, email:c.email, phone:c.phone||false, type:c.type, create_date:c.created})),
+    'hoc.sitter': Object.entries(S.sitters||{}).map(([sid,p])=>({x_id:sid, name:((p.first||'')+' '+(p.last||'')).trim(), email:p.email||false,
+      services:SERVICES.filter(k=>(p.prices||{})[k] && p.prices[k].on), hood_ids:p.hoods||[], care:p.care||[],
+      availability_default:(p.avail||{}).base || 'yes', takes_urgent:!!p.urgent_ok, active:!p.deactivated_at, deactivated_at:p.deactivated_at||false})),
+    'hoc.sitter.agreement': Object.entries(S.sitters||{}).filter(([,p])=>p.signed).map(([sid,p])=>({
+      sitter_id:sid, version:p.signed.version, signed_at:p.signed.at, signer:p.signed.name||false,
+      email:p.signed.mail||false, user_agent:p.signed.ua||false, copy_sent_at:p.signed.mailed_at||false})),
+    'hoc.sitter.availability': Object.entries(S.sitters||{}).flatMap(([sid,p])=>Object.entries(((p.avail||{}).days)||{}).map(([date,d])=>({
+      sitter_id:sid, date, mode:d.mode, service_ids:(d.services&&d.services.length)?d.services:'all',
+      unavailable_times:(d.times||[]).map(x=>({time_from:f2(toMin(x.from)), time_to:f2(toMin(x.to))}))}))),
     'hoc.pet': P.pets.map(p=>({x_id:p.id, name:p.name, species:p.species, coat_color:p.coat, pattern:p.pattern, ears:p.ears||false})),
-    'hoc.care.plan': [{x_id:'plan_1', notes:P.notes, vet_name:P.vet.name, vet_phone:P.vet.phone}],
+    'hoc.care.plan': [{x_id:'plan_1', notes:P.notes, health_declaration:P.health||false, vet_name:P.vet.name, vet_phone:P.vet.phone}],
     'hoc.care.plan.feeding': P.feedings.flatMap(f=>Object.entries(f.portions).filter(([,c])=>c!=='none').map(([pid,c])=>({plan_id:'plan_1', moment_id:f.id, time:f2(toMin(f.time)), pet_id:pid, portion:c}))),
     'hoc.care.plan.walk': P.walks.map(w=>({x_id:w.id, plan_id:'plan_1', time:f2(toMin(w.time)), duration:w.duration, pet_ids:w.dog_ids})),
     'hoc.care.plan.chore': Object.entries(P.chores).filter(([,c])=>c.on).map(([k,c])=>({plan_id:'plan_1', code:k, time:f2(toMin(c.time)), time_off:c.time_off?f2(toMin(c.time_off)):false, weekday:c.weekday??false}))
@@ -2171,7 +2910,12 @@ function exportJSON(){
       .concat(P.custom.map(c=>({plan_id:'plan_1', code:'custom', time:f2(toMin(c.time)), description:c.text}))),
     'hoc.booking': (S.bookings||[]).map(b=>({x_id:b.id, plan_id:'plan_1', type:b.type, state:b.state, services:b.services||['day'],
       visits_per_day:b.visits||1, walks_per_day:b.walks||1, alone_hours:b.alone??false, sitter_ids:b.sitter_ids||[],
-      declined_by:b.declined_by||[], accepted_by:b.accepted_by||false, requested_at:b.requested_at||false, checkin_at:b.checkin_at||false})),
+      urgent:!!b.urgent, urgent_surcharge_pct:b.urgent?URGENT_BONUS:false, price_cap:b.cap ?? false,
+      handover_from:(b.handover||{}).from || false, handover_at:(b.handover||{}).at || false, handover_reason:(b.handover||{}).reason || false,
+      declined_by:b.declined_by||[], accepted_ids:acceptedBy(b), accepted_by:b.accepted_by||false, requested_at:b.requested_at||false, checkin_at:b.checkin_at||false})),
+    'hoc.message': Object.entries(S.threads||{}).flatMap(([k,ms])=>{ const [bid,sid] = k.split('|');
+      return ms.map(m=>({booking_id:bid, sitter_id:sid, author:m.from, body:m.text, create_date:m.at})); }),
+    'hoc.moderation.flag': (S.flags||[]).map(f=>({x_id:f.id, booking_id:f.booking||false, sitter_id:f.sitter||false, author:f.from, reason:'phone_number', body:f.text, create_date:f.at})),
     'hoc.booking.day': (S.bookings||[]).flatMap(b=>(b.days||[]).map(d=>({booking_id:b.id, date:d.date, time_start:f2(toMin(d.start)), time_end:f2(toMin(d.end))}))),
     'hoc.care.task': Object.values(S.days).flatMap(d=>d.tasks.map(x=>({x_id:d.date+'/'+x.id, date:d.date, kind:x.kind, name:taskTitle(x),
       time_start:f2(x.time_start), time_end:x.time_end!=null?f2(x.time_end):false, pet_ids:x.pet_ids, state:x.state,
@@ -2186,6 +2930,7 @@ function exportJSON(){
 /* ---------------- boot ---------------- */
 S = load() || seed();
 if(!isActive()) S.tab = 'booking';
+snapshot();
 save(); render();
 setInterval(yumTick, 5000);
 let lastKey = dateKey(nowDate());
