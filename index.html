@@ -568,16 +568,15 @@ Object.assign(I18N.nl, {
   q_health:'Klachten of behandeling op dit moment', q_health_ph:'Bijv. hinkt sinds vorige week, of krijgt een kuur tot vrijdag',
   q_health_s:'Meld wat er nu speelt. De oppas kan er rekening mee houden. Bestaande klachten vallen buiten de dierenartsdekking \u2014 die is voor wat er tijdens de oppasperiode ontstaat.',
   q_health_none:'Niets gemeld', vet_trip:'Vergoeding dierenartsrit',
+  bk_ask:'Vraag stellen', bk_asked:'Vraag van de oppas',
   ur_pill:'Spoed', ur_drop:'Ik val uit', ur_need:'Vervanging nodig',
   ur_drop_q:'De resterende dagen worden als spoedaanvraag naar andere oppassers gestuurd. Doorgaan?',
   ur_title:'Spoedaanvraag', ur_from:'Spoedaanvraag van {name}',
   ur_looking:'We zoeken een vervanger', ur_looking_s:'Je hoort binnen 24 uur van ons.',
   ur_cap:'Je betaalt over de resterende dagen nooit meer dan je al betaalde: {n} XCG.',
   ur_capped:'Prijsplafond toegepast', ur_reason:'Reden', ur_handover:'Overgenomen van {name}',
-  ur_bonus:'Spoedtoeslag +{pct}%', ur_bonus_s:'De spoedtoeslag betaalt het platform, niet de klant.',
-  ur_done:'Spoedaanvraag verstuurd', ur_ok:'Ik neem spoedaanvragen aan',
-  ur_ok_s:'Je krijgt aanvragen van boekingen waarvan de oppas is uitgevallen. Daar staat een spoedtoeslag van {pct}% op je eigen tarief tegenover, betaald door het platform.',
-  ur_badge:'Neemt spoed aan', ur_none:'Geen spoedaanvragen op dit moment.',
+  ur_bonus:'Spoedtoeslag +{pct}%', ur_bonus_s:'Betaald door Huisdierenoppas Cura\u00e7ao.',
+  ur_done:'Spoedaanvraag verstuurd',
   ur_since:'Uitgevallen op {date}', ur_days_left:'{n} dagen over',
   fee_what:'Wat zit daarin?', fee_title:'Wat je krijgt voor de servicekosten',
   fee_lead_owner:'Bovenop het tarief van de oppas betaal je 25% servicekosten en 6% OB. Dit krijg je daarvoor.',
@@ -659,16 +658,15 @@ Object.assign(I18N.en, {
   q_health:'Current complaints or treatment', q_health_ph:'E.g. limping since last week, or on a course of pills until Friday',
   q_health_s:'Tell us what is going on now so the sitter can take it into account. Existing complaints fall outside the veterinary cover, which is for what arises during the booking.',
   q_health_none:'Nothing reported', vet_trip:'Vet trip compensation',
+  bk_ask:'Ask a question', bk_asked:'Question from the sitter',
   ur_pill:'Urgent', ur_drop:'I have to drop out', ur_need:'I need a replacement',
   ur_drop_q:'The remaining days go out as an urgent request to other sitters. Continue?',
   ur_title:'Urgent request', ur_from:'Urgent request from {name}',
   ur_looking:'We are finding a replacement', ur_looking_s:'You hear from us within 24 hours.',
   ur_cap:'For the remaining days you never pay more than you already did: {n} XCG.',
   ur_capped:'Price cap applied', ur_reason:'Reason', ur_handover:'Taken over from {name}',
-  ur_bonus:'Urgent surcharge +{pct}%', ur_bonus_s:'The platform pays the urgent surcharge, not the customer.',
-  ur_done:'Urgent request sent', ur_ok:'I take urgent requests',
-  ur_ok_s:'You receive requests for bookings whose sitter dropped out. They carry an urgent surcharge of {pct}% on your own rate, paid by the platform.',
-  ur_badge:'Takes urgent work', ur_none:'No urgent requests right now.',
+  ur_bonus:'Urgent surcharge +{pct}%', ur_bonus_s:'Paid by Huisdierenoppas Cura\u00e7ao.',
+  ur_done:'Urgent request sent',
   ur_since:'Dropped out on {date}', ur_days_left:'{n} days left',
   fee_what:'What does that cover?', fee_title:'What the service fee covers',
   fee_lead_owner:'On top of the sitter\u2019s rate you pay a 25% service fee and 6% OB. This is what it buys.',
@@ -896,7 +894,7 @@ function defaultProfiles(){
     s_eline:{first:'Eline', last:'', phone:'+599 694 7642', email:'info@huisdierenoppascuracao.com',
       about:'Ik pas al jaren op honden, katten en af en toe een schildpad. Ik stuur graag korte updates en een foto tussendoor.',
       photos:[], care:['dog','puppy','cat','kitten','turtle'], tasks:['feed','walk','plants'], signed:signedDemo(),
-      hoods:['Pietermaai','Punda','Scharloo','Saliña'], avail:demoAvail, urgent_ok:true,
+      hoods:['Pietermaai','Punda','Scharloo','Saliña'], avail:demoAvail,
       prices:{day:{on:true, base:90, extra:10, other:0, discounts:[{days:5, pct:5},{days:10, pct:10}]},
               host:{on:true, base:70, extra:15, other:0, discounts:[{days:7, pct:5}]},
               hotel:{on:false, base:65, extra:20, other:0, discounts:[]},
@@ -907,11 +905,11 @@ function defaultProfiles(){
       prices:{day:{on:true, base:85, extra:10, other:0, discounts:[{days:7, pct:5}]}, host:{on:true, base:60, extra:12, other:0, discounts:[]},
               hotel:{on:false, base:65, extra:20, other:0, discounts:[]}, visit:{on:true, base:55, extra:5, other:0, discounts:[]}, walk:{on:false, base:30, extra:5, other:0, discounts:[]}}},
     s_ruben:{first:'Ruben', last:'', phone:'', email:'ruben@voorbeeld.com', about:'Sportief en actief: lange strandwandelingen zijn mijn ding.',
-      photos:[], care:['dog','puppy'], tasks:['feed','walk'], hoods:['Jan Thiel','Willibrordus'], signed:signedDemo(), urgent_ok:true,
+      photos:[], care:['dog','puppy'], tasks:['feed','walk'], hoods:['Jan Thiel','Willibrordus'], signed:signedDemo(),
       prices:{day:{on:false, base:90, extra:10, other:0, discounts:[]}, host:{on:false, base:70, extra:15, other:0, discounts:[]},
               hotel:{on:true, base:75, extra:25, other:0, discounts:[{days:7, pct:10}]}, visit:{on:true, base:60, extra:5, other:0, discounts:[]}, walk:{on:true, base:35, extra:5, other:0, discounts:[]}}},
     s_kim:{first:'Kim', last:'', phone:'', email:'kim@voorbeeld.com', about:'Net begonnen als oppas en leer graag bij. Ik spring graag in als er met spoed iemand nodig is.',
-      photos:[], care:['dog','cat','turtle'], tasks:['feed','walk'], hoods:['Punda','Otrobanda','Scharloo'], signed:signedDemo(), urgent_ok:true,
+      photos:[], care:['dog','cat','turtle'], tasks:['feed','walk'], hoods:['Punda','Otrobanda','Scharloo'], signed:signedDemo(),
       prices:{day:{on:true, base:80, extra:10, other:0, discounts:[]}, host:{on:true, base:55, extra:10, other:0, discounts:[]},
               hotel:{on:false, base:65, extra:20, other:0, discounts:[]}, visit:{on:true, base:50, extra:5, other:0, discounts:[]}, walk:{on:true, base:25, extra:5, other:0, discounts:[]}}},
   };
@@ -1109,12 +1107,12 @@ function sitterName(){ const c = cur(); return c ? bookingName(c) : (S.role==='s
 const forMe = b => {
   if((b.declined_by||[]).includes(me())) return false;
   /* een spoedaanvraag gaat naar iedereen die spoed aanneemt en bij de klant past, ook zonder topbeoordeling */
-  if(b.urgent) return takesUrgent(me()) && matchingSitters(b.services||['day'], true).some(x=>x.id===me());
+  if(b.urgent) return matchingSitters(b.services||['day'], true).some(x=>x.id===me());
   return !b.sitter_ids.length ? goodSitters().some(x=>x.id===me()) : b.sitter_ids.includes(me());
 };
+const MAX_PHOTOS = 10;
 const URGENT_BONUS = 25;   /* % bovenop het eigen tarief, betaald door het platform */
 const acceptedBy = b => b.accepted_list || (b.accepted_by ? [b.accepted_by] : []);
-const takesUrgent = id => !!(profile(id) || {}).urgent_ok;
 /* de dagen die na vandaag nog komen */
 const daysLeft = b => (b.days||[]).filter(d => d.date >= dateKey(nowDate()));
 /* prijs bij een spoedaanvraag: de klant betaalt de laagste van oud en nieuw */
@@ -1143,6 +1141,8 @@ const notChosenForMe = () => (S.bookings||[]).filter(b=>b.accepted_by && b.accep
 const myBookings = () => (S.bookings||[]).filter(b=>['accepted','active'].includes(b.state) && b.accepted_by===me());
 /* gesprekken per aanvraag én per oppas, zodat de eigenaar met meerdere kan praten */
 const thKey = (bid, sid) => bid+'|'+sid;
+/* oppassers die bij deze boeking al een bericht hebben gestuurd */
+const threadSitters = b => Object.keys(S.threads||{}).filter(k=>k.startsWith(b.id+'|') && (S.threads[k]||[]).length).map(k=>k.split('|')[1]);
 function thread(bid, sid){ S.threads = S.threads || {}; const k = thKey(bid,sid); return S.threads[k] = S.threads[k] || []; }
 /* screening: deelt iemand een telefoonnummer? */
 const PHONE_RE = /(\+\s?\d{2,4}\b)|(\b\d{3}[\s.\-]\d{4}\b)|(\b\d{7,}\b)|(\b\d{2,4}[\s.\-]\d{2,4}[\s.\-]\d{2,4}\b)/;
@@ -1874,7 +1874,7 @@ function viewLog(){
 function ownerPhotos(){
   const list = (S.plan.owner_info||{}).photos || [];
   return `<div class="photos">${list.map((src,i)=>`<div class="photo" data-photo="${i}"><img src="${src}" alt=""><button class="x" data-act="oi-del-photo" aria-label="${t('remove')}">\u00d7</button></div>`).join('')}
-      ${list.length < 4 ? `<label class="addphoto">${t('sp_add_photo')}<input type="file" accept="image/*" multiple id="ownerPhotoInput" hidden></label>` : ''}</div>`;
+      ${list.length < MAX_PHOTOS ? `<label class="addphoto">${t('sp_add_photo')}<input type="file" accept="image/*" multiple id="ownerPhotoInput" hidden></label>` : ''}</div>`;
 }
 function viewIntake(){
   const P = S.plan, ro = S.role!=='owner', dogs = P.pets.filter(p=>p.species==='dog');
@@ -1984,7 +1984,7 @@ function sitterCard(x, picked, showPick, days, opt){
   return `<div class="bcard sitter ${picked?'picked':''}" data-sitter="${x.id}">
     <button class="sitterhead" data-act="bk-sitter-open">
       <span class="ava">${x.photos && x.photos.length ? `<img src="${x.photos[0]}" alt="">` : esc((x.name||'?')[0])}</span>
-      <span><b>${esc(x.name)}</b>${takesUrgent(x.id)?`<span class="pill acc sm">${t('ur_badge')}</span>`:''}<span class="sub">${x.hoods.slice(0,3).join(', ')}</span>
+      <span><b>${esc(x.name)}</b><span class="sub">${x.hoods.slice(0,3).join(', ')}</span>
         <span class="sub price">${days ? (q ? `${q.total} XCG ${t('q_total').toLowerCase()}` : t('q_no_service')) : priceLine(x)}</span></span>
       <span class="rate"><span class="st">${stars(x.rating)}</span><span class="sub">${x.rating.toFixed(1)} · ${t('bk_bookings',{n:x.bookings})}</span></span>
     </button>
@@ -2042,7 +2042,10 @@ function bookingOwner(){
         return `<div class="kv"><b>${t('q_total')}</b><span>${b.urgent && q.capped ? `<s>${q.total} XCG</s> ${q.shown} XCG` : `${b.urgent ? q.shown : q.total} XCG`}</span></div>`; })()}
       ${b.urgent ? `<div class="bcard urgent inner"><h3>${t('ur_looking')} <span class="pill warn">${t('ur_pill')}</span></h3>
           <p class="sub">${t('ur_looking_s')}</p></div>` : ''}
-      ${acceptedBy(b).length ? `<p class="lbl">${t('bk_accepted_list')}</p><div class="daylist">${acceptedBy(b).map(sid=>threadRow(b, sid, b.state==='pending')).join('')}</div>` : ''}
+      ${(()=>{ const acc = acceptedBy(b), asked = threadSitters(b).filter(x=>!acc.includes(x));
+        if(!acc.length && !asked.length) return '';
+        return `${acc.length?`<p class="lbl">${t('bk_accepted_list')}</p><div class="daylist">${acc.map(sid=>threadRow(b, sid, b.state==='pending')).join('')}</div>`:''}
+          ${asked.length?`<p class="lbl">${t('bk_asked')}</p><div class="daylist">${asked.map(sid=>threadRow(b, sid, false)).join('')}</div>`:''}`; })()}
       ${b.state==='declined'?`<p class="sub" style="color:var(--late)">${t('bk_declined_msg')}</p>`:''}
       ${b.state==='active' && b.checkin_at?`<p class="sub">${t('bk_checked_in',{time:hmOf(b.checkin_at)})}</p>`:''}
       <div class="brow">
@@ -2075,6 +2078,7 @@ function planSummary(){
         <b>${t('bk_phone')}</b><span>${esc(oi.phone||'—')}</span>
         <b>${t('vet_short')}</b><span>${esc(P.vet.name||'—')}${P.vet.phone?` · ${esc(P.vet.phone)}`:''}</span>
         <b>${t('q_health')}</b><span>${esc(P.health || t('q_health_none'))}</span></div>
+      ${(oi.photos||[]).length?`<div class="photos">${oi.photos.map(src=>`<div class="photo"><img src="${src}" alt=""></div>`).join('')}</div>`:''}
     </div>
     <div class="panel"><h3>${t('bk_plan_pets')}</h3>
       <div class="daylist">${P.pets.map(p=>`<div class="dayrow"><span>${esc(p.name)}</span><span class="muted">${t(p.species)}</span><span></span></div>`).join('')}</div></div>
@@ -2309,7 +2313,7 @@ function sitterProfileForm(){
   const id = me(), pr = profile(id);
   const chips = (act, list, sel, pre) => `<div class="seg">${list.map(v=>`<button class="chip ${sel.includes(v)?'sel':''}" data-act="${act}" data-v="${v}">${pre?t(pre+v):v}</button>`).join('')}</div>`;
   const photos = `<div class="photos">${(pr.photos||[]).map((src,i)=>`<div class="photo" data-photo="${i}"><img src="${src}" alt=""><button class="x" data-act="sp-del-photo" aria-label="${t('remove')}">×</button></div>`).join('')}
-      ${(pr.photos||[]).length < 4 ? `<label class="addphoto">${t('sp_add_photo')}<input type="file" accept="image/*" multiple id="photoInput" hidden></label>` : ''}</div>`;
+      ${(pr.photos||[]).length < MAX_PHOTOS ? `<label class="addphoto">${t('sp_add_photo')}<input type="file" accept="image/*" multiple id="photoInput" hidden></label>` : ''}</div>`;
   const money = (key, f, lbl) => `<div class="pricerow"><span>${t(lbl)}</span><input type="number" min="0" step="5" inputmode="numeric" data-f="sp.price" data-k="${key}" data-p="${f}" value="${(pr.prices[key]||{})[f] ?? 0}"></div>`;
   const service = (key, lbl) => {
     const p = pr.prices[key] || {};
@@ -2343,8 +2347,6 @@ function sitterProfileForm(){
       <h3 style="margin-top:6px">${t('sp_hoods')}</h3>${chips('sp-hood', HOODS, pr.hoods||[], '')}
     </div>
     ${availPanel()}
-    <div class="panel"><label class="toggle" style="grid-template-columns:auto 1fr"><input type="checkbox" data-f="sp.urgent" ${pr.urgent_ok?'checked':''}><span><b>${t('ur_ok')}</b></span></label>
-      <p class="sub muted">${t('ur_ok_s',{pct:URGENT_BONUS})}</p></div>
     <div class="panel"><h3>${t('sp_prices')}</h3><p class="sub">${t('pr_net_s')}</p>
       ${SERVICES.map(k=>service(k, SV_LONG[k])).join('')}
     </div></section>`;
@@ -2378,7 +2380,10 @@ function bookingSitter(){
       ${bkDays(b)}
       ${(()=>{ const q = quote(me(), b.days, bkOpt(b)); if(!q) return '';
         return quoteHTML(q, 'net') + (b.urgent ? `<div class="daylist"><div class="dayrow total"><span><b>${t('ur_bonus',{pct:URGENT_BONUS})}</b></span><span></span><span><b>+${Math.round(q.net*URGENT_BONUS/100)} XCG</b></span></div></div><p class="fineprint">${t('ur_bonus_s')}</p>` : ''); })()}
-      <div class="brow"><button class="btn" data-act="bk-accept">${t('bk_accept')}</button><button class="btn ghost danger" data-act="bk-decline">${t('bk_decline')}</button></div></div>`).join('');
+      <div class="brow"><button class="btn" data-act="bk-accept">${t('bk_accept')}</button>
+        <button class="btn ghost" data-act="th-open" data-v="${me()}">${t('bk_ask')}</button>
+        <button class="btn ghost danger" data-act="bk-decline">${t('bk_decline')}</button></div>
+      ${openThread===thKey(b.id, me()) ? threadBox(b.id, me()) : ''}</div>`).join('');
   const mineCards = mine.map(b=>`<button class="bcard tap" data-booking="${b.id}" data-act="bk-open">
       <h3>${bookingRange(b)} <span class="pill ${bkPill(b.state)}">${t('st_'+b.state)}</span></h3>
       <p class="sub">${esc(ownerName())} · ${esc((S.plan.owner_info||{}).hood||'')} · ${S.plan.pets.map(p=>esc(p.name)).join(', ')}</p>
@@ -2503,7 +2508,8 @@ const TABS = [
   ['more', '<svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg>'],
 ];
 function renderTabs(){
-  const alert = S.role==='sitter' ? openRequests().length>0 : (S.bookings||[]).some(b=>['declined','pending'].includes(b.state));
+  const alert = S.role==='sitter' ? openRequests().length>0
+    : (S.bookings||[]).some(b=>['declined','pending'].includes(b.state) || threadSitters(b).length);
   $('#tabbar').innerHTML = TABS.map(([k,ic])=>`<button role="tab" aria-selected="${S.tab===k}" data-tab="${k}">${ic}<span>${t(k)}</span>${k==='booking'&&alert?'<span class="dot"></span>':''}</button>`).join('');
 }
 function renderMain(){
@@ -2753,7 +2759,7 @@ document.addEventListener('change', e=>{
   if(e.target.id !== 'photoInput' && e.target.id !== 'ownerPhotoInput') return;
   const owner = e.target.id === 'ownerPhotoInput';
   const pr = owner ? (S.plan.owner_info = S.plan.owner_info || {}) : (S.sitters[me()] = S.sitters[me()] || profile(me()));
-  const files = [...e.target.files].slice(0, 4 - (pr.photos||[]).length);
+  const files = [...e.target.files].slice(0, MAX_PHOTOS - (pr.photos||[]).length);
   let left = files.length; if(!left) return;
   files.forEach(file=>{
     const fr = new FileReader();
@@ -2864,7 +2870,6 @@ document.addEventListener('change', e=>{
   else if(f==='chore.weekday') P.chores.kliko.weekday = Number(val);
   else if(f==='med.time') byId(P.meds,'data-med').time = val;
   else if(f==='med.pet') byId(P.meds,'data-med').pet_id = val;
-  else if(f==='sp.urgent'){ const pr = S.sitters[me()] = S.sitters[me()] || profile(me()); pr.urgent_ok = e.target.checked; save(); renderMain(); return; }
   else if(f==='sp.on'){ const pr = S.sitters[me()]; pr.prices[e.target.dataset.k].on = e.target.checked; save(); renderMain(); return; }
   else if(f==='sp.price'){ const pr = S.sitters[me()]; pr.prices[e.target.dataset.k][e.target.dataset.p] = Number(val)||0; save(); return; }
   else if(f==='sp.disc'){ const pr = S.sitters[me()], i = Number(e.target.closest('[data-disc]').dataset.disc);
@@ -2894,7 +2899,7 @@ function exportJSON(){
     'res.partner': (S.contacts||[]).map(c=>({x_id:c.id, name:c.name, email:c.email, phone:c.phone||false, type:c.type, create_date:c.created})),
     'hoc.sitter': Object.entries(S.sitters||{}).map(([sid,p])=>({x_id:sid, name:((p.first||'')+' '+(p.last||'')).trim(), email:p.email||false,
       services:SERVICES.filter(k=>(p.prices||{})[k] && p.prices[k].on), hood_ids:p.hoods||[], care:p.care||[],
-      availability_default:(p.avail||{}).base || 'yes', takes_urgent:!!p.urgent_ok, active:!p.deactivated_at, deactivated_at:p.deactivated_at||false})),
+      availability_default:(p.avail||{}).base || 'yes', active:!p.deactivated_at, deactivated_at:p.deactivated_at||false})),
     'hoc.sitter.agreement': Object.entries(S.sitters||{}).filter(([,p])=>p.signed).map(([sid,p])=>({
       sitter_id:sid, version:p.signed.version, signed_at:p.signed.at, signer:p.signed.name||false,
       email:p.signed.mail||false, user_agent:p.signed.ua||false, copy_sent_at:p.signed.mailed_at||false})),
