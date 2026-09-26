@@ -77,10 +77,17 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 .top{position:absolute;top:0;left:0;right:0;z-index:5;background:transparent;padding:calc(env(safe-area-inset-top,0px) + 12px) 18px 10px;color:#16323D;transition:color .6s;
   display:flex;align-items:center;justify-content:space-between;gap:12px}
-.top h1{margin:0;font-size:17px;font-weight:700;letter-spacing:-.01em;line-height:1.15}
+.top h1{margin:0;font-size:16px;font-weight:700;letter-spacing:-.015em;line-height:1.15;min-width:0}
 .top h1 span{display:block;font-size:12.5px;font-weight:500;opacity:.7;letter-spacing:0}
 .top.light{color:#F4F1EA}
-.rolebtn{border:0;background:rgba(255,255,255,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:99px;padding:7px 13px;font-size:13px;font-weight:600;cursor:pointer;color:#16323D;white-space:nowrap}
+.topright{display:flex;align-items:center;gap:8px}
+.pawpts{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-radius:99px;padding:6px 10px 6px 8px;font-size:12.5px;font-weight:700;color:#16323D;white-space:nowrap}
+.pawpts svg{width:16px;height:16px;fill:currentColor;display:block}
+.top.light .pawpts{background:rgba(255,255,255,.16);color:#F4F1EA}
+body.noanim .top{position:static;color:var(--ink)}
+body.noanim .top .rolebtn, body.noanim .top .pawpts{background:var(--surface-2);color:var(--ink)}
+.rolebtn{border:0;background:rgba(255,255,255,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:99px;padding:7px 11px;font-size:12.5px;font-weight:600;cursor:pointer;color:#16323D;white-space:nowrap}
 .top.light .rolebtn{background:rgba(255,255,255,.16);color:#F4F1EA}
 
 .scene{position:relative;overflow:hidden;background:var(--sand)}
@@ -211,7 +218,7 @@ button.card .pill{align-self:center}
 .lnk.fee{font-size:11.5px;color:var(--accent);padding:0;display:inline}
 .panel.danger, .bcard.danger{box-shadow:var(--shadow), inset 0 0 0 2px var(--late)}
 .panel.danger>h3, .bcard.danger>h3{color:var(--late)}
-.bcard.sign{box-shadow:var(--shadow), inset 0 0 0 2px var(--accent)}
+.bcard.sign, .panel.sign{box-shadow:var(--shadow), inset 0 0 0 2px var(--accent)}
 .keypt{display:grid;grid-template-columns:20px 1fr;gap:9px;align-items:start;font-size:14.5px;line-height:1.4}
 .keypt .tick{width:18px;height:18px;margin-top:2px}
 .term{font-size:14px;line-height:1.45}
@@ -318,6 +325,20 @@ details.all>summary::-webkit-details-marker{display:none}
 fieldset{border:0;margin:0;padding:0;min-width:0;display:flex;flex-direction:column;gap:14px}
 fieldset[disabled]{opacity:.7}
 
+.acc{background:var(--surface);border-radius:18px;box-shadow:var(--shadow)}
+.acc>summary,.acc>.head{list-style:none;cursor:pointer;padding:15px 16px;display:grid;grid-template-columns:1fr 14px;
+  gap:2px 10px;align-items:center;font-size:16px;font-weight:700}
+.acc>summary::-webkit-details-marker{display:none}
+.acc>summary .muted,.acc>.head .muted{grid-column:1;font-size:13px;font-weight:500}
+.acc>summary:after{content:'\203A';grid-row:1/3;grid-column:2;align-self:center;color:var(--ink-3);font-size:19px;line-height:1;transform:rotate(90deg);justify-self:end}
+.acc[open]>summary:after{transform:rotate(-90deg)}
+.acc>.head{cursor:default}
+.acc>.head:after{content:'';}
+.acc.off{opacity:.55}
+.acc .inner{padding:0 16px 16px;display:flex;flex-direction:column;gap:14px}
+.acc .inner>.sec:first-child{margin-top:-2px}
+.repfilters{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.repfilters select:last-child{grid-column:1/-1}
 .day{background:var(--surface);border-radius:16px;box-shadow:var(--shadow)}
 .day>summary{list-style:none;cursor:pointer;padding:13px 16px;display:flex;justify-content:space-between;gap:10px}
 .day>summary::-webkit-details-marker{display:none}
@@ -450,7 +471,7 @@ fieldset[disabled]{opacity:.7}
 <div class="shell">
   <header class="top">
     <h1 id="hTitle">Huisdierenoppas Curaçao<span id="hSub"></span></h1>
-    <button class="rolebtn" id="roleBtn"></button>
+    <div class="topright"><span class="pawpts" id="pawPts"></span><button class="rolebtn" id="roleBtn"></button></div>
   </header>
   <section class="scene" id="sceneWrap" aria-label="Eiland met huisdieren">
     <div id="scene"></div>
@@ -491,7 +512,7 @@ const I18N = {
     med:'Medicatie: {pet}', at:'om', now:'nu',
     intake_intro:'Deze antwoorden bepalen de dagelijkse takenlijst van de oppas. Wijzigingen worden direct opgeslagen.',
     ro_intake:'Alleen de eigenaar kan de vragenlijst aanpassen. Wissel van rol bovenaan.',
-    q_pets:'Welke huisdieren verzorgen we?', q_pets_s:'Maximaal 4 dieren. Kies ook hoe ze eruitzien.',
+    q_pets:'Voor welke dieren zoek je oppas?', q_pets_s:'Maximaal 4 dieren. Kies ook hoe ze eruitzien.',
     name:'Naam', species:'Soort', dog:'Hond', cat:'Kat', turtle:'Schildpad',
     chicken:'Kippen', bird:'Vogels', fish:'Vissen', pet_count:'Aantal',
     coat:'Vachtkleur', shell:'Schildkleur', pattern:'Tekening', ears:'Oren',
@@ -534,7 +555,7 @@ const I18N = {
     med:'Medication: {pet}', at:'at', now:'now',
     intake_intro:"These answers build the sitter's daily task list. Changes are saved right away.",
     ro_intake:'Only the owner can edit the questionnaire. Switch role at the top.',
-    q_pets:'Which pets are we caring for?', q_pets_s:'Up to 4 pets. Choose how they look, too.',
+    q_pets:'Which pets do you need a sitter for?', q_pets_s:'Up to 4 pets. Choose how they look, too.',
     name:'Name', species:'Species', dog:'Dog', cat:'Cat', turtle:'Turtle',
     chicken:'Chickens', bird:'Birds', fish:'Fish', pet_count:'Number',
     coat:'Coat colour', shell:'Shell colour', pattern:'Markings', ears:'Ears',
@@ -561,11 +582,16 @@ const I18N = {
   }
 };
 Object.assign(I18N.nl, {
-  need:'Wat heb je nodig?', sv_day_s:'Oppas aan huis', sv_visit_s:'Korte visite', sv_walk_s:'Hondenuitlaatservice',
-  sv_host_s:'Opvang bij de oppas', sv_hotel_s:'Hondenhotel',
-  sv_host:'Opvang bij de oppas (per dag)', sv_hotel:'Hondenhotel (per dag)',
-  q_hosts:'{n}× opvang bij de oppas', q_hotels:'{n}× hondenhotel',
-  fee_note:'Inclusief servicekosten en 6% OB.',
+  need:'Wat voor oppas zoek je?', sv_day_s:'Oppas aan huis', sv_visit_s:'Korte visite', sv_walk_s:'Hondenuitlaatservice',
+  sv_host_s:'Opvang bij de oppas', sv_hotel_s:'Hondenhotel', sv_cathotel_s:'Kattenhotel',
+  sv_host:'Opvang bij de oppas (per dag)', sv_hotel:'Hondenhotel (per dag)', sv_cathotel:'Kattenhotel (per dag)',
+  q_hosts:'{n}× opvang bij de oppas', q_hotels:'{n}× hondenhotel', q_cathotels:'{n}× kattenhotel',
+  bk_petinfo:'Informatie over je huisdieren', bk_reqsec:'Aanvragen',
+  bk_petinfo_need:'Invullen en opslaan', bk_locked:'Eerst je huisdieren invullen',
+  bk_npets:'{n} dieren', bk_nreq:'{n} aanvragen', bk_1pet:'1 dier', bk_1req:'1 aanvraag', bk_1day:'1 dag',
+  rep_title:'Afgeronde boekingen', rep_year:'Jaar', rep_month:'Maand', rep_who:'Klant', rep_who_s:'Oppas',
+  rep_all:'Alle', rep_total:'Totaal', rep_none:'Geen boekingen in deze selectie.',
+  fee_note:'Inclusief {share}% servicekosten en 6% OB.',
   q_net:'Jij ontvangt',
   av_title:'Jouw beschikbaarheid', av_base:'Standaard sta je op', av_yes:'Beschikbaar', av_no:'Niet beschikbaar',
   av_base_s:'Dit geldt voor je hele kalender.', av_custom:'Per dag aanpassen',
@@ -582,9 +608,14 @@ Object.assign(I18N.nl, {
   tm_toast:'Getekend \u00b7 kopie onderweg naar {mail}', tm_view:'Wat je hebt getekend',
   tm_k1:'Je bepaalt zelf je tarief, je diensten en je beschikbaarheid',
   tm_k2:'De klant betaalt 50% vooraf; jij krijgt je bedrag binnen twee werkdagen',
-  tm_k3:'Bovenop jouw tarief betaalt de klant 25% servicekosten en OB',
+  tm_k3:'Je tarief krijg je volledig; de klant betaalt daarnaast servicekosten van {share}% van het totaalbedrag',
   tm_k4:'Twaalf maanden relatiebeding na deactivering, af te kopen vanaf XCG 500',
   tm_locked:'Onderteken eerst de voorwaarden, dan verschijnen hier de aanvragen.',
+  tm_accept:'Ik accepteer de voorwaarden', tm_need:'Zet eerst een vinkje bij de voorwaarden.',
+  ik_title:'We plannen een kennismakingsgesprek', ik_s:'Je profiel staat klaar. Zodra we elkaar gesproken hebben, ontvang je aanvragen.',
+  ik_mailed:'Je gegevens zijn doorgestuurd naar info@huisdierenoppascuracao.com.',
+  ik_demo:'Demo: gesprek afgerond', ik_locked:'Aanvragen verschijnen hier na het kennismakingsgesprek.',
+  log_empty:'Geen historie beschikbaar.', log_sum:'{n} dagen \u00b7 {amt} XCG',
   deact:'Account deactiveren', deact_s:'Je account verdwijnt uit de zoekresultaten en je ontvangt geen aanvragen meer. Lopende boekingen maak je nog af.',
   deact_term:'Na deactivering geldt het relatiebeding nog twaalf maanden, dus tot {date}.',
   deact_q:'Weet je zeker dat je je account wilt deactiveren? Je wordt uitgelogd.',
@@ -604,8 +635,8 @@ Object.assign(I18N.nl, {
   ur_done:'Spoedaanvraag verstuurd',
   ur_since:'Uitgevallen op {date}', ur_days_left:'{n} dagen over',
   fee_what:'Wat zit daarin?', fee_title:'Wat je krijgt voor de servicekosten',
-  fee_lead_owner:'Bovenop het tarief van de oppas betaal je 25% servicekosten en 6% OB. Dit krijg je daarvoor.',
-  fee_lead_sitter:'De klant betaalt 25% servicekosten bovenop jouw tarief. Dit doen wij daarvoor.',
+  fee_lead_owner:'Van het bedrag dat je betaalt is {share}% servicekosten; de 6% OB zit er ook in. Dit krijg je daarvoor.',
+  fee_lead_sitter:'Jouw tarief krijg je volledig. De klant betaalt daarnaast servicekosten: {share}% van het totaalbedrag, ofwel {pct}% bovenop jouw tarief. Dit doen wij daarvoor.',
   fee_more:'Servicekosten: wat krijg je ervoor?',
   fee_disclaimer:'Bedragen en dekkingen zijn in dit prototype nog een voorstel en moeten nog worden vastgesteld.',
   fo1:'Veilig betalen, of je geld terug', fo1s:'Je betaalt in de app. Komt er niemand opdagen, dan krijg je je geld terug. De helft betaal je vooraf, de rest pas na afloop.',
@@ -621,7 +652,7 @@ Object.assign(I18N.nl, {
   fs5:'Hulp van een mens', fs5s:'Zit je ergens mee tijdens een boeking, dan hoor je binnen 24 uur van ons: +599 9 694 7642.',
   fs6:'Vergoed voor een ritje naar de dierenarts', fs6s:'Moet je met spoed naar de dierenarts, dan krijg je XCG 50 voor de rit en de tijd, bovenop je tarief. De rekening zelf gaat tot XCG 200 naar de dierenarts.',
   react_s:'Je ontvangt geen aanvragen zolang je account gedeactiveerd is.',
-  pr_net_s:'Dit is jouw tarief: het bedrag dat jij overhoudt. De klant betaalt hierover nog servicekosten en OB.',
+  pr_net_s:'Dit is jouw tarief: het bedrag dat jij ontvangt. De klant betaalt daarnaast servicekosten en OB.',
   need_host_s:'De dieren logeren bij de oppas. De begintijd geldt voor de eerste dag, de eindtijd voor de laatste.',
   need_day_s:'De oppas blijft slapen. De begintijd geldt voor de eerste dag, de eindtijd voor de laatste.',
   alone:'Hoe lang kunnen de dieren alleen zijn?', alone_u:'uur', per_day:'per dag',
@@ -675,11 +706,16 @@ Object.assign(I18N.nl, {
   lg_signed:'Ingelogd als {name} ({mail})', logout:'Uitloggen',
 });
 Object.assign(I18N.en, {
-  need:'What do you need?', sv_day_s:'House sitting', sv_visit_s:'Short visit', sv_walk_s:'Dog walking',
-  sv_host_s:'At the sitter\u2019s home', sv_hotel_s:'Dog boarding',
-  sv_host:'At the sitter\u2019s home (per day)', sv_hotel:'Dog boarding (per day)',
-  q_hosts:'{n}× at the sitter\u2019s home', q_hotels:'{n}× dog boarding',
-  fee_note:'Includes service fee and 6% OB.',
+  need:'What kind of sitting do you need?', sv_day_s:'House sitting', sv_visit_s:'Short visit', sv_walk_s:'Dog walking',
+  sv_host_s:'At the sitter\u2019s home', sv_hotel_s:'Dog boarding', sv_cathotel_s:'Cat boarding',
+  sv_host:'At the sitter\u2019s home (per day)', sv_hotel:'Dog boarding (per day)', sv_cathotel:'Cat boarding (per day)',
+  q_hosts:'{n}× at the sitter\u2019s home', q_hotels:'{n}× dog boarding', q_cathotels:'{n}× cat boarding',
+  bk_petinfo:'About your pets', bk_reqsec:'Requests',
+  bk_petinfo_need:'Fill in and save', bk_locked:'Fill in your pets first',
+  bk_npets:'{n} pets', bk_nreq:'{n} requests', bk_1pet:'1 pet', bk_1req:'1 request', bk_1day:'1 day',
+  rep_title:'Completed bookings', rep_year:'Year', rep_month:'Month', rep_who:'Customer', rep_who_s:'Sitter',
+  rep_all:'All', rep_total:'Total', rep_none:'No bookings in this selection.',
+  fee_note:'Includes a {share}% service fee and 6% OB.',
   q_net:'You receive',
   av_title:'Your availability', av_base:'By default you are', av_yes:'Available', av_no:'Unavailable',
   av_base_s:'This applies to your whole calendar.', av_custom:'Adjust per day',
@@ -696,9 +732,14 @@ Object.assign(I18N.en, {
   tm_toast:'Signed \u00b7 copy on its way to {mail}', tm_view:'What you signed',
   tm_k1:'You set your own rates, services and availability',
   tm_k2:'The customer pays 50% up front; you are paid within two working days',
-  tm_k3:'On top of your rate the customer pays a 25% service fee and OB',
+  tm_k3:'You keep your rate in full; the customer also pays a service fee of {share}% of the total',
   tm_k4:'A twelve-month non-solicitation clause after deactivation, buyable from XCG 500',
   tm_locked:'Sign the terms first and requests will appear here.',
+  tm_accept:'I accept the terms', tm_need:'Tick the terms first.',
+  ik_title:'We are arranging an introductory call', ik_s:'Your profile is ready. Once we have spoken, requests start coming in.',
+  ik_mailed:'Your details were sent to info@huisdierenoppascuracao.com.',
+  ik_demo:'Demo: call completed', ik_locked:'Requests appear here after the introductory call.',
+  log_empty:'No history available.', log_sum:'{n} days \u00b7 {amt} XCG',
   deact:'Deactivate account', deact_s:'Your account disappears from search results and you stop receiving requests. Bookings already running are finished as agreed.',
   deact_term:'After deactivation the non-solicitation clause runs for another twelve months, until {date}.',
   deact_q:'Are you sure you want to deactivate your account? You will be signed out.',
@@ -718,8 +759,8 @@ Object.assign(I18N.en, {
   ur_done:'Urgent request sent',
   ur_since:'Dropped out on {date}', ur_days_left:'{n} days left',
   fee_what:'What does that cover?', fee_title:'What the service fee covers',
-  fee_lead_owner:'On top of the sitter\u2019s rate you pay a 25% service fee and 6% OB. This is what it buys.',
-  fee_lead_sitter:'The customer pays a 25% service fee on top of your rate. This is what we do for it.',
+  fee_lead_owner:'Of the amount you pay, {share}% is the service fee; the 6% OB is included too. This is what it buys.',
+  fee_lead_sitter:'You keep your rate in full. On top of it the customer pays a service fee: {share}% of the total, or {pct}% on top of your rate. This is what we do for it.',
   fee_more:'Service fee: what does it cover?',
   fee_disclaimer:'In this prototype the amounts and cover are still a proposal and have yet to be fixed.',
   fo1:'Pay safely, or get your money back', fo1s:'You pay in the app. If nobody turns up, you get your money back. Half up front, the rest only after the booking ends.',
@@ -803,7 +844,8 @@ Object.assign(I18N.nl, {
   sp_about:'Vertel iets over jezelf', sp_about_ph:'Wie ben je, hoe pak je het aan, wat kunnen klanten verwachten?',
   sp_photos:'Foto’s', sp_add_photo:'+ Foto toevoegen', sp_photo_hint:'Maximaal 4 foto’s. Ze blijven op dit apparaat.',
   sp_care:'Ik pas op', sp_tasks:'Taken die ik uitvoer', sp_hoods:'Buurten waar ik oppas',
-  sp_profile:'Jouw profiel', sp_profile_s:'Dit zien eigenaren als ze een oppas zoeken.',
+  hg_stad:'Willemstad', hg_ariba:'Bandariba (oost)', hg_abou:'Bandabou (west)',
+  sp_profile:'Jouw profiel', sp_profile_s:'Contactgegevens',
   sp_prices:'Prijs', sp_price_s:'Bedragen in XCG. Kies per dienst een vast tarief en eventuele toeslagen.',
   sv_day:'Oppas aan huis (per dag)', sv_visit:'Korte visite of uitlaatservice (per keer)', sv_walk:'Hondenuitlaatservice tijdens oppas (per keer)',
   pr_base:'Basisprijs (1 huisdier)', pr_extra:'Per extra hond of kat', pr_other:'Per overig dier', pr_offer:'Ik bied dit aan',
@@ -817,7 +859,8 @@ Object.assign(I18N.en, {
   sp_about:'Tell us about yourself', sp_about_ph:'Who are you, how do you work, what can owners expect?',
   sp_photos:'Photos', sp_add_photo:'+ Add photo', sp_photo_hint:'Up to 4 photos. They stay on this device.',
   sp_care:'I look after', sp_tasks:'Tasks I do', sp_hoods:'Areas I cover',
-  sp_profile:'Your profile', sp_profile_s:'This is what owners see when they look for a sitter.',
+  hg_stad:'Willemstad', hg_ariba:'Bandariba (east)', hg_abou:'Bandabou (west)',
+  sp_profile:'Your profile', sp_profile_s:'Contact details',
   sp_prices:'Pricing', sp_price_s:'Amounts in XCG. Set a rate and any surcharges per service.',
   sv_day:'House sitting (per day)', sv_visit:'Short visit or walking service (per visit)', sv_walk:'Dog walking during house sitting (per walk)',
   pr_base:'Base price (1 pet)', pr_extra:'Per extra dog or cat', pr_other:'Per other pet', pr_offer:'I offer this',
@@ -888,6 +931,8 @@ Object.assign(I18N.en, {
   st_none:'No request yet', st_requested:'Waiting for the sitter', st_accepted:'Accepted', st_active:'In progress', st_done:'Finished',
   notif_req:'New request received', notif_acc:'Your request was accepted',
 });
+/* enkelvoud of meervoud, zodat er nooit "1 dieren" staat */
+const nlab = (n, one, many) => n === 1 ? t(one) : t(many, {n});
 function t(k, v){ let s = (I18N[S.lang]||I18N.nl)[k]; if(s==null) s = I18N.nl[k] ?? k; if(v) for(const x in v) s = s.replace('{'+x+'}', v[x]); return s; }
 
 /* ---------------- looks ---------------- */
@@ -936,11 +981,18 @@ function season(){
 }
 
 /* ---------------- oppassers (demo-catalogus) ---------------- */
-const HOODS = ['Punda','Otrobanda','Scharloo','Pietermaai','Saliña','Saliña Abou','Mahaai','Damacor','Van Engelen','Julianadorp',
-  'Jan Thiel','Caracasbaai','Spaanse Water','Brievengat','Zeelandia','Marie Pompoen','Rooi Catootje','Emmastad','Groot Kwartier','Gosieweg',
-  'Koraal Specht','Suffisant','Steenrijk','Wishi','Seru Fortuna','Cas Grandi','Bapor Kibrá','Toni Kunchi','Sta. Rosa','Sta. Maria',
-  'Montaña','Sint Joris','Ronde Klip','Piscadera','Blue Bay','Bottelier','Vredenberg','Grote Berg','Sint Michiel','Willibrordus',
-  'Barber','Soto','Tera Kòrá','Lagun','Santa Cruz','Knip','Daniel','Westpunt'];
+/* De gangbare indeling van het eiland: Willemstad met zijn wijken, Bandariba (oost)
+   en Bandabou (west, vanaf Grote Berg richting Westpunt).                          */
+const HOOD_GROUPS = [
+  ['hg_stad', ['Punda','Otrobanda','Scharloo','Pietermaai','Saliña','Saliña Abou','Mahaai','Damacor','Van Engelen','Julianadorp',
+    'Brievengat','Zeelandia','Marie Pompoen','Rooi Catootje','Emmastad','Groot Kwartier','Gosieweg','Koraal Specht','Suffisant',
+    'Steenrijk','Wishi','Seru Fortuna','Cas Grandi','Toni Kunchi','Piscadera']],
+  ['hg_ariba', ['Jan Thiel','Caracasbaai','Spaanse Water','Bapor Kibrá','Sta. Rosa','Sta. Maria','Montaña','Sint Joris','Ronde Klip']],
+  ['hg_abou', ['Blue Bay','Sint Michiel','Grote Berg','Bottelier','Vredenberg','Willibrordus','Barber','Soto','Tera Kòrá',
+    'Lagun','Santa Cruz','Knip','Daniel','Westpunt']],
+];
+const HOODS = HOOD_GROUPS.flatMap(([,list])=>list);
+const hoodGroup = h => (HOOD_GROUPS.find(([,l])=>l.includes(h)) || ['hg_stad'])[0];
 const CARE_KINDS = ['dog','puppy','cat','kitten','turtle','chicken','bird','fish'];
 const CARE_BASE = {dog:'dog', puppy:'dog', cat:'cat', kitten:'cat', turtle:'turtle', chicken:'chicken', bird:'bird', fish:'fish'};
 /* soorten die in het strandtafereel meelopen, en soorten die je per aantal opgeeft */
@@ -961,22 +1013,33 @@ const FLOCK_ICON = {
   fish:'<svg viewBox="0 0 24 24"><path d="M6.2 12 1.6 8.2v7.6z"/><ellipse cx="13" cy="12" rx="7.6" ry="4.9"/>'
     + '<path d="M12.6 7.6 11.4 4.9l3.9 2.3z"/><circle cx="17.6" cy="10.6" r=".8" class="hl"/></svg>'};
 const SITTER_TASKS = ['feed','walk','plants'];
-/* de oppas bepaalt het eigen tarief; de klant betalt dat plus marge en OB */
-const MARGIN = 0.25, OB = 0.06;
+/* De oppas bepaalt het eigen tarief en ontvangt dat volledig.
+   MARGIN is de enige knop: de opslag op dat tarief, en dus de brutomarge.
+   FEE_SHARE volgt eruit — het aandeel van het totaalbedrag inclusief OB
+   dat de klant als servicekosten betaalt. 26,9% opslag = 20% van het totaal. */
+const MARGIN = 0.269, OB = 0.06;
+const FEE_SHARE = MARGIN / ((1 + MARGIN) * (1 + OB));
+const pctTxt = n => String(Math.round(n * 10) / 10).replace('.', ',');
+const FEE_PCT = pctTxt(MARGIN * 100);          // opslag op het tarief van de oppas
+const SHARE_PCT = pctTxt(FEE_SHARE * 100);     // aandeel van het totaalbedrag
 const gross = n => Math.round(n * (1 + MARGIN) * (1 + OB));
-const SERVICES = ['day','host','hotel','visit','walk'];
-const SV_LBL = {day:'sv_day_s', host:'sv_host_s', hotel:'sv_hotel_s', visit:'sv_visit_s', walk:'sv_walk_s'};
-const SV_LONG = {day:'sv_day', host:'sv_host', hotel:'sv_hotel', visit:'sv_visit', walk:'sv_walk'};
-const SV_LINE = {day:'q_days', host:'q_hosts', hotel:'q_hotels', visit:'q_visits', walk:'q_walks'};
-const DAILY = ['day','host','hotel'];   // per oppasdag — aankomst- en vertrekdag tellen allebei mee; de rest per keer
+const SERVICES = ['day','host','hotel','cathotel','visit','walk'];
+const SV_LBL = {day:'sv_day_s', host:'sv_host_s', hotel:'sv_hotel_s', cathotel:'sv_cathotel_s', visit:'sv_visit_s', walk:'sv_walk_s'};
+const SV_LONG = {day:'sv_day', host:'sv_host', hotel:'sv_hotel', cathotel:'sv_cathotel', visit:'sv_visit', walk:'sv_walk'};
+const SV_LINE = {day:'q_days', host:'q_hosts', hotel:'q_hotels', cathotel:'q_cathotels', visit:'q_visits', walk:'q_walks'};
+const PRICE_ORDER = ['day','host','hotel','cathotel','walk','visit'];   // volgorde in het prijzenblok
+const DAILY = ['day','host','hotel','cathotel'];   // per oppasdag — aankomst- en vertrekdag tellen allebei mee; de rest per keer
 const emptyPrices = () => ({
   day:  {on:true,  base:90, extra:10, other:0, discounts:[{days:5, pct:5},{days:10, pct:10}]},
   host: {on:false, base:70, extra:15, other:0, discounts:[]},
   hotel:{on:false, base:65, extra:20, other:0, discounts:[]},
+  cathotel:{on:false, base:55, extra:15, other:0, discounts:[]},
   visit:{on:true,  base:60, extra:5,  other:0, discounts:[]},
   walk: {on:false, base:30, extra:5,  other:0, discounts:[]},
 });
 function defaultProfiles(){
+  const intakeDemo = () => ({requested_at:new Date(Date.now()-86400e3*30).toISOString(), done:true,
+    done_at:new Date(Date.now()-86400e3*28).toISOString()});
   const signedDemo = () => ({version:TERMS_VERSION, at:new Date(Date.now()-86400e3*30).toISOString(), name:'', mail:'', ua:'demo', mailed_at:new Date(Date.now()-86400e3*30).toISOString()});
   const dk = n => { const d = new Date(); d.setDate(d.getDate()+n); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); };
   const demoAvail = {base:'yes', custom:true, days:{
@@ -986,25 +1049,29 @@ function defaultProfiles(){
   return {
     s_eline:{first:'Eline', last:'', phone:'+599 694 7642', email:'info@huisdierenoppascuracao.com',
       about:'Ik pas al jaren op honden, katten en af en toe een schildpad. Ik stuur graag korte updates en een foto tussendoor.',
-      photos:[], care:['dog','puppy','cat','kitten','turtle','chicken','bird','fish'], tasks:['feed','walk','plants'], signed:signedDemo(),
+      photos:[], care:['dog','puppy','cat','kitten','turtle','chicken','bird','fish'], tasks:['feed','walk','plants'], signed:signedDemo(), intake:intakeDemo(),
       hoods:['Pietermaai','Punda','Scharloo','Saliña'], avail:demoAvail,
       prices:{day:{on:true, base:90, extra:10, other:0, discounts:[{days:5, pct:5},{days:10, pct:10}]},
               host:{on:true, base:70, extra:15, other:0, discounts:[{days:7, pct:5}]},
               hotel:{on:false, base:65, extra:20, other:0, discounts:[]},
+              cathotel:{on:false, base:55, extra:15, other:0, discounts:[]},
               visit:{on:true, base:60, extra:5, other:0, discounts:[]},
               walk:{on:true, base:30, extra:5, other:0, discounts:[]}}},
     s_naomi:{first:'Naomi', last:'', phone:'', email:'naomi@voorbeeld.com', about:'Kattenmens in hart en nieren. Rustig aan huis en ik blijf graag even hangen voor een knuffel.',
-      photos:[], care:['cat','kitten'], tasks:['feed'], hoods:['Pietermaai','Mahaai'], signed:signedDemo(),
+      photos:[], care:['cat','kitten'], tasks:['feed'], hoods:['Pietermaai','Mahaai'], signed:signedDemo(), intake:intakeDemo(),
       prices:{day:{on:true, base:85, extra:10, other:0, discounts:[{days:7, pct:5}]}, host:{on:true, base:60, extra:12, other:0, discounts:[]},
-              hotel:{on:false, base:65, extra:20, other:0, discounts:[]}, visit:{on:true, base:55, extra:5, other:0, discounts:[]}, walk:{on:false, base:30, extra:5, other:0, discounts:[]}}},
+              hotel:{on:false, base:65, extra:20, other:0, discounts:[]}, cathotel:{on:true, base:55, extra:12, other:0, discounts:[{days:7, pct:5}]},
+              visit:{on:true, base:55, extra:5, other:0, discounts:[]}, walk:{on:false, base:30, extra:5, other:0, discounts:[]}}},
     s_ruben:{first:'Ruben', last:'', phone:'', email:'ruben@voorbeeld.com', about:'Sportief en actief: lange strandwandelingen zijn mijn ding.',
-      photos:[], care:['dog','puppy'], tasks:['feed','walk'], hoods:['Jan Thiel','Willibrordus'], signed:signedDemo(),
+      photos:[], care:['dog','puppy'], tasks:['feed','walk'], hoods:['Jan Thiel','Willibrordus'], signed:signedDemo(), intake:intakeDemo(),
       prices:{day:{on:false, base:90, extra:10, other:0, discounts:[]}, host:{on:false, base:70, extra:15, other:0, discounts:[]},
-              hotel:{on:true, base:75, extra:25, other:0, discounts:[{days:7, pct:10}]}, visit:{on:true, base:60, extra:5, other:0, discounts:[]}, walk:{on:true, base:35, extra:5, other:0, discounts:[]}}},
+              hotel:{on:true, base:75, extra:25, other:0, discounts:[{days:7, pct:10}]}, cathotel:{on:false, base:55, extra:15, other:0, discounts:[]},
+              visit:{on:true, base:60, extra:5, other:0, discounts:[]}, walk:{on:true, base:35, extra:5, other:0, discounts:[]}}},
     s_kim:{first:'Kim', last:'', phone:'', email:'kim@voorbeeld.com', about:'Net begonnen als oppas en leer graag bij. Ik spring graag in als er met spoed iemand nodig is.',
-      photos:[], care:['dog','cat','turtle','chicken'], tasks:['feed','walk','plants'], hoods:['Punda','Otrobanda','Scharloo'], signed:signedDemo(),
+      photos:[], care:['dog','cat','turtle','chicken'], tasks:['feed','walk','plants'], hoods:['Punda','Otrobanda','Scharloo'], signed:signedDemo(), intake:intakeDemo(),
       prices:{day:{on:true, base:80, extra:10, other:0, discounts:[]}, host:{on:true, base:55, extra:10, other:0, discounts:[]},
-              hotel:{on:false, base:65, extra:20, other:0, discounts:[]}, visit:{on:true, base:50, extra:5, other:0, discounts:[]}, walk:{on:true, base:25, extra:5, other:0, discounts:[]}}},
+              hotel:{on:false, base:65, extra:20, other:0, discounts:[]}, cathotel:{on:false, base:55, extra:15, other:0, discounts:[]},
+              visit:{on:true, base:50, extra:5, other:0, discounts:[]}, walk:{on:true, base:25, extra:5, other:0, discounts:[]}}},
   };
 }
 /* profiel + vaste demo-cijfers samen */
@@ -1147,7 +1214,7 @@ function seed(){
     {id:'m1', from:'owner', text:'Hoi Eline! De sleutel ligt onder de bloempot bij de achterdeur.', at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,32).toISOString()},
     {id:'m2', from:'sitter', text:'Dank je! Ik ben binnen, de dieren zijn blij. Ik hou je op de hoogte.', at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,54).toISOString()},
   ];
-  const st = {v:1, lang:'nl', role:'sitter', user_type:'sitter', theme:'auto', season:'auto', demo_time:null, tab:'today', plan, days:{}, dismissed:{}, read:{owner:null, sitter:null}, me_sitter:DEFAULT_ME, sitters:defaultProfiles(), bookings:[booking], bkform:null, chat, threads:{}, flags:[], extra_sitters:[], contacts:[], rewards:{}, anim:true, anim_by:{},
+  const st = {v:1, lang:'nl', role:'sitter', user_type:'sitter', theme:'auto', season:'auto', demo_time:null, tab:'today', plan, days:{}, dismissed:{}, read:{owner:null, sitter:null}, me_sitter:DEFAULT_ME, sitters:defaultProfiles(), bookings:[booking], bkform:null, chat, threads:{}, flags:[], extra_sitters:[], contacts:[], rewards:{}, mails:[], anim:true, anim_by:{},
     auth:{email:'info@huisdierenoppascuracao.com', name:'Eline', role:'sitter', sitter:DEFAULT_ME}};
   const y = new Date(today); y.setDate(y.getDate()-1);
   const yk = dateKey(y);
@@ -1169,16 +1236,19 @@ function seed(){
 function seedClean(){
   const st = seed();
   st.bookings = []; st.bkform = null; st.chat = []; st.days = {}; st.dismissed = {}; st.read = {owner:null, sitter:null}; st.threads = {}; st.flags = [];
-  st.extra_sitters = []; st.contacts = []; st.rewards = {}; st.auth = null;
+  st.extra_sitters = []; st.contacts = []; st.rewards = {}; st.mails = []; st.auth = null;
   st.role = 'owner'; st.user_type = 'owner'; st.tab = 'booking';
   return st;
 }
 function load(){
   try{ const raw = localStorage.getItem(SAVE_KEY); if(raw){ const s = JSON.parse(raw); if(s && s.v===1){ s.dismissed = s.dismissed||{}; s.season = s.season||'auto'; s.chat = s.chat||[]; if(s.booking){ s.booking.id = s.booking.id||'bk_1'; s.bookings = s.bookings||[s.booking]; delete s.booking; }
         s.bookings = s.bookings||[]; s.plan.owner_info = s.plan.owner_info||{name:'Mirthe', address:'', hood:'Pietermaai', phone:''};
+        s.bookings = s.bookings.filter(b => b && ['requested','pending','accepted','declined','active','done'].includes(b.state) && (b.days||[]).length);
         s.bookings.forEach(b=>{ b.sitter_ids = b.sitter_ids||[]; b.declined_by = b.declined_by||[]; if(b.sitter==='Shanti') b.sitter='Eline'; b.owner = s.plan.owner_info.name || 'Mirthe'; });
         s.read = s.read||{owner:null, sitter:null}; s.me_sitter = s.me_sitter||DEFAULT_ME; s.sitters = s.sitters||defaultProfiles(); s.user_type = s.user_type||null;
         if(s.plan && s.plan.chores) delete s.plan.chores.water;
+        s.mails = s.mails || [];
+        Object.values(s.sitters||{}).forEach(p=>{ if(p && p.signed && !p.intake) p.intake = {done:true}; });
         s.anim_by = s.anim_by || {};
         s.anim = s.anim_by[((s.auth && s.auth.email) || 'demo').toLowerCase()] !== false;
         s.threads = s.threads||{}; s.flags = s.flags||[]; s.extra_sitters = s.extra_sitters||[]; s.contacts = s.contacts||[]; s.rewards = s.rewards||{};
@@ -1235,6 +1305,9 @@ function rebuildToday(){
 
 /* ---------------- boeking ---------------- */
 const BLANK = {id:null, state:'none', days:[], sitter_ids:[], declined_by:[], type:'single'};
+/* een boeking met een status die de app niet kent, is een restant uit een oudere versie */
+const BK_STATES = ['requested','pending','accepted','declined','active','done'];
+const realBookings = () => (S.bookings||[]).filter(b => b && BK_STATES.includes(b.state) && (b.days||[]).length);
 /* de boeking waar het vandaag om gaat */
 function cur(){
   const k = dateKey(nowDate()), has = b => (b.days||[]).some(d=>d.date===k);
@@ -1247,7 +1320,7 @@ const ownerName = () => (S.plan.owner_info||{}).name || 'Mirthe';
 function sitterName(){ const c = cur(); return c ? bookingName(c) : (S.role==='sitter' ? meSitter().name : ((S.bookings||[]).filter(b=>b.accepted_by).map(bookingName)[0] || meSitter().name)); }
 /* aanvragen die bij deze oppas (Eline) horen */
 const forMe = b => {
-  if((b.declined_by||[]).includes(me())) return false;
+  if((b.declined_by||[]).includes(me()) || !isSigned(me()) || !intakeDone(me())) return false;
   /* een spoedaanvraag gaat naar iedereen die spoed aanneemt en bij de klant past, ook zonder topbeoordeling */
   if(b.urgent) return matchingSitters(b.services||['day'], true, b.days, b.alone).some(x=>x.id===me());
   return !b.sitter_ids.length ? goodSitters(b.days, b.alone).some(x=>x.id===me()) : b.sitter_ids.includes(me());
@@ -1626,7 +1699,8 @@ function birdSVG(b){
   </g></g>`;
 }
 let birdTimer = null, birdsOn = false;
-const birdsMode = () => S.role==='sitter' && !cur() && myBookings().length===0;
+/* rustig strand: de oppas zonder boekingen, de eigenaar zolang er nog geen dieren zijn */
+const birdsMode = () => !cur() && (S.role==='sitter' ? myBookings().length===0 : !S.plan.pets.length);
 function startBirds(){ if(birdsOn) return; birdsOn = true; scheduleBird(600); }
 function stopBirds(){ birdsOn = false; clearTimeout(birdTimer); const l = document.getElementById('birdLayer'); if(l) l.innerHTML=''; }
 function scheduleBird(ms){ clearTimeout(birdTimer); birdTimer = setTimeout(()=>{ if(!birdsOn) return; flyBird(); scheduleBird(5000 + Math.random()*7000); }, ms); }
@@ -1823,7 +1897,7 @@ function sceneSVG(){
   </svg>`;
 }
 function renderScene(){
-  document.querySelector('.top').classList.toggle('light', skyAt(nowMin()).dark);
+  document.querySelector('.top').classList.toggle('light', S.anim !== false && skyAt(nowMin()).dark);
   if(S.anim === false){ stopBirds(); $('#scene').innerHTML = ''; return; }
   $('#scene').innerHTML = sceneSVG();
   if(birdsMode()) startBirds(); else stopBirds();
@@ -1838,6 +1912,7 @@ function renderScene(){
 }
 function renderHeader(){
   $('#hSub').textContent = fmtDay(today().date);
+  $('#pawPts').innerHTML = ICON_PAW + '<span>' + rwNum(rwPts()) + '</span>';
   $('#roleBtn').textContent = t(S.role) + ' ⇄';
   $('#roleBtn').setAttribute('aria-label', t('view_as')+': '+t(S.role));
 }
@@ -1847,9 +1922,10 @@ let openTask = null;
 const ICON_CHECK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 const ICON_TICK = '<svg class="tick" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 function viewToday(){
+  const head = S.role==='sitter' ? (isSigned(me()) ? intakeCard() : signCard()) : '';
   /* zonder boeking voor vandaag: geen takenlijst en geen berichten */
-  if(!cur() || !bookingToday()) return bannerHTML();
-  return bannerHTML() + inboxSection() + (S.role === 'owner' ? viewOwner() : viewSitter());
+  if(!cur() || !bookingToday()) return head + bannerHTML();
+  return head + bannerHTML() + inboxSection() + (S.role === 'owner' ? viewOwner() : viewSitter());
 }
 /* één vak: het laatste ongelezen bericht of de laatste opmerking, of de chat zelf */
 function inboxSection(){
@@ -2004,15 +2080,55 @@ function ownerExtra(x){
   return '';
 }
 
+/* Logboek: nog nooit geboekt → leeg. Lopende boeking → de dagen zelf.
+   Twee dagen na afloop → alleen een samenvatting per boeking.            */
+const LOG_GRACE = 2;
+const lastDayOf = b => (b.days||[]).map(x=>x.date).sort().pop() || '';
+const daysSince = key => Math.round((new Date(dateKey(nowDate())+'T00:00') - new Date(key+'T00:00')) / 864e5);
+const logBookings = () => (S.bookings||[]).filter(b => b.accepted_by && (S.role!=='sitter' || b.accepted_by===me()));
+let logF = {y:'', m:'', c:''};
+const logAmount = b => { const q = quote(b.accepted_by, b.days, bkOpt(b)); return q ? (S.role==='sitter' ? q.net : q.total) : 0; };
+const logWho = b => String(S.role==='sitter' ? (b.owner || ownerName()) : ((sitterById(b.accepted_by)||{}).name || '')).split(' ')[0];
+/* afgeronde boekingen in één kader, met filters en een totaal */
+function reportPanel(done){
+  const years = [...new Set(done.map(b=>lastDayOf(b).slice(0,4)))].sort().reverse();
+  const whos  = [...new Set(done.map(logWho))].sort();
+  const pick = (key, cur, opts, lbl) => `<select data-f="log.${key}" aria-label="${lbl}">
+    <option value="">${lbl}: ${t('rep_all')}</option>
+    ${opts.map(([v,n])=>`<option value="${v}" ${cur===v?'selected':''}>${n}</option>`).join('')}</select>`;
+  const sel = done.filter(b=>{ const d = lastDayOf(b);
+    return (!logF.y || d.slice(0,4)===logF.y) && (!logF.m || d.slice(5,7)===logF.m) && (!logF.c || logWho(b)===logF.c); });
+  const total = sel.reduce((a,b)=>a+logAmount(b), 0);
+  const rows = sel.sort((a,b)=>lastDayOf(b).localeCompare(lastDayOf(a))).map(b=>
+    `<div class="dayrow"><span><b>${esc(logWho(b))}</b></span>
+      <span class="muted">${bookingRange(b)} · ${nlab((b.days||[]).length, 'bk_1day', 'bk_days')}</span>
+      <span>${logAmount(b)} XCG</span></div>`).join('');
+  return `<div class="panel"><h3>${t('rep_title')}</h3>
+    <div class="repfilters">
+      ${pick('y', logF.y, years.map(y=>[y,y]), t('rep_year'))}
+      ${pick('m', logF.m, t('mon').map((n,i)=>[pad(i+1), n]), t('rep_month'))}
+      ${pick('c', logF.c, whos.map(w=>[w,w]), S.role==='sitter'?t('rep_who'):t('rep_who_s'))}
+    </div>
+    ${rows ? `<div class="daylist">${rows}
+      <div class="dayrow total"><span><b>${t('rep_total')}</b></span><span></span><span><b>${total} XCG</b></span></div></div>`
+      : `<p class="sub muted">${t('rep_none')}</p>`}</div>`;
+}
 function viewLog(){
-  const keys = Object.keys(S.days).sort().reverse();
-  const items = keys.map((k,i)=>{
-    const d = S.days[k], done = d.tasks.filter(x=>x.state==='done').length;
-    const rows = d.tasks.map(x=>`<div class="lrow"><span class="d ${x.state==='done'?(x.note||x.outcome==='refused'?'note':'ok'):''}"></span><span class="tm">${x.state==='done'?hmOf(x.later_at||x.done_at):'—'}</span>
-      <span>${esc(taskTitle(x))}${outcomeText(x)?` <span class="muted">· ${esc(outcomeText(x))}</span>`:''}${x.note?`<div class="muted">“${esc(x.note)}”</div>`:''}</span></div>`).join('');
-    return `<details class="day" ${i===0?'open':''}><summary><b>${fmtDay(k)}</b><span class="muted">${t('tasks_done',{a:done,b:d.tasks.length})}</span></summary><div class="inner">${rows}</div></details>`;
-  }).join('');
-  return `<section class="sec"><h2>${t('log')}</h2><div style="display:flex;flex-direction:column;gap:10px">${items}</div></section>`;
+  const all = logBookings();
+  const live = all.filter(b => { const l = lastDayOf(b); return l && daysSince(l) <= LOG_GRACE; });
+  const done = all.filter(b => { const l = lastDayOf(b); return l && daysSince(l) > LOG_GRACE; })
+    .sort((a,b)=>lastDayOf(b).localeCompare(lastDayOf(a)));
+  const days = live.length ? Object.keys(S.days).sort().reverse().map((k,i)=>{
+    const d = S.days[k], doneN = d.tasks.filter(x=>x.state==='done').length;
+    const rows = d.tasks.map(x=>`<div class="lrow"><span class="d ${x.state==='done'?(x.note||x.outcome==='refused'?'note':'ok'):''}"></span><span class="tm">${x.state==='done'?hmOf(x.later_at||x.done_at):'\u2014'}</span>
+      <span>${esc(taskTitle(x))}${outcomeText(x)?` <span class="muted">\u00b7 ${esc(outcomeText(x))}</span>`:''}${x.note?`<div class="muted">\u201c${esc(x.note)}\u201d</div>`:''}</span></div>`).join('');
+    return `<details class="day" ${i===0?'open':''}><summary><b>${fmtDay(k)}</b><span class="muted">${t('tasks_done',{a:doneN,b:d.tasks.length})}</span></summary><div class="inner">${rows}</div></details>`;
+  }).join('') : '';
+  const sums = done.length ? reportPanel(done) : '';
+  const body = days + sums;
+  return `<section class="sec"><h2>${t('log')}</h2>${body
+    ? `<div style="display:flex;flex-direction:column;gap:10px">${body}</div>`
+    : `<div class="empty">${t('log_empty')}</div>`}</section>`;
 }
 
 function ownerPhotos(){
@@ -2065,7 +2181,7 @@ function viewIntake(){
     <fieldset ${ro?'disabled':''}>
     ${sec(t('q_owner'), t('q_owner_s'), `<input type="text" data-f="oi.name" value="${esc((P.owner_info||{}).name||'')}" placeholder="${t('name')}">
       <input type="text" data-f="oi.address" value="${esc((P.owner_info||{}).address||'')}" placeholder="${t('bk_address')}">
-      <select data-f="oi.hood">${HOODS.map(h=>`<option value="${h}" ${(P.owner_info||{}).hood===h?'selected':''}>${h}</option>`).join('')}</select>
+      <select data-f="oi.hood">${HOOD_GROUPS.map(([g,list])=>`<optgroup label="${t(g)}">${list.map(h=>`<option value="${h}" ${(P.owner_info||{}).hood===h?'selected':''}>${h}</option>`).join('')}</optgroup>`).join('')}</select>
       <input type="tel" data-f="oi.phone" value="${esc((P.owner_info||{}).phone||'')}" placeholder="${t('bk_phone')}">
       <p class="lbl">${t('q_owner_photos')}</p>${ownerPhotos()}`)}
     ${sec(t('q_pets'), '', petCards + (P.pets.length<4?`<button class="btn ghost sm" data-act="add-pet">${t('add_pet')}</button>`:''))}
@@ -2090,12 +2206,16 @@ function bkForm(){
   const f = S.bkform = S.bkform || {type:'single', date:k, start:'08:00', end:'18:00', date2:k, rows:[{date:k, start:'08:00', end:'18:00'}], sitter_ids:[]};
   f.type = f.type || 'single'; f.sitter_ids = f.sitter_ids || [];
   f.services = (f.services && f.services.length) ? f.services : ['day'];
-  if(!hasDogs()) f.services = f.services.filter(x=>!['walk','hotel'].includes(x));
+  f.services = f.services.filter(k => bkSvcList().some(([v])=>v===k));
+  if(!f.services.length) f.services = ['day'];
   f.visits = f.visits || 1; f.walks = f.walks || 1; f.alone = f.alone == null ? 4 : f.alone;
   return f;
 }
 const hasDogs = () => S.plan.pets.some(p=>p.species==='dog');
-const bkSvcList = () => SERVICES.filter(k => hasDogs() || !['walk','hotel'].includes(k)).map(k=>[k, SV_LBL[k]]);
+const hasCats = () => S.plan.pets.some(p=>p.species==='cat');
+/* hondendiensten alleen bij honden, kattenhotel alleen bij katten */
+const bkSvcList = () => SERVICES.filter(k =>
+  ['walk','hotel'].includes(k) ? hasDogs() : k==='cathotel' ? hasCats() : true).map(k=>[k, SV_LBL[k]]);
 function svcNames(list){ return (list||[]).map(k=>t(SV_LBL[k]||'sv_day_s')).join(', ');
 }
 function buildDays(){
@@ -2149,7 +2269,7 @@ function sitterCard(x, picked, showPick, days, opt){
   </div>`;
 }
 function bookingOwner(){
-  const f = bkForm(), list = (S.bookings||[]).slice().sort((a,b)=> (firstDay(a)||'').localeCompare(firstDay(b)||''));
+  const f = bkForm(), list = realBookings().slice().sort((a,b)=> (firstDay(a)||'').localeCompare(firstDay(b)||''));
   const chips = `<div class="seg">${[['single','bk_single'],['range','bk_range'],['multi','bk_multi']].map(([v,l])=>`<button class="chip ${f.type===v?'sel':''}" data-act="bk-type" data-v="${v}">${t(l)}</button>`).join('')}</div>`;
   const when = f.type==='single'
     ? `<div class="dayrow"><input type="date" data-f="bk.date" value="${f.date}"><span style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><input type="time" data-f="bk.start" value="${f.start}"><input type="time" data-f="bk.end" value="${f.end}"></span><span></span></div>`
@@ -2202,14 +2322,30 @@ function bookingOwner(){
         ${['requested','pending','declined','accepted'].includes(b.state)?`<button class="btn ghost danger" data-act="bk-delete">${['requested','pending'].includes(b.state)?t('bk_cancel'):t('bk_delete')}</button>`:''}
       </div></div>`).join('');
   const preview = (()=>{ const d = buildDays(); return d.length > 1 ? bkDays({days:d}) : ''; })();
-  const form = (showForm || !list.length) ? `${need}<section class="sec"><h2>${t('bk_when')}</h2><div class="panel">${chips}${when}${preview}</div></section>
+  const form = showForm ? `${need}<section class="sec"><h2>${t('bk_when')}</h2><div class="panel">${chips}${when}${preview}</div></section>
       ${picker}
       <section class="sec"><div class="panel"><button class="btn" data-act="bk-send">${t('bk_send')}</button></div></section>`
     : `<section class="sec"><button class="btn ghost" data-act="bk-form">${t('bk_new')}</button></section>`;
-  return `<section class="sec"><h2>${t('bk_plan')}</h2>${viewIntake()}${formBar('plan')}</section>
-    ${list.length?`<section class="sec"><h2>${t('bk_my')}</h2><div class="cards">${cards}</div></section>`:''}
-    ${form}`;
+  const ready = petsReady();
+  const petLine = S.plan.pets.length ? nlab(S.plan.pets.length, 'bk_1pet', 'bk_npets') : t('bk_petinfo_need');
+  const openPets = accOpen.pets == null ? !ready : accOpen.pets;
+  const openReq  = accOpen.req  == null ? true  : accOpen.req;
+  return `<details class="acc" data-acc="pets" ${openPets?'open':''}>
+      <summary><span>${t('bk_petinfo')}</span><span class="muted">${petLine}</span></summary>
+      <div class="inner">${viewIntake()}${formBar('plan')}</div></details>
+    ${ready ? `<details class="acc" data-acc="req" ${openReq?'open':''}>
+        <summary><span>${t('bk_reqsec')}</span><span class="muted">${list.length?nlab(list.length, 'bk_1req', 'bk_nreq'):''}</span></summary>
+        <div class="inner">${list.length?`<div class="cards">${cards}</div>`:''}${form}</div></details>`
+      : `<div class="acc off"><div class="head"><span>${t('bk_reqsec')}</span><span class="muted">${t('bk_locked')}</span></div></div>`}`;
 }
+/* de aanvraagsectie gaat pas open als de dieren zijn ingevuld én opgeslagen */
+const petsReady = () => (S.plan.pets||[]).length > 0 && !dirtyKinds().includes('plan');
+/* open of dicht blijft staan zolang de gebruiker er zelf aan zit; null = automatisch */
+let accOpen = {pets:null, req:null};
+document.addEventListener('toggle', e=>{
+  const d = e.target.closest && e.target.closest('details.acc');
+  if(d && d.dataset.acc) accOpen[d.dataset.acc] = d.open;
+}, true);
 /* wat de oppas van een boeking ziet: alle praktische info, geen animatie-instellingen */
 function planSummary(){
   const P = S.plan, oi = P.owner_info||{};
@@ -2260,7 +2396,7 @@ function quote(sitterId, days, opt){
   return lines.length ? {total, net, lines} : null;
 }
 const bkOpt = b => ({services: b.services || ['day'], visits: b.visits || 1, walks: b.walks || 1});
-const feeNote = () => `<p class="fineprint">${t('fee_note')} <button class="lnk fee" data-act="fees">${t('fee_what')}</button></p>`;
+const feeNote = () => `<p class="fineprint">${t('fee_note',{share:SHARE_PCT})} <button class="lnk fee" data-act="fees">${t('fee_what')}</button></p>`;
 /* mode 'gross' = wat de klant betaalt (standaard), 'net' = wat de oppas overhoudt */
 function quoteHTML(q, mode){
   if(!q) return `<p class="sub" style="color:var(--note)">${t('q_no_service')}</p>`;
@@ -2304,7 +2440,7 @@ const FEE_SITTER = [['shield','fs1'],['swap','fs2'],['badge','fs3'],['list','fs4
 function feesPage(){
   const owner = S.role !== 'sitter', rows = owner ? FEE_OWNER : FEE_SITTER;
   return `<section class="sec"><h2>${t('fee_title')}<span><button class="lnk" data-act="fees-close">${t('hide')}</button></span></h2>
-    <p class="sub">${owner ? t('fee_lead_owner') : t('fee_lead_sitter')}</p>
+    <p class="sub">${owner ? t('fee_lead_owner',{share:SHARE_PCT}) : t('fee_lead_sitter',{share:SHARE_PCT, pct:FEE_PCT})}</p>
     <div class="cards">${rows.map(([ic,k])=>`<div class="panel feerow">${feeIcon(ic)}<div><b>${t(k)}</b><span>${t(k+'s')}</span></div></div>`).join('')}</div>
     <p class="fineprint">${t('fee_disclaimer')}</p>
     <div class="brow"><button class="btn ghost" data-act="fees-close">${t('hide')}</button></div>
@@ -2317,7 +2453,7 @@ const TERMS = {
   nl: [
     ['1. Partijen en rol van het platform', 'Huisdierenoppas Cura\u00e7ao bemiddelt en incasseert namens jou. De oppasovereenkomst zelf sluit je met de klant.'],
     ['2. Je bent zelfstandig', 'Dit is geen arbeidsovereenkomst. Je bepaalt je eigen tarief, je diensten, je buurten en je beschikbaarheid, en je mag aanvragen weigeren zonder opgaaf van reden.'],
-    ['3. Tarief, servicevergoeding en OB', 'Jouw tarief is het bedrag dat jij overhoudt. De klant betaalt daarbovenop 25% servicekosten en de verschuldigde OB. Over je eigen tarief draag je zelf OB af.'],
+    ['3. Tarief, servicevergoeding en OB', `Jouw tarief is het bedrag dat jij ontvangt; daar gaat niets vanaf. De klant betaalt een totaalbedrag dat bestaat uit jouw tarief, de servicevergoeding en de verschuldigde OB. De servicevergoeding bedraagt ${SHARE_PCT}% van dat totaalbedrag inclusief OB, wat neerkomt op ${FEE_PCT}% bovenop jouw tarief. Over je eigen tarief draag je zelf OB af.`],
     ['4. Betaling en uitbetaling', 'De klant betaalt 50% bij acceptatie en de rest na afloop. Jij ontvangt je bedrag binnen twee werkdagen na de eindfactuur.'],
     ['5. Wijzigen en annuleren', 'Tot 24 uur na afloop kun je de einddatum en de omvang van de boeking aanpassen. Daarna staat de factuur vast.'],
     ['5a. Uitvallen en vervanging', 'Val je uit, dan zet je met \u00e9\u00e9n tik de resterende dagen als spoedaanvraag uit. Neem je zelf een spoedaanvraag aan, dan betaalt het platform je een spoedtoeslag van 25% op je eigen tarief. De klant betaalt over de resterende dagen nooit meer dan het oorspronkelijke bedrag.'],
@@ -2332,7 +2468,7 @@ const TERMS = {
   en: [
     ['1. Parties and the role of the platform', 'Huisdierenoppas Cura\u00e7ao introduces customers and collects payment on your behalf. The sitting agreement itself is between you and the customer.'],
     ['2. You are self-employed', 'This is not an employment contract. You set your own rates, services, areas and availability, and you may decline any request without giving a reason.'],
-    ['3. Rate, service fee and OB', 'Your rate is what you keep. On top of it the customer pays a 25% service fee and the OB due. You file and pay OB on your own rate.'],
+    ['3. Rate, service fee and OB', `Your rate is what you receive in full. The customer pays a total made up of your rate, the service fee and the OB due. The service fee is ${SHARE_PCT}% of that total including OB, which comes to ${FEE_PCT}% on top of your rate. You file and pay OB on your own rate.`],
     ['4. Payment and payout', 'The customer pays 50% on acceptance and the rest after the booking ends. You are paid within two working days of the final invoice.'],
     ['5. Changes and cancellation', 'You can adjust the end date and the scope of a booking up to 24 hours after it ends. After that the invoice is final.'],
     ['5a. Dropping out and replacement', 'If you drop out, one tap puts the remaining days out as an urgent request. If you accept an urgent request yourself, the platform pays you a 25% urgent surcharge on your own rate. The customer never pays more than the original amount for the remaining days.'],
@@ -2347,6 +2483,34 @@ const TERMS = {
 };
 const termsList = () => TERMS[S.lang] || TERMS.nl;
 const signedOf = id => (profile(id) || {}).signed || null;
+/* pas na het kennismakingsgesprek ontvangt een oppas aanvragen */
+const intakeOf = id => (profile(id) || {}).intake || null;
+const intakeDone = id => { const k = intakeOf(id); return !k || k.done === true; };
+let termsOK = false;
+function termsAccept(){
+  const mail = (S.auth && S.auth.email) || profile(me()).email || '';
+  return `<div class="panel sign"><h3>${t('tm_head')}</h3>
+    <div class="daylist">${['tm_k1','tm_k2','tm_k3','tm_k4'].map(k=>`<div class="keypt">${ICON_TICK}<span>${t(k,{share:SHARE_PCT})}</span></div>`).join('')}</div>
+    <details class="all"><summary>${t('tm_read')}</summary>${termsHTML()}</details>
+    <label class="toggle" style="grid-template-columns:auto 1fr"><input type="checkbox" data-f="tm.ok" ${termsOK?'checked':''}><span><b>${t('tm_accept')}</b></span></label>
+    <p class="fineprint">${t('tm_note',{v:TERMS_VERSION, mail:esc(mail)})}</p></div>`;
+}
+function intakeCard(){
+  const k = intakeOf(me());
+  if(!k || k.done) return '';
+  return `<div class="bcard"><h3>${t('ik_title')}</h3><p class="sub">${t('ik_s')}</p>
+    <p class="sub muted">${t('ik_mailed')}</p>
+    <button class="lnk" data-act="ik-done">${t('ik_demo')}</button></div>`;
+}
+/* in Odoo: een mail naar het platform plus een taak om het gesprek in te plannen */
+function intakeMail(pr, mail){
+  S.mails = S.mails || [];
+  S.mails.push({to:'info@huisdierenoppascuracao.com',
+    subject:'Kennismakingsgesprek met oppasser inplannen',
+    body:['Naam: '+(pr.first||''), 'Achternaam: '+(pr.last||''),
+          'Telefoonnummer: '+(pr.phone||''), 'E-mailadres: '+(mail||'')].join('\n'),
+    at:nowDate().toISOString()});
+}
 const isSigned = id => { const g = signedOf(id); return !!(g && g.version === TERMS_VERSION); };
 const deactivatedOf = id => (profile(id) || {}).deactivated_at || null;
 /* twaalf maanden relatiebeding vanaf een datum */
@@ -2360,7 +2524,7 @@ function signCard(){
     <div class="bcard sign">
       <h3>${t('tm_head')}</h3>
       <p class="sub">${t('tm_why')}</p>
-      <div class="daylist">${['tm_k1','tm_k2','tm_k3','tm_k4'].map(k=>`<div class="keypt">${ICON_TICK}<span>${t(k)}</span></div>`).join('')}</div>
+      <div class="daylist">${['tm_k1','tm_k2','tm_k3','tm_k4'].map(k=>`<div class="keypt">${ICON_TICK}<span>${t(k,{share:SHARE_PCT})}</span></div>`).join('')}</div>
       <details class="all"><summary>${t('tm_read')}</summary>${termsHTML()}</details>
       <div class="brow"><button class="btn" data-act="sign">${t('tm_sign')}</button></div>
       <p class="fineprint">${t('tm_note',{v:TERMS_VERSION, mail:esc(mail)})}</p>
@@ -2466,7 +2630,7 @@ function sitterProfileForm(){
   const service = (key, lbl) => {
     const p = pr.prices[key] || {};
     if(!p.on) return '';
-    return `<div class="petcard">
+    return `<div class="petcard" data-svc="${key}">
       <h4 class="svch">${t(lbl)}</h4>
       ${money(key,'base','pr_base') + money(key,'extra','pr_extra') + money(key,'other','pr_other') +
         (`<p class="lbl">${t('pr_disc')}</p>
@@ -2493,17 +2657,18 @@ function sitterProfileForm(){
       <div class="seg">${SERVICES.map(k=>`<button class="chip ${(pr.prices[k]||{}).on?'sel':''}" data-act="sp-offer" data-v="${k}">${t(SV_LBL[k])}</button>`).join('')}</div>
       <p class="sub muted">${t('sp_offer_s')}</p>
       <h3 style="margin-top:6px">${t('sp_tasks')}</h3>${chips('sp-task', SITTER_TASKS, pr.tasks||[], 'tk_')}
-      <h3 style="margin-top:6px">${t('sp_hoods')}</h3>${chips('sp-hood', HOODS, pr.hoods||[], '')}
+      <h3 style="margin-top:6px">${t('sp_hoods')}</h3>
+      ${HOOD_GROUPS.map(([g,list])=>`<p class="lbl">${t(g)}</p>${chips('sp-hood', list, pr.hoods||[], '')}`).join('')}
     </div>
     ${availPanel()}
     <div class="panel"><h3>${t('sp_prices')}</h3><p class="sub">${t('pr_net_s')}</p>
-      ${SERVICES.map(k=>service(k, SV_LONG[k])).join('')}
+      ${PRICE_ORDER.map(k=>service(k, SV_LONG[k])).join('')}
     </div></section>`;
 }
 
 function bookingSitter(){
   const signed = isSigned(me()), off = deactivatedOf(me());
-  const reqs = (signed && !off) ? openRequests() : [], mine = myBookings().sort((a,b)=>(firstDay(a)||'').localeCompare(firstDay(b)||''));
+  const reqs = (signed && !off && intakeDone(me())) ? openRequests() : [], mine = myBookings().sort((a,b)=>(firstDay(a)||'').localeCompare(firstDay(b)||''));
   const pend = signed ? pendingForMe() : [], lost = signed ? notChosenForMe() : [];
   if(openBooking){
     const b = (S.bookings||[]).find(x=>x.id===openBooking);
@@ -2549,13 +2714,13 @@ function bookingSitter(){
       <h3>${bookingRange(b)} <span class="pill warn">${t('st_notchosen')}</span></h3>
       <p class="sub muted">${t('st_notchosen_s')}</p></div>`).join('');
   const none = !reqs.length && !mine.length && !pend.length && !lost.length;
-  return `${signed ? '' : signCard()}${off ? deactivatedCard() : ''}
+  return `${off ? deactivatedCard() : ''}
     ${reqs.length?`<section class="sec"><h2>${t('bk_requests')}</h2><div class="cards">${reqCards}</div></section>`:''}
     ${pend.length?`<section class="sec"><h2>${t('st_pending')}</h2><div class="cards">${pendCards}</div></section>`:''}
     ${mine.length?`<section class="sec"><h2>${t('bk_yours')}</h2><div class="cards">${mineCards}</div></section>`:''}
     ${lost.length?`<div class="cards">${lostCards}</div>`:''}
-    ${none && signed && !off?`<div class="bcard"><h3>${esc(meSitter().name)} · ${t('bk_offer')}</h3><p class="sub muted">${t('bk_no_req')}</p></div>`:''}
-    ${sitterProfileForm()}${formBar('profile')}`;
+    ${none && signed && !off?`<div class="bcard"><h3>${esc(meSitter().name)} · ${t('bk_offer')}</h3><p class="sub muted">${intakeDone(me())?t('bk_no_req'):t('ik_locked')}</p></div>`:''}
+    ${sitterProfileForm()}${signed?'':termsAccept()}${formBar('profile', !signed)}`;
 }
 
 function viewMore(){
@@ -2572,26 +2737,28 @@ function viewMore(){
     <p class="sub muted">${t('role_hint')}</p>
     <p class="lbl">${t('language')}</p>${chips('set-lang', S.lang, [['nl','Nederlands'],['en','English']])}
     <p class="lbl">${t('theme')}</p>${chips('set-theme', S.theme, [['auto',t('th_auto')],['light',t('th_light')],['dark',t('th_dark')]])}
-    <p class="lbl">${t('season')}</p>${chips('set-season', S.season||'auto', [['auto',t('se_auto')],['december',t('se_dec')],['carnival',t('se_carn')],['none',t('se_none')]])}
-    <p class="sub muted">${t('season_hint')}</p>
     <p class="lbl">${t('anim')}</p>
     <button class="btn ghost" data-act="anim">${S.anim===false?t('anim_on'):t('anim_off')}</button>
     <p class="sub muted">${t('anim_s')}</p>
-    <p class="lbl">${t('demo_me')}</p><div class="seg">${allSitters().map(x=>`<button class="chip ${me()===x.id?'sel':''}" data-act="set-me" data-v="${x.id}">${esc(sitterInfo(x.id).name||x.name)}</button>`).join('')}</div>
-    <p class="lbl">${t('demo_time')}</p>${chips('set-demo', S.demo_time||'', [['',t('live')],['07:15','07:15'],['10:20','10:20'],['12:30','12:30'],['18:10','18:10'],['22:30','22:30']])}
   </div>
-  ${S.auth?`<div class="panel danger"><h3>${t('deact')}</h3>
-    <p class="sub">${t('deact_s')}</p>
-    ${S.auth.role==='sitter'?`<p class="sub muted">${t('deact_term',{date:plusYear(null)})}</p>`:''}
-    <button class="btn ghost danger" data-act="deactivate">${t('deact')}</button></div>`:''}
+  <div class="panel"><button class="btn ghost" data-act="fees">${t('fee_more')}</button></div>
   <div class="panel">
-    <button class="btn ghost" data-act="fees">${t('fee_more')}</button>
     <p class="sub">${t('install')}</p>
     ${S.auth?`<p class="sub muted">${t('lg_signed',{name:esc(S.auth.name), mail:esc(S.auth.email)})}</p><button class="btn ghost" data-act="logout">${t('logout')}</button>`:''}
     <button class="btn ghost" data-act="export">${t('export')}</button>
     <button class="btn ghost" data-act="demo-full">${t('demo_full')}</button>
     <button class="btn ghost danger" data-act="reset">${t('reset')}</button>
     <p class="sub muted" style="font-size:12.5px">${t('about')}</p>
+  </div>
+  ${S.auth?`<div class="panel"><h3>${t('deact')}</h3>
+    <p class="sub">${t('deact_s')}</p>
+    ${S.auth.role==='sitter'?`<p class="sub muted">${t('deact_term',{date:plusYear(null)})}</p>`:''}
+    <button class="btn ghost danger" data-act="deactivate">${t('deact')}</button></div>`:''}
+  <div class="panel">
+    <p class="lbl">${t('season')}</p>${chips('set-season', S.season||'auto', [['auto',t('se_auto')],['december',t('se_dec')],['carnival',t('se_carn')],['none',t('se_none')]])}
+    <p class="sub muted">${t('season_hint')}</p>
+    <p class="lbl">${t('demo_me')}</p><div class="seg">${allSitters().map(x=>`<button class="chip ${me()===x.id?'sel':''}" data-act="set-me" data-v="${x.id}">${esc(sitterInfo(x.id).name||x.name)}</button>`).join('')}</div>
+    <p class="lbl">${t('demo_time')}</p>${chips('set-demo', S.demo_time||'', [['',t('live')],['07:15','07:15'],['10:20','10:20'],['12:30','12:30'],['18:10','18:10'],['22:30','22:30']])}
   </div>`;
 }
 
@@ -2608,11 +2775,7 @@ const PTS = {
 const REWARDS = {
   owner: [
     {id:'o_disc250', cost:250,   k:'ro1'},
-    {id:'o_spot',    cost:250,   k:'ro6'},
-    {id:'store10',   cost:1000,  k:'rw3'},
-    {id:'o_visit',   cost:2000,  k:'ro3'},
     {id:'o_disc25',  cost:2500,  k:'ro4'},
-    {id:'o_fee',     cost:3000,  k:'ro5'},
     {id:'o_badge',   cost:3500,  k:'ro8'},
     {id:'course',    cost:9000,  k:'rw6'},
     {id:'photo',     cost:12500, k:'ro7'},
@@ -2620,14 +2783,16 @@ const REWARDS = {
   sitter: [
     {id:'prio',    cost:200,   k:'rw1'},
     {id:'spot',    cost:250,   k:'rw2'},
-    {id:'store10', cost:1000,  k:'rw3'},
     {id:'fast',    cost:2000,  k:'rw4'},
     {id:'badge',   cost:3500,  k:'rw5'},
     {id:'course',  cost:9000,  k:'rw6'},
     {id:'photo',   cost:12500, k:'rw7'},
   ],
 };
-const rwKey = role => (role || S.role) === 'sitter' ? me() : 'owner';
+const ownerKey  = () => ((S.plan.owner_info||{}).email || OWNER_MAIL).toLowerCase();
+const sitterKey = id => { const k = id || me(); return ((profile(k)||{}).email || k.slice(2)+'@voorbeeld.com').toLowerCase(); };
+/* één spaarkaart per persoon: zonder rol die van wie er is ingelogd */
+const rwKey = role => role === 'sitter' ? sitterKey() : role === 'owner' ? ownerKey() : personKey();
 const rwFresh = at => (nowDate() - new Date(at)) < RW_DAYS*864e5;
 function rwStore(role){
   const k = rwKey(role); S.rewards = S.rewards || {};
@@ -2642,10 +2807,7 @@ function rwBalance(r){
   return Math.max(0, won - uit);
 }
 const rwPts = role => rwBalance(rwStore(role));
-/* de persoon achter een spaarkaart, zodat Odoo hem aan een contact kan hangen */
-const rwPartner = k => (k==='owner'
-  ? ((S.plan.owner_info||{}).email || OWNER_MAIL)
-  : ((profile(k)||{}).email || k.slice(2)+'@voorbeeld.com')).toLowerCase();
+const rwPartner = k => k;   /* de sleutel íís het contact */
 /* de eerstvolgende punten die verlopen */
 function rwNextExpiry(role){
   const live = rwStore(role).entries.filter(e=>rwFresh(e.at)).sort((a,b)=>a.at.localeCompare(b.at));
@@ -2657,13 +2819,13 @@ function rwNextExpiry(role){
 function award(role, key, n){
   const r = rwStore(role);
   r.entries = r.entries.filter(e=>rwFresh(e.at));
-  if(r.entries.some(e=>e.key===key)) return;
-  r.entries.push({key, n, at:nowDate().toISOString()});
+  if(r.entries.some(e=>e.key===key && e.side===role)) return;
+  r.entries.push({key, n, side:role, at:nowDate().toISOString()});
   save();
 }
 const rwNum = n => n.toLocaleString(S.lang==='en' ? 'en-US' : 'nl-NL');
 function rewardsPanel(){
-  const role = S.role, pts = rwPts(role), r = rwStore(role);
+  const role = S.role, pts = rwPts(), r = rwStore();
   const rows = role==='sitter'
     ? [['rw_e_accept',PTS.sitter.accept],['rw_e_checkin',PTS.sitter.checkin],['rw_e_task',PTS.sitter.task]]
     : [['rw_e_choose',PTS.owner.choose],['rw_e_otask',PTS.owner.task]];
@@ -2676,7 +2838,7 @@ function rewardsPanel(){
               : `<button class="btn sm" data-act="rw-redeem" data-v="${x.id}" ${ok?'':'disabled'}>${ok?t('rw_redeem'):t('rw_need',{n:rwNum(x.cost-pts)})}</button>`}
       </div></div>`;
   }).join('');
-  const exp = rwNextExpiry(role);
+  const exp = rwNextExpiry();
   return `<details class="day rw"><summary><b>${t('rw_title')}</b><span class="pill acc">${t('rw_pts',{n:rwNum(pts)})}</span></summary>
     <div class="inner">
       <p class="sub">${t('rw_how')}</p>
@@ -2700,12 +2862,14 @@ function dirtyKinds(){
 }
 const ICON_UNDO = '<svg viewBox="0 0 24 24"><path d="M4.2 9h9.3a5 5 0 0 1 0 10H9.4"/><path d="M7.9 5.3 4.2 9l3.7 3.7"/></svg>';
 /* balk onder een vragenlijst: alleen zichtbaar zolang er iets openstaat */
-function formBar(kind){
-  if(!dirtyKinds().includes(kind)) return '';
+function formBar(kind, always){
+  const on = dirtyKinds().includes(kind);
+  if(!on && !always) return '';
+  const blocked = always && !termsOK;
   return `<div class="savebar" data-savebar="${kind}">
-    <span class="dot"></span><span class="txt">${t('unsaved')}</span>
-    <button class="btn ghost ico" data-act="form-undo" data-v="${kind}" aria-label="${t('form_undo')}" title="${t('form_undo')}">${ICON_UNDO}</button>
-    <button class="btn" data-act="form-save" data-v="${kind}">${t('form_save')}</button></div>`;
+    <span class="dot"></span><span class="txt">${t(on?'unsaved':'tm_accept')}</span>
+    <button class="btn ghost ico" data-act="form-undo" data-v="${kind}" ${on?'':'disabled'} aria-label="${t('form_undo')}" title="${t('form_undo')}">${ICON_UNDO}</button>
+    <button class="btn" data-act="form-save" data-v="${kind}" ${blocked?'disabled':''}>${t('form_save')}</button></div>`;
 }
 /* wie wegklikt met open wijzigingen wordt naar de knoppen gebracht */
 function guardUnsaved(){
@@ -2873,7 +3037,10 @@ document.addEventListener('click', e=>{
   if(act==='av-del-time'){ const av = avOf(), d = av.days[calDay]; if(!d) return;
     d.times.splice(Number(a.closest('[data-time]').dataset.time), 1); save(); renderMain(); return; }
   if(act==='av-clear'){ const av = avOf(); delete av.days[calDay]; save(); renderMain(); return; }
-  if(act==='sp-offer'){ const pr = S.sitters[me()]; pr.prices[v].on = !pr.prices[v].on; save(); renderMain(); return; }
+  if(act==='sp-offer'){ const pr = S.sitters[me()] = S.sitters[me()] || profile(me());
+    pr.prices[v].on = !pr.prices[v].on; save(); renderMain();
+    if(pr.prices[v].on) setTimeout(()=>document.querySelector(`[data-svc="${v}"]`)?.scrollIntoView({behavior:'smooth', block:'center'}), 60);
+    return; }
   if(act==='bk-form'){ showForm = true; renderMain(); return; }
   if(act==='bk-any'){ bkForm().sitter_ids = []; save(); renderMain(); return; }
   if(act==='bk-sitter-open'){ const id = a.closest('[data-sitter]').dataset.sitter; openSitter = openSitter===id ? null : id; renderMain(); return; }
@@ -2913,7 +3080,7 @@ document.addEventListener('click', e=>{
   if(act==='rw-redeem'){
     const list = REWARDS[S.role==='sitter'?'sitter':'owner'], x = list.find(y=>y.id===v), r = rwStore();
     if(!x || rwPts() < x.cost || r.redeemed.some(y=>y.id===x.id && rwFresh(y.at))) return;
-    r.redeemed.push({id:x.id, cost:x.cost, date:dateKey(nowDate()), at:nowDate().toISOString()});
+    r.redeemed.push({id:x.id, cost:x.cost, side:S.role, date:dateKey(nowDate()), at:nowDate().toISOString()});
     save(); renderMain(); toast(t('rw_toast')); return; }
   if(act==='flags-clear'){ S.flags = []; save(); renderMain(); return; }
   if(act==='bk-decline'){ const id = a.closest('[data-booking]').dataset.booking, b = S.bookings.find(x=>x.id===id); if(!b) return;
@@ -2942,7 +3109,21 @@ document.addEventListener('click', e=>{
     if(act==='undo'){ x.state='todo'; x.outcome=null; x.done_at=null; x.later_at=null; x.pet_ids.forEach(id=>delete transient[id]); refresh(); return; }
     return;
   }
-  if(act==='form-save'){ save(); snapshot(); toast(t('saved')); render(); return; }
+  if(act==='form-save'){
+    if(v==='profile' && !isSigned(me())){
+      if(!termsOK){ toast(t('tm_need')); return; }
+      const pr = S.sitters[me()] = S.sitters[me()] || profile(me());
+      const mail = (S.auth && S.auth.email) || pr.email || '';
+      pr.signed = {version:TERMS_VERSION, at:nowDate().toISOString(), name:((pr.first||'')+' '+(pr.last||'')).trim(),
+        mail, ua:navigator.userAgent.slice(0,120), mailed_at:nowDate().toISOString()};
+      pr.intake = {requested_at:nowDate().toISOString(), done:false};
+      intakeMail(pr, mail); termsOK = false; accOpen = {pets:null, req:null};
+      save(); snapshot(); render(); window.scrollTo({top:0}); toast(t('tm_toast',{mail})); return;
+    }
+    accOpen = {pets:null, req:null}; save(); snapshot(); toast(t('saved')); render(); return; }
+  if(act==='ik-done'){ const pr = S.sitters[me()] = S.sitters[me()] || profile(me());
+    pr.intake = {...(pr.intake||{}), done:true, done_at:nowDate().toISOString()};
+    save(); snapshot(); render(); return; }
   if(act==='form-undo'){ if(!baseline) return;
     if(v==='plan'){ S.plan = JSON.parse(baseline.plan); rebuildToday(); }
     else { S.sitters[me()] = JSON.parse(baseline.profile); }
@@ -2961,12 +3142,15 @@ document.addEventListener('click', e=>{
     /* in Odoo: een nieuw contact (res.partner) met een portaalgebruiker */
     S.contacts = [...(S.contacts||[]), {id:uid('res_'), name, email:mail, phone:lg.phone||'', type:lg.role, created:nowDate().toISOString()}];
     if(lg.role==='owner'){
-      S.plan.owner_info = {...(S.plan.owner_info||{}), name, email:mail, phone:lg.phone||''};
+      S.plan = {...S.plan, pets:[], feedings:[], walks:[], meds:[], custom:[], notes:'', health:'',
+        owner_info:{name, email:mail, phone:lg.phone||'', address:'', hood:HOODS[0], photos:[]}};
+      S.days = {};
       signIn({email:mail, name, role:'owner'});
     } else {
       const id = uid('s_');
       S.extra_sitters = [...(S.extra_sitters||[]), {id, name, hoods:[], species:[], years:0, bookings:0, rating:5, intro:''}];
-      S.sitters[id] = {first:name, last:'', phone:lg.phone||'', email:mail, about:'', photos:[], care:[], tasks:[], hoods:[], prices:emptyPrices(), avail:blankAvail(), signed:null};
+      S.sitters[id] = {first:name, last:'', phone:lg.phone||'', email:mail, about:'', photos:[], care:[], tasks:[], hoods:[], prices:emptyPrices(), avail:blankAvail(), signed:null, intake:null};
+      termsOK = false;
       signIn({email:mail, name, role:'sitter', sitter:id});
     }
     lg = {mode:'in', email:'', pass:'', name:'', phone:'', role:'owner'};
@@ -3100,6 +3284,7 @@ document.addEventListener('input', e=>{
   if(n){ const x = findTask(n.dataset.note); if(x){ x.note = n.value; delete S.dismissed[dismissKey(today().date,x)]; clearTimeout(noteTimer); noteTimer = setTimeout(()=>{ save(); renderScene(); }, 400); } return; }
   const f = e.target.dataset.f; if(!f) return;
   if(f.startsWith('lg.')){ lg[f.slice(3)] = e.target.value; return; }
+  if(f==='tm.ok'){ termsOK = e.target.checked; renderMain(); return; }
   const P = S.plan, later = fn => { clearTimeout(noteTimer); noteTimer = setTimeout(fn, 400); };
   if(!f.startsWith('sp.') && !f.startsWith('av.') && S.role!=='owner') return;
   if(f==='pet.name'){ P.pets.find(p=>p.id===e.target.closest('[data-pet]').dataset.pet).name = e.target.value; later(()=>planChanged(false)); }
@@ -3123,6 +3308,8 @@ document.addEventListener('input', e=>{
 document.addEventListener('focusout', e=>{ if(e.target.matches('[data-note]')){ const x = findTask(e.target.dataset.note); if(x){ x.note = e.target.value; save(); } } });
 document.addEventListener('change', e=>{
   const f = e.target.dataset.f; if(!f) return;
+  if(f==='tm.ok'){ termsOK = e.target.checked; renderMain(); return; }
+  if(f && f.startsWith('log.')){ logF[f.slice(4)] = e.target.value; renderMain(); return; }
   if(f==='av.custom'){ const av = avOf(); av.custom = e.target.checked; if(!av.custom) calDay = null; save(); renderMain(); return; }
   if(f==='av.from' || f==='av.to'){ const av = avOf(), d = av.days[calDay];
     if(d){ const i = Number(e.target.closest('[data-time]').dataset.time); d.times[i][f==='av.from'?'from':'to'] = e.target.value; save(); renderMain(); }
@@ -3166,9 +3353,14 @@ function exportJSON(){
   const out = {
     _info:'Huisdierenoppas Curaçao export — veldnamen volgen docs/DATAMODEL.md',
     'res.partner': (S.contacts||[]).map(c=>({x_id:c.id, name:c.name, email:c.email, phone:c.phone||false, type:c.type, create_date:c.created})),
+    'hoc.hood': HOOD_GROUPS.flatMap(([g,list])=>list.map(h=>({name:h, region:g.slice(3)}))),
     'hoc.sitter': Object.entries(S.sitters||{}).map(([sid,p])=>({x_id:sid, name:((p.first||'')+' '+(p.last||'')).trim(), email:p.email||false,
       services:SERVICES.filter(k=>(p.prices||{})[k] && p.prices[k].on), hood_ids:p.hoods||[], care:p.care||[],
       availability_default:(p.avail||{}).base || 'yes', active:!p.deactivated_at, deactivated_at:p.deactivated_at||false})),
+    'hoc.sitter.intake': Object.entries(S.sitters||{}).filter(([,p])=>p.intake).map(([sid,p])=>({
+      sitter_id:sid, requested_at:p.intake.requested_at||false, state:p.intake.done?'done':'todo',
+      done_at:p.intake.done_at||false, note:'Kennismakingsgesprek inplannen'})),
+    'mail.mail': (S.mails||[]).map(m=>({email_to:m.to, subject:m.subject, body_plain:m.body, create_date:m.at})),
     'hoc.sitter.agreement': Object.entries(S.sitters||{}).filter(([,p])=>p.signed).map(([sid,p])=>({
       sitter_id:sid, version:p.signed.version, signed_at:p.signed.at, signer:p.signed.name||false,
       email:p.signed.mail||false, user_agent:p.signed.ua||false, copy_sent_at:p.signed.mailed_at||false})),
@@ -3190,14 +3382,14 @@ function exportJSON(){
     'hoc.message': Object.entries(S.threads||{}).flatMap(([k,ms])=>{ const [bid,sid] = k.split('|');
       return ms.map(m=>({booking_id:bid, sitter_id:sid, author:m.from, body:m.text, create_date:m.at})); }),
     /* één spaarkaart per persoon; het saldo is de som van de regels hieronder */
-    'hoc.loyalty.account': Object.entries(S.rewards||{}).map(([k,r])=>({x_id:'loy_'+k, partner_ref:rwPartner(k),
-      role:k==='owner'?'owner':'sitter', valid_days:RW_DAYS, points_balance:rwBalance(r)})),
+    'hoc.loyalty.account': Object.entries(S.rewards||{}).map(([k,r])=>({x_id:'loy_'+k, partner_ref:k,
+      valid_days:RW_DAYS, points_balance:rwBalance(r)})),
     /* platte regels: sparen is positief, inwisselen negatief — read_group op partner_ref geeft het saldo */
     'hoc.loyalty.line': Object.entries(S.rewards||{}).flatMap(([k,r])=>[
-      ...(r.entries||[]).map(e=>({account_id:'loy_'+k, partner_ref:rwPartner(k), role:k==='owner'?'owner':'sitter',
+      ...(r.entries||[]).map(e=>({account_id:'loy_'+k, partner_ref:k, side:e.side||'sitter',
         event:e.key.split(':')[0], ref:e.key.slice(e.key.indexOf(':')+1), points:e.n, create_date:e.at,
         expires_at:new Date(new Date(e.at).getTime()+RW_DAYS*864e5).toISOString(), expired:!rwFresh(e.at)})),
-      ...(r.redeemed||[]).map(x=>({account_id:'loy_'+k, partner_ref:rwPartner(k), role:k==='owner'?'owner':'sitter',
+      ...(r.redeemed||[]).map(x=>({account_id:'loy_'+k, partner_ref:k, side:x.side||'owner',
         event:'redeem', ref:x.id, points:-x.cost, create_date:x.at, expires_at:false, expired:!rwFresh(x.at)}))]),
     /* wie heeft de animaties aan of uit staan */
     'hoc.user.settings': Object.entries(S.anim_by||{}).map(([mail,on])=>({partner_ref:mail, animations_enabled:on !== false})),
