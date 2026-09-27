@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Oppas Curaçao">
+<meta name="apple-mobile-web-app-title" content="Huisdierenoppas Curaçao">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
@@ -256,6 +256,15 @@ button.card .pill{align-self:center}
 .sitterhead b{display:block;font-size:15.5px}
 .sitterhead .sub{font-size:12.5px}
 .rate{text-align:right}.rate .st{display:block;color:var(--note);letter-spacing:1px;font-size:13px}
+.vfyline{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--ok);white-space:nowrap}
+.vfyline .vfy{width:15px;height:15px}
+.starpick{display:flex;gap:2px}
+.stbtn{border:0;background:none;font-size:30px;line-height:1;color:var(--idle);cursor:pointer;padding:0 3px}
+.stbtn.on{color:var(--note)}
+.pawpts .vfy{width:16px;height:16px;stroke:currentColor;fill:none}
+.pawpts.only{padding:6px 8px}
+.pawpts .stmark{font-size:14px;color:var(--note)}
+.top.light .pawpts .stmark{color:#F6C76B}
 .pill.warn{background:var(--late-soft);color:var(--late)}
 .bcard h3{margin:0;font-size:17px;font-weight:700;display:flex;align-items:center;gap:8px}
 .pill{font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--surface-2);color:var(--ink-2)}
@@ -263,6 +272,7 @@ button.card .pill{align-self:center}
 .kv{display:grid;grid-template-columns:96px 1fr;gap:6px 10px;font-size:14px}
 .kv b{font-weight:600;color:var(--ink-2)}
 .daylist{display:flex;flex-direction:column;gap:6px}
+.lrows{display:flex;flex-direction:column;gap:8px}
 .dayrow{display:grid;grid-template-columns:1fr 150px auto;gap:8px;align-items:center;font-size:14px}
 .brow{display:flex;gap:8px;flex-wrap:wrap}
 .choice{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;text-align:left;width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:14px;cursor:pointer}
@@ -281,7 +291,7 @@ body.noanim *{animation:none!important}
 .opt.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
 .opt.sel.warn{border-color:var(--note);background:var(--note-soft);color:var(--note)}
 .opt.full{grid-column:1/-1}
-textarea,input[type=text],input[type=tel],input[type=time],select{width:100%;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:9px 11px;font-size:15px;outline:none}
+textarea,input[type=text],input[type=tel],input[type=time],input[type=number],input[type=email],input[type=password],input[type=date],select{width:100%;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:9px 11px;font-size:15px;outline:none}
 textarea{resize:vertical;min-height:60px}
 textarea:focus,input:focus,select:focus{border-color:var(--accent)}
 .lnk{background:none;border:0;padding:2px 0;color:var(--ink-3);font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
@@ -306,6 +316,10 @@ details.all>summary::-webkit-details-marker{display:none}
 .petprev{width:72px;height:54px;background:var(--sky-2);border-radius:12px;overflow:hidden}
 .petprev svg{width:100%;height:100%;display:block}
 .petprev.flock{display:grid;place-items:center;background:var(--sand-2)}
+.stepper{display:grid;grid-template-columns:42px 1fr 42px;gap:6px;align-items:center}
+.stepper input{text-align:center;padding:9px 2px}
+.stepbtn{border:1.5px solid var(--line);background:var(--surface);border-radius:11px;height:40px;
+  font:700 19px/1 inherit;color:var(--accent);cursor:pointer;padding:0}
 .petprev.flock svg{width:34px;height:34px;fill:var(--ink-2)}
 .petprev.flock svg .hl{fill:var(--sand-2)}
 .seg{display:flex;flex-wrap:wrap;gap:6px}
@@ -325,26 +339,32 @@ details.all>summary::-webkit-details-marker{display:none}
 fieldset{border:0;margin:0;padding:0;min-width:0;display:flex;flex-direction:column;gap:14px}
 fieldset[disabled]{opacity:.7}
 
-.acc{background:var(--surface);border-radius:18px;box-shadow:var(--shadow)}
-.acc>summary,.acc>.head{list-style:none;cursor:pointer;padding:15px 16px;display:grid;grid-template-columns:1fr 14px;
+.fold{background:var(--surface);border-radius:18px;box-shadow:var(--shadow)}
+main>.fold+.fold,main>.fold+.sec,main>.sec+.fold{margin-top:-10px}
+.fold>summary,.fold>.head{list-style:none;cursor:pointer;padding:15px 16px;display:grid;grid-template-columns:1fr auto 14px;
   gap:2px 10px;align-items:center;font-size:16px;font-weight:700}
-.acc>summary::-webkit-details-marker{display:none}
-.acc>summary .muted,.acc>.head .muted{grid-column:1;font-size:13px;font-weight:500}
-.acc>summary:after{content:'\203A';grid-row:1/3;grid-column:2;align-self:center;color:var(--ink-3);font-size:19px;line-height:1;transform:rotate(90deg);justify-self:end}
-.acc[open]>summary:after{transform:rotate(-90deg)}
-.acc>.head{cursor:default}
-.acc>.head:after{content:'';}
-.acc.off{opacity:.55}
-.acc .inner{padding:0 16px 16px;display:flex;flex-direction:column;gap:14px}
-.acc .inner>.sec:first-child{margin-top:-2px}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary>span:first-child,.fold>.head>span:first-child{grid-column:1;grid-row:1}
+.fold>summary .muted,.fold>.head .muted{grid-column:1;grid-row:2;font-size:13px;font-weight:500}
+.fold>summary .cnt,.fold>.head .cnt{grid-column:2;grid-row:1/3;align-self:center;font-size:12px;font-weight:700;
+  padding:3px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
+.fold>summary:after{content:'\203A';grid-row:1/3;grid-column:3;align-self:center;color:var(--ink-3);font-size:19px;line-height:1;transform:rotate(90deg);justify-self:end}
+.fold[open]>summary:after{transform:rotate(-90deg)}
+.fold>.head{cursor:default}
+.fold>.head:after{content:'';}
+.fold.off{opacity:.55}
+.fold>.inner{padding:0 16px 16px;display:flex;flex-direction:column;gap:14px}
+.fold>.inner>.sec:first-child{margin-top:-2px}
+/* binnen een uitklapbaar vak geen kaart-in-kaart: alles wordt vlak */
+.fold .inner .panel{background:transparent;box-shadow:none;border-radius:0;padding:0}
+.fold .inner .panel+.panel,.fold .inner .sec+.sec{border-top:1px solid var(--line);padding-top:14px}
+.fold>.inner>.list,.fold>.inner>.status{background:transparent;box-shadow:none;border-radius:0;margin:0 -16px}
+.fold .inner .empty{background:var(--surface-2)}
+.fold .inner .card,.fold .inner .bcard{background:var(--surface-2);box-shadow:none;border-radius:14px}
+.fold .inner .bcard.picked{box-shadow:inset 0 0 0 2px var(--accent)}
+.fold .inner .panel.danger,.fold .inner .bcard.danger{box-shadow:none;color:var(--late)}
 .repfilters{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .repfilters select:last-child{grid-column:1/-1}
-.day{background:var(--surface);border-radius:16px;box-shadow:var(--shadow)}
-.day>summary{list-style:none;cursor:pointer;padding:13px 16px;display:flex;justify-content:space-between;gap:10px}
-.day>summary::-webkit-details-marker{display:none}
-.day>summary b{font-weight:600}
-.day .inner{padding:0 16px 14px;display:flex;flex-direction:column;gap:8px}
-.day.rw>summary b{font-size:16px}
 .petcard.rwrow{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
 .rwrow b{display:block;font-size:15px;font-weight:600;line-height:1.3}
 .rwrow .sub{display:block;font-size:13px;color:var(--ink-3);line-height:1.35;margin-top:2px}
@@ -381,8 +401,23 @@ fieldset[disabled]{opacity:.7}
 .bunting{animation:flutter 4s ease-in-out infinite alternate}
 @keyframes flutter{from{transform:translateY(0)}to{transform:translateY(1.5px)}}
 
+/* de vis zwemt heen en weer en komt af en toe bovendrijven */
+.fishy{transform-box:view-box;animation:swim 18s ease-in-out infinite}
+.fishy .fish{opacity:.5;animation:surface 18s ease-in-out infinite}
+.fishtag{cursor:pointer}
+@keyframes swim{
+  0%   {transform:translate(52px,212px) scaleX(1)}
+  26%  {transform:translate(190px,206px) scaleX(1)}
+  34%  {transform:translate(232px,192px) scaleX(1)}
+  42%  {transform:translate(276px,205px) scaleX(1)}
+  50%  {transform:translate(330px,214px) scaleX(1)}
+  54%  {transform:translate(330px,214px) scaleX(-1)}
+  76%  {transform:translate(196px,209px) scaleX(-1)}
+  100% {transform:translate(52px,212px) scaleX(-1)}
+}
+@keyframes surface{0%,26%{opacity:.5}32%,38%{opacity:1}46%,100%{opacity:.5}}
 .slot{cursor:pointer}
-.slot text.nm{font-family:var(--font);font-weight:700;font-size:10px;fill:var(--ink)}
+text.nm{font-family:var(--font);font-weight:700;font-size:10px;fill:var(--ink)}
 .pet *{transition:transform .5s ease, opacity .4s ease}
 .walker,.bodyg,.upper,.head,.legs,.leg,.tail,.food,.mover,.fx *{transform-box:view-box}
 .mover{transform-origin:0 0}
@@ -410,6 +445,9 @@ fieldset[disabled]{opacity:.7}
 .st-eat .sp-dog .head{transform-origin:16px -30px;animation:eatDog .55s ease-in-out infinite alternate}
 .st-eat .sp-cat .head{transform-origin:14px -26px;animation:eatCat .6s ease-in-out infinite alternate}
 .st-eat .sp-turtle .head{transform-origin:18px -8px;animation:eatTurtle .5s ease-in-out infinite alternate}
+.st-eat .sp-chicken .head{transform-origin:11.6px -27.6px;animation:eatBird .45s ease-in-out infinite alternate}
+.st-eat .sp-bird .head{transform-origin:7.6px -18.8px;animation:eatBird .38s ease-in-out infinite alternate}
+@keyframes eatBird{from{transform:translate(1px,9px) rotate(30deg)}to{transform:translate(1px,11px) rotate(40deg)}}
 @keyframes eatDog{from{transform:translate(4px,14px) rotate(36deg)}to{transform:translate(4px,15px) rotate(42deg)}}
 @keyframes eatCat{from{transform:translate(5px,13px) rotate(34deg)}to{transform:translate(5px,14px) rotate(40deg)}}
 @keyframes eatTurtle{from{transform:translate(6px,1px) rotate(12deg)}to{transform:translate(7px,3px) rotate(20deg)}}
@@ -428,6 +466,8 @@ fieldset[disabled]{opacity:.7}
 .st-refuse .sp-dog .head,.st-sleep .sp-dog .head{transform-origin:16px -30px;transform:translate(2px,6px) rotate(14deg)}
 .st-refuse .sp-cat .head,.st-sleep .sp-cat .head{transform-origin:14px -26px;transform:translate(1px,4px) rotate(10deg)}
 .st-refuse .sp-turtle .head,.st-sleep .sp-turtle .head{transform-origin:18px -8px;transform:translateX(-11px) scale(.72)}
+.st-refuse .sp-chicken .head,.st-sleep .sp-chicken .head{transform-origin:11.6px -27.6px;transform:translate(-1px,6px) rotate(-10deg)}
+.st-refuse .sp-bird .head,.st-sleep .sp-bird .head{transform-origin:7.6px -18.8px;transform:translate(-1px,4px) rotate(-10deg)}
 .st-refuse .sp-turtle .legs,.st-sleep .sp-turtle .legs{transform:scaleY(.5)}
 .st-refuse .tail,.st-sleep .tail{animation:none}
 .st-refuse .walker{transform:translateX(-4px) scaleX(-1)}
@@ -471,7 +511,7 @@ fieldset[disabled]{opacity:.7}
 <div class="shell">
   <header class="top">
     <h1 id="hTitle">Huisdierenoppas Curaçao<span id="hSub"></span></h1>
-    <div class="topright"><span class="pawpts" id="pawPts"></span><button class="rolebtn" id="roleBtn"></button></div>
+    <div class="topright"><span class="pawpts" id="starPts"></span><span class="pawpts" id="pawPts"></span><button class="rolebtn" id="roleBtn"></button></div>
   </header>
   <section class="scene" id="sceneWrap" aria-label="Eiland met huisdieren">
     <div id="scene"></div>
@@ -515,6 +555,7 @@ const I18N = {
     q_pets:'Voor welke dieren zoek je oppas?', q_pets_s:'Maximaal 4 dieren. Kies ook hoe ze eruitzien.',
     name:'Naam', species:'Soort', dog:'Hond', cat:'Kat', turtle:'Schildpad',
     chicken:'Kippen', bird:'Vogels', fish:'Vissen', pet_count:'Aantal',
+    turtle_n:'Schildpadden', chicken_1:'Kip', bird_1:'Vogel', fish_1:'Vis',
     coat:'Vachtkleur', shell:'Schildkleur', pattern:'Tekening', ears:'Oren',
     p_solid:'Effen', p_spots:'Vlekken', p_bib:'Witte bef', p_saddle:'Zadel', p_tabby:'Gestreept', p_tux:'Sokjes & bef', p_calico:'Lapjes', p_plates:'Schubben',
     e_flop:'Hangoren', e_up:'Staande oren', add_pet:'+ Dier toevoegen', remove:'Verwijderen',
@@ -558,6 +599,7 @@ const I18N = {
     q_pets:'Which pets do you need a sitter for?', q_pets_s:'Up to 4 pets. Choose how they look, too.',
     name:'Name', species:'Species', dog:'Dog', cat:'Cat', turtle:'Turtle',
     chicken:'Chickens', bird:'Birds', fish:'Fish', pet_count:'Number',
+    turtle_n:'Turtles', chicken_1:'Chicken', bird_1:'Bird', fish_1:'Fish',
     coat:'Coat colour', shell:'Shell colour', pattern:'Markings', ears:'Ears',
     p_solid:'Solid', p_spots:'Spots', p_bib:'White bib', p_saddle:'Saddle', p_tabby:'Tabby', p_tux:'Tuxedo', p_calico:'Calico', p_plates:'Scutes',
     e_flop:'Floppy', e_up:'Upright', add_pet:'+ Add pet', remove:'Remove',
@@ -667,6 +709,7 @@ Object.assign(I18N.nl, {
   bk_accepted_list:'Oppassers die hebben geaccepteerd', bk_msg:'Bericht', bk_choose_one:'Kies',
   bk_await_toast:'Geaccepteerd · in afwachting van de eigenaar',
   th_ph:'Bericht aan {who}…', th_empty:'Nog geen berichten.',
+  m_settings:'Instellingen', m_app:'App en account', m_demo:'Demo-instellingen', fee_open:'Bekijken',
   more_alerts:'Meldingen', flag_phone:'Mogelijk telefoonnummer gedeeld', flag_clear:'Meldingen wissen',
   flag_hint:'In Odoo wordt dit een notificatie voor het platform; het gesprek blijft zichtbaar.',
   anim:'Animaties', anim_off:'Animaties uitzetten', anim_on:'Animaties aanzetten',
@@ -791,6 +834,7 @@ Object.assign(I18N.en, {
   bk_accepted_list:'Sitters who accepted', bk_msg:'Message', bk_choose_one:'Choose',
   bk_await_toast:'Accepted · waiting for the owner',
   th_ph:'Message {who}…', th_empty:'No messages yet.',
+  m_settings:'Settings', m_app:'App and account', m_demo:'Demo settings', fee_open:'Open',
   more_alerts:'Alerts', flag_phone:'Possible phone number shared', flag_clear:'Clear alerts',
   flag_hint:'In Odoo this becomes a platform notification; the conversation stays visible.',
   anim:'Animations', anim_off:'Turn animations off', anim_on:'Turn animations on',
@@ -902,6 +946,10 @@ Object.assign(I18N.nl, {
   bk_cancel:'Aanvraag annuleren', bk_new_req:'Nieuwe aanvraag', bk_accept:'Accepteren', bk_decline:'Weigeren',
   bk_accepted_by:'Geaccepteerd door {name}', bk_declined:'Aanvraag geweigerd', bk_req_from:'Aanvraag van {name}',
   bk_checkin:'Inchecken', bk_checkout:'Uitchecken', bk_checked_in:'Ingecheckt om {time}',
+  co_q:'Weet je zeker dat je wilt uitchecken?',
+  rv_title:'Hoe was het met {name}?', rv_ph:'Opmerking (optioneel)', rv_save:'Beoordeling opslaan',
+  rv_skip:'Later', rv_note:'We bewaren je beoordeling en plaatsen hem na controle bij het profiel.',
+  rv_done:'Bedankt voor je beoordeling', verified:'Geverifieerd', rv_stars:'{n} sterren',
   bk_not_started:'Nog niet ingecheckt', bk_not_started_s:'De animatie start zodra de oppas incheckt.',
   bk_before:'voor het inchecken', bk_outside:'buiten de oppastijd',
   bk_none:'Geen actieve boeking', bk_none_s:'Pas je profiel aan om meer aanvragen te tonen of neem contact op met +599 9 694 7642 voor support.', bk_to_booking:'Naar boeking',
@@ -922,6 +970,10 @@ Object.assign(I18N.en, {
   bk_cancel:'Cancel request', bk_new_req:'New request', bk_accept:'Accept', bk_decline:'Decline',
   bk_accepted_by:'Accepted by {name}', bk_declined:'Request declined', bk_req_from:'Request from {name}',
   bk_checkin:'Check in', bk_checkout:'Check out', bk_checked_in:'Checked in at {time}',
+  co_q:'Are you sure you want to check out?',
+  rv_title:'How was it with {name}?', rv_ph:'Note (optional)', rv_save:'Save review',
+  rv_skip:'Later', rv_note:'We keep your review and publish it on the profile after a check.',
+  rv_done:'Thanks for your review', verified:'Verified', rv_stars:'{n} stars',
   bk_not_started:'Not checked in yet', bk_not_started_s:'The scene starts once the sitter checks in.',
   bk_before:'before check-in', bk_outside:'outside sitting hours',
   bk_none:'No active booking', bk_none_s:'Update your profile to receive more requests, or contact +599 9 694 7642 for support.', bk_to_booking:'Go to booking',
@@ -933,12 +985,12 @@ Object.assign(I18N.en, {
 });
 /* enkelvoud of meervoud, zodat er nooit "1 dieren" staat */
 const nlab = (n, one, many) => n === 1 ? t(one) : t(many, {n});
-function t(k, v){ let s = (I18N[S.lang]||I18N.nl)[k]; if(s==null) s = I18N.nl[k] ?? k; if(v) for(const x in v) s = s.replace('{'+x+'}', v[x]); return s; }
+function t(k, v){ let s = ((S && I18N[S.lang]) || I18N.nl)[k]; if(s==null) s = I18N.nl[k] ?? k; if(v) for(const x in v) s = s.replace('{'+x+'}', v[x]); return s; }
 
 /* ---------------- looks ---------------- */
 const LOOKS = {
   dog:{ coats:['#D9B07A','#7A4A2B','#2E2A28','#F1EBE0','#B8652F','#8E9091'], patterns:['solid','spots','bib','saddle'] },
-  cat:{ coats:['#8D8F94','#D98E48','#2B2A2E','#F3EFE8','#E8D2AE'], patterns:['solid','tabby','tux','calico'] },
+  cat:{ coats:['#8D8F94','#D98E48','#2B2A2E','#F3EFE8','#E8D2AE'], patterns:['solid','tabby','spots'] },
   turtle:{ coats:['#6F7F3A','#8A6337','#4F7A4A'], patterns:['solid','plates'] },
 };
 const CUPS = ['none','q','h','f','f5'];
@@ -995,11 +1047,26 @@ const HOODS = HOOD_GROUPS.flatMap(([,list])=>list);
 const hoodGroup = h => (HOOD_GROUPS.find(([,l])=>l.includes(h)) || ['hg_stad'])[0];
 const CARE_KINDS = ['dog','puppy','cat','kitten','turtle','chicken','bird','fish'];
 const CARE_BASE = {dog:'dog', puppy:'dog', cat:'cat', kitten:'cat', turtle:'turtle', chicken:'chicken', bird:'bird', fish:'fish'};
-/* soorten die in het strandtafereel meelopen, en soorten die je per aantal opgeeft */
+/* soorten die je per aantal opgeeft in plaats van per naam */
 const PET_KINDS = ['dog','cat','turtle','chicken','bird','fish'];
-const FLOCK = ['chicken','bird','fish'];
+const FLOCK = ['turtle','chicken','bird','fish'];
+const SMALL = ['chicken','bird'];          // klein in het tafereel
+const SG = {turtle:'turtle', chicken:'chicken_1', bird:'bird_1', fish:'fish_1'};
 const isFlock = p => FLOCK.includes(p.species);
-const petName = p => isFlock(p) ? `${t(p.species)} (${p.count||1})` : (p.name||'');
+/* alleen enkelvoud of meervoud; het aantal staat in de vragenlijst */
+const petName = p => { if(!isFlock(p)) return p.name || '';
+  return (p.count || 1) === 1 ? t(SG[p.species]) : t(p.species === 'turtle' ? 'turtle_n' : p.species); };
+/* in het tafereel: alle honden en katten, en van elke telsoort er één; de vis zwemt apart */
+function scenePets(){
+  const out = [];
+  for(const p of S.plan.pets){
+    if(p.species === 'fish') continue;
+    if(isFlock(p) && out.some(q=>q.species===p.species)) continue;
+    out.push(p);
+  }
+  return out.slice(0,4);
+}
+const fishPet = () => S.plan.pets.find(p=>p.species==='fish');
 const FLOCK_ICON = {
   chicken:'<svg viewBox="0 0 24 24"><path d="M4.6 10.6 8 12.8l-1.4 2.6z"/><ellipse cx="11.4" cy="14.2" rx="6.2" ry="5"/>'
     + '<path d="M14 11.5c0-2.6 1-4.2 2.6-4.2s2.6 1.5 2.6 3.6c0 1.9-1.2 3.4-3 3.8z"/><circle cx="16.6" cy="8" r="2.9"/>'
@@ -1150,6 +1217,22 @@ function matchingSitters(services, anyHood, days, alone){
 }
 const goodSitters = (days, alone) => matchingSitters(null, false, days, alone).filter(x=>x.rating >= 4);
 function stars(r){ const full = Math.round(r); return '★'.repeat(full) + '☆'.repeat(5-full); }
+const ICON_VERIFIED = '<svg class="vfy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.4 5.5 6v5.2c0 4 2.8 7.3 6.5 8.4 3.7-1.1 6.5-4.4 6.5-8.4V6z"/><path d="M9.2 11.8l2 2 3.6-3.7"/></svg>';
+/* gemiddelde over de vaste demo-cijfers plus de echte beoordelingen; null = nog niets gedaan */
+function ratingOf(id){
+  const info = sitterById(id) || {};
+  const revs = (S.bookings||[]).filter(b=>b.accepted_by===id && b.review && b.review.stars).map(b=>b.review.stars);
+  const n = (info.bookings||0) + revs.length;
+  if(!n) return null;
+  const sum = (info.rating||0)*(info.bookings||0) + revs.reduce((a,x)=>a+x, 0);
+  return {avg: sum/n, n};
+}
+/* sterren met het gemiddelde, of een rustig vinkje voor wie nog moet beginnen */
+function ratingBlock(id){
+  const r = ratingOf(id);
+  if(!r) return `<span class="rate"><span class="vfyline">${ICON_VERIFIED}${t('verified')}</span></span>`;
+  return `<span class="rate"><span class="st">${stars(r.avg)}</span><span class="sub">${r.avg.toFixed(1)} · ${t('bk_bookings',{n:r.n})}</span></span>`;
+}
 
 /* ---------------- accounts (in Odoo: res.users op res.partner) ---------------- */
 const OWNER_MAIL = 'mirthe@voorbeeld.com';
@@ -1214,7 +1297,7 @@ function seed(){
     {id:'m1', from:'owner', text:'Hoi Eline! De sleutel ligt onder de bloempot bij de achterdeur.', at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,32).toISOString()},
     {id:'m2', from:'sitter', text:'Dank je! Ik ben binnen, de dieren zijn blij. Ik hou je op de hoogte.', at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,54).toISOString()},
   ];
-  const st = {v:1, lang:'nl', role:'sitter', user_type:'sitter', theme:'auto', season:'auto', demo_time:null, tab:'today', plan, days:{}, dismissed:{}, read:{owner:null, sitter:null}, me_sitter:DEFAULT_ME, sitters:defaultProfiles(), bookings:[booking], bkform:null, chat, threads:{}, flags:[], extra_sitters:[], contacts:[], rewards:{}, mails:[], anim:true, anim_by:{},
+  const st = {v:1, lang:'nl', role:'sitter', user_type:'sitter', theme:'auto', season:'auto', demo_time:null, tab:'today', plan, days:{}, dismissed:{}, read:{owner:null, sitter:null}, me_sitter:DEFAULT_ME, sitters:defaultProfiles(), bookings:[booking], bkform:null, chat, threads:{}, flags:[], extra_sitters:[], contacts:[], rewards:{}, mails:[], acc:{}, anim:true, anim_by:{},
     auth:{email:'info@huisdierenoppascuracao.com', name:'Eline', role:'sitter', sitter:DEFAULT_ME}};
   const y = new Date(today); y.setDate(y.getDate()-1);
   const yk = dateKey(y);
@@ -1247,7 +1330,11 @@ function load(){
         s.bookings.forEach(b=>{ b.sitter_ids = b.sitter_ids||[]; b.declined_by = b.declined_by||[]; if(b.sitter==='Shanti') b.sitter='Eline'; b.owner = s.plan.owner_info.name || 'Mirthe'; });
         s.read = s.read||{owner:null, sitter:null}; s.me_sitter = s.me_sitter||DEFAULT_ME; s.sitters = s.sitters||defaultProfiles(); s.user_type = s.user_type||null;
         if(s.plan && s.plan.chores) delete s.plan.chores.water;
-        s.mails = s.mails || [];
+        s.mails = s.mails || []; s.acc = s.acc || {};
+        (s.plan.pets||[]).forEach(p=>{
+          if(p.species==='turtle'){ p.coat = '#6F7F3A'; p.pattern = 'plates'; p.count = p.count || 1; }
+          if(p.species==='cat' && !['solid','tabby','spots'].includes(p.pattern)) p.pattern = 'solid';
+        });
         Object.values(s.sitters||{}).forEach(p=>{ if(p && p.signed && !p.intake) p.intake = {done:true}; });
         s.anim_by = s.anim_by || {};
         s.anim = s.anim_by[((s.auth && s.auth.email) || 'demo').toLowerCase()] !== false;
@@ -1515,7 +1602,7 @@ function yumTick(){
 
 /* ---------------- SVG: pets ---------------- */
 function petSVG(p, outfit){
-  const c = p.coat, d = shade(c,-0.25), dark = luma(c) < 0.3, white = '#FBF8F2';
+  const c = p.coat || '#D9B07A', d = shade(c,-0.25), dark = luma(c) < 0.3, white = '#FBF8F2';
   const muz = (p.pattern==='bib'||p.pattern==='tux') ? white : (dark ? shade(c,0.35) : shade(c,0.3));
   const nose = '#2A211C', eye = dark ? '#F6EBD6' : '#1E1916';
   const eyes = (x,y) => `<circle class="eye-o" cx="${x}" cy="${y}" r="1.9" fill="${eye}"/><path class="eye-c" d="M${x-2} ${y} Q${x} ${y+1.8} ${x+2} ${y}" stroke="${eye}" stroke-width="1.3" fill="none" stroke-linecap="round"/>`;
@@ -1559,32 +1646,82 @@ function petSVG(p, outfit){
   }
   if(p.species==='cat'){
     let pat = '';
-    if(p.pattern==='tabby') pat = `<path d="M-8 -30 L-6 -21 M-1 -31 L0 -21 M6 -30 L5 -22" stroke="${d}" stroke-width="2.4" stroke-linecap="round"/>`;
-    if(p.pattern==='tux') pat = `<ellipse cx="13" cy="-18" rx="5" ry="6" fill="${white}"/>`;
-    if(p.pattern==='calico') pat = `<ellipse cx="-7" cy="-24" rx="6" ry="5" fill="#D98E48"/><ellipse cx="6" cy="-26" rx="4" ry="3.5" fill="#2B2A2E"/>`;
-    const paw = p.pattern==='tux' ? white : c;
-    const hat = party ? `<g><path d="M15.5 -41 L20 -57 L24.5 -41Z" fill="${PARTY[3]}"/><path d="M17 -46 L23 -46 M18.3 -51 L21.7 -51" stroke="${PARTY[1]}" stroke-width="1.6"/><circle cx="20" cy="-58" r="2.3" fill="${PARTY[1]}"/></g>` : '';
+    if(p.pattern==='tabby') pat = `<path d="M-9 -30 q2 5 1 9 M-2 -31.5 q2 5.5 1 9.5 M5 -31 q2 5 1 9" stroke="${d}" stroke-width="2.4" stroke-linecap="round" fill="none"/>`;
+    if(p.pattern==='spots') pat = `<ellipse cx="-8" cy="-25.5" rx="5.4" ry="4.2" fill="${d}" transform="rotate(-14 -8 -25.5)"/>
+      <ellipse cx="4.5" cy="-27" rx="4.2" ry="3.3" fill="${d}" transform="rotate(10 4.5 -27)"/>
+      <ellipse cx="-14" cy="-19.5" rx="3.2" ry="2.5" fill="${d}"/>`;
+    const headSpot = p.pattern==='spots' ? `<ellipse cx="15" cy="-39.5" rx="3.6" ry="2.7" fill="${d}" transform="rotate(-20 15 -39.5)"/>` : '';
+    const hat = party ? `<g><path d="M15.5 -44 L20 -60 L24.5 -44Z" fill="${PARTY[3]}"/><path d="M17 -49 L23 -49 M18.3 -54 L21.7 -54" stroke="${PARTY[1]}" stroke-width="1.6"/><circle cx="20" cy="-61" r="2.3" fill="${PARTY[1]}"/></g>` : '';
     return `<g class="pet sp-cat"><g class="bodyg">
       <g class="legs">
-        <rect class="leg lb1" x="-13" y="-16" width="4.6" height="16" rx="2.3" fill="${d}"/>
-        <rect class="leg lf1" x="8" y="-16" width="4.6" height="16" rx="2.3" fill="${d}"/>
-        <rect class="leg lb2" x="-8" y="-16" width="4.6" height="16" rx="2.3" fill="${c}"/>
-        <rect class="leg lf2" x="12.5" y="-16" width="4.6" height="16" rx="2.3" fill="${c}"/>
-        <rect class="leg lf2" x="12.5" y="-3.5" width="4.6" height="3.5" rx="1.7" fill="${paw}"/>
+        <rect class="leg lb1" x="-13" y="-16" width="4.8" height="16" rx="2.4" fill="${d}"/>
+        <rect class="leg lf1" x="8" y="-16" width="4.8" height="16" rx="2.4" fill="${d}"/>
+        <rect class="leg lb2" x="-7.6" y="-16" width="4.8" height="16" rx="2.4" fill="${c}"/>
+        <rect class="leg lf2" x="12.6" y="-16" width="4.8" height="16" rx="2.4" fill="${c}"/>
       </g>
       <g class="upper">
-        <path class="tail" d="M-15 -21 Q-29 -20 -27 -36 Q-26 -46 -19 -45" stroke="${c}" stroke-width="4" stroke-linecap="round" fill="none"/>
-        <ellipse cx="0" cy="-22" rx="18" ry="10" fill="${c}"/>
+        <path class="tail" d="M-16 -22 q-12 1.5 -11.5 -12 q.5 -8.5 7 -9.5" stroke="${c}" stroke-width="4.2" stroke-linecap="round" fill="none"/>
+        <ellipse cx="0" cy="-22.5" rx="18" ry="10.2" fill="${c}"/>
         ${pat}
-        ${ruff([[9,-29],[11,-25],[14,-22],[18,-21]])}
+        ${ruff([[9,-30],[11.5,-26],[14.5,-23],[18,-22]])}
         <g class="head">
-          <path d="M11 -38 L12 -50 L19 -42 Z" fill="${c}"/><path d="M21 -42 L27 -50 L28 -38 Z" fill="${c}"/>
-          <path d="M13 -40 L13.6 -46 L17 -42 Z" fill="#F2B5A9"/><path d="M23 -42 L26.4 -46 L26.5 -40 Z" fill="#F2B5A9"/>
-          <circle cx="20" cy="-33" r="10" fill="${c}"/>
-          ${p.pattern==='tux'?`<ellipse cx="25" cy="-29" rx="5" ry="3.8" fill="${white}"/>`:''}
-          <path d="M27.5 -31.5 L29.5 -31.5 L28.5 -30 Z" fill="#E48C8C"/>
-          <path d="M29 -29 L36 -30 M29 -28 L36 -26.5" stroke="${dark?'#bbb':'#6B5B52'}" stroke-width=".6"/>
-          ${eyes(24,-35)}${hat}
+          <path d="M11.5 -40 L12.5 -51.5 L20 -43.5 Z" fill="${c}"/>
+          <path d="M22 -43.5 L28.5 -51.5 L29 -39.5 Z" fill="${c}"/>
+          <path d="M13.8 -41.5 L14.3 -47.4 L18 -43.4 Z" fill="#F2B5A9"/>
+          <path d="M23.2 -43.2 L27.3 -47.6 L27.6 -41 Z" fill="#F2B5A9"/>
+          <ellipse cx="20" cy="-34" rx="10.6" ry="9.6" fill="${c}"/>
+          ${headSpot}
+          <ellipse cx="25.8" cy="-30" rx="6.2" ry="4.4" fill="${muz}"/>
+          <path d="M24.4 -32.2 h2.9 l-1.45 1.8z" fill="#E48C8C"/>
+          <path d="M25.85 -30.2 q-1.5 1.5 -3 .3 M25.85 -30.2 q1.5 1.5 3 .3" stroke="${dark?'#8A7F78':'#6B5B52'}" stroke-width=".9" fill="none" stroke-linecap="round"/>
+          <path d="M30 -31.5 L37.5 -33 M30.4 -29.6 L38 -28.4" stroke="${dark?'#C8C0B8':'#6B5B52'}" stroke-width=".7" stroke-linecap="round"/>
+          ${eyes(20.5,-36)}
+          <circle cx="15.8" cy="-31.5" r="2.1" fill="#F29C9C" opacity=".3"/>
+          ${hat}
+        </g>
+      </g>
+    </g></g>`;
+  }
+  if(p.species==='chicken'){
+    const cc = '#F1EDE4', sh = '#DCD5C6', comb = '#D8544C', beak = '#E8A33C';
+    const hat = party ? `<path d="M8 -33 L12 -43 L16 -32Z" fill="${PARTY[0]}"/>` : '';
+    return `<g class="pet sp-chicken"><g class="bodyg">
+      <g class="legs">
+        <rect class="leg lb1" x="-3.4" y="-9" width="2.6" height="9" rx="1.3" fill="${beak}"/>
+        <rect class="leg lf1" x="2.6" y="-9" width="2.6" height="9" rx="1.3" fill="${beak}"/>
+      </g>
+      <g class="upper">
+        <path class="tail" d="M-10 -18 q-8 -2 -11 -10 q6 2.5 11 3.5z" fill="${sh}"/>
+        <ellipse cx="0" cy="-14.5" rx="11.5" ry="9" fill="${cc}"/>
+        <ellipse cx="-1.5" cy="-13" rx="6.4" ry="4.4" fill="${sh}"/>
+        <g class="head">
+          <path d="M6.5 -20 q2.5 -4 4.5 -6.2" stroke="${cc}" stroke-width="6.4" stroke-linecap="round" fill="none"/>
+          <circle cx="11.6" cy="-27.6" r="5.2" fill="${cc}"/>
+          <circle cx="9.7" cy="-33" r="2.1" fill="${comb}"/><circle cx="12.9" cy="-33.6" r="2.1" fill="${comb}"/>
+          <path d="M15.8 -28 L20.8 -26.4 L15.8 -25z" fill="${beak}"/>
+          <path d="M13.6 -24 q1.6 1.7 .4 3.3 q-1.9 -.7 -2.3 -2.7z" fill="${comb}"/>
+          ${eyes(13,-28.8)}${hat}
+        </g>
+      </g>
+    </g></g>`;
+  }
+  if(p.species==='bird'){
+    const bb = '#F2A02A', bk = '#23252A';
+    const hat = party ? `<path d="M5 -25 L8 -33 L11 -24Z" fill="${PARTY[2]}"/>` : '';
+    return `<g class="pet sp-bird"><g class="bodyg">
+      <g class="legs">
+        <rect class="leg lb1" x="-2" y="-6" width="1.8" height="6" rx=".9" fill="#8A6A3A"/>
+        <rect class="leg lf1" x="2.2" y="-6" width="1.8" height="6" rx=".9" fill="#8A6A3A"/>
+      </g>
+      <g class="upper">
+        <path class="tail" d="M-7 -12.5 L-16.5 -16 L-7 -8.5z" fill="${bk}"/>
+        <ellipse cx="0" cy="-11" rx="8.2" ry="6.4" fill="${bb}"/>
+        <path d="M-8 -14.4 q8 -4 14.5 -1 q-6.5 4.2 -14.5 1z" fill="${bk}"/>
+        <ellipse cx="-1" cy="-7.6" rx="5.4" ry="2.6" fill="#F7BE58"/>
+        <g class="head">
+          <circle cx="7.6" cy="-18.8" r="4.7" fill="${bk}"/>
+          <path d="M11.8 -19.2 L17.8 -18.2 L11.8 -16.6z" fill="#3A3A3A"/>
+          <circle cx="9.1" cy="-20" r="1" fill="#F4F4F4"/>${hat}
         </g>
       </g>
     </g></g>`;
@@ -1663,8 +1800,13 @@ function mixHex(a,b,f){ const A=parseInt(a.slice(1),16), B=parseInt(b.slice(1),1
 function skyAt(m){
   let i=0; while(i < SKY_KEYS.length-2 && m >= SKY_KEYS[i+1][0]) i++;
   const [m0,k0] = SKY_KEYS[i], [m1,k1] = SKY_KEYS[i+1], f = m1===m0 ? 0 : Math.min(1, Math.max(0,(m-m0)/(m1-m0)));
-  const a = SKY[k0], b = SKY[k1], o = {};
-  for(const key in a) o[key] = typeof a[key]==='number' ? a[key]*(1-f)+b[key]*f : mixHex(a[key], b[key], f);
+  let a = SKY[k0], b = SKY[k1], ff = f;
+  /* kiest iemand licht of donker, dan staat het tafereel vast; de zon en de maan
+     blijven de klok volgen, dus overdag geen maan en 's nachts geen zon */
+  if(S.theme === 'light'){ a = b = SKY.day; ff = 0; }
+  else if(S.theme === 'dark'){ a = b = SKY.night; ff = 0; }
+  const o = {};
+  for(const key in a) o[key] = typeof a[key]==='number' ? a[key]*(1-ff)+b[key]*ff : mixHex(a[key], b[key], ff);
   // zon: 06:00 → 19:15, zakt achter de horizon; maan: 19:00 → 06:00
   const sunT = (m-360)/(1155-360); o.sun = sunT>0 && sunT<1 ? [22+sunT*346, HOR - Math.sin(Math.PI*sunT)*108] : null;
   const mm = m >= 1140 ? m-1140 : m+300, moonT = mm/660; o.moon = moonT>0 && moonT<1 ? [22+moonT*346, HOR - Math.sin(Math.PI*moonT)*100] : null;
@@ -1762,7 +1904,7 @@ const OPENINGS = [
   {kind:'door',x:283, y:226, w:24, h:46, cloud:[295,136]},
   {kind:'round',cx:295, cy:184, r:10, cloud:[248,148]},
 ];
-const HEAD = {dog:[22,-38], cat:[20,-33], turtle:[27,-10]};
+const HEAD = {dog:[22,-38], cat:[20,-34], turtle:[27,-10], chicken:[11.6,-27.6], bird:[7.6,-18.8]};
 const lastPlace = {};   // onthoudt of een dier op het strand of in huis was → naar huis lopen / naar buiten komen
 
 function palmSVG(se){
@@ -1821,17 +1963,36 @@ function openingsSVG(sky, sleepers, se){
   const clouds = sleepers.map((pet,i)=> pet ? `<g transform="translate(${OPENINGS[i].cloud[0]},${OPENINGS[i].cloud[1]})">${cloudSVG('Z z z','zzz on','#CFD8E3', OPENINGS[i].cloud[0] > 300 ? 'left' : 'right')}</g>` : '').join('');
   return {defs, out, clouds};
 }
+const ST_COL = {ok:'var(--ok)', note:'var(--note)', late:'var(--late)', open:'var(--idle)'};
+/* naambordje met een stip voor de stand van zaken */
+function nameTag(p, dx, dy, sc){
+  const label = petName(p), w = label.length*6+22;
+  const col = ST_COL[petStatus(p, today(), nowMin())];
+  return `<g transform="translate(${dx},${dy}) scale(${(1/sc).toFixed(3)})">
+    <rect x="${-w/2}" y="-8" width="${w}" height="16" rx="8" fill="var(--surface)" opacity=".92"/>
+    <circle cx="${-w/2+9}" cy="0" r="3.5" fill="${col}"/>
+    <text class="nm" x="${-w/2+16}" y="3.5">${esc(label)}</text></g>`;
+}
+/* een vis zwemt in zee en komt af en toe even boven */
+function fishSVG(){
+  return `<g class="fish"><path d="M-9 0 L-16.5 -6 L-16.5 6z" fill="#D97F2E"/>
+    <ellipse cx="0" cy="0" rx="10" ry="6" fill="#F2A24A"/>
+    <path d="M-1 -5.4 L-4.5 -11 L4 -7z" fill="#D97F2E"/>
+    <path d="M-2 5.2 L-5 9 L2 6.6z" fill="#D97F2E"/>
+    <circle cx="6" cy="-1.6" r="1.5" fill="#FBF8F2"/><circle cx="6.3" cy="-1.6" r=".8" fill="#2A211C"/></g>`;
+}
 function sceneSVG(){
   const d = today(), m = nowMin(), se = season(), sky = skyAt(m);
-  const pets = S.plan.pets.filter(p=>!isFlock(p)).slice(0,4), n = Math.max(1, pets.length);
+  const pets = scenePets(), n = Math.max(1, pets.length);
   const sc = SCALE[Math.min(4,n)], spots = SPOTS[Math.min(4,n)];
   const sleepers = [];
   const quiet = birdsMode();
   const slots = quiet ? [] : pets.map((p,i)=>{
     let st = petState(p,d);
     const [x, gy] = spots[i];
-    const place = st==='sleep' ? 'home' : 'beach';
-    // overgang tijdens het kijken: naar huis lopen of naar buiten komen
+    /* waar het dier hoort te zijn, los van een lopende overgang — anders
+       blijft hij 's avonds opnieuw naar huis lopen zonder ooit te gaan slapen */
+    const place = isAsleep(p,d) ? 'home' : 'beach';
     if(lastPlace[p.id] && lastPlace[p.id]!==place && !(transient[p.id] && transient[p.id].until > Date.now())){
       transient[p.id] = {state: place==='home' ? 'gohome' : 'comeout', until: Date.now()+3400};
       setTimeout(()=>renderScene(), 3460);
@@ -1839,22 +2000,17 @@ function sceneSVG(){
     }
     lastPlace[p.id] = place;
     const full = bowlFull(p,d);
-    if(st==='sleep'){ sleepers.push(p); return `<g transform="translate(${x},${gy}) scale(${sc})">${bowlSVG(p, full)}</g>`; }
-    const ps = petStatus(p,d,m);
-    const col = {ok:'var(--ok)', note:'var(--note)', late:'var(--late)', open:'var(--idle)'}[ps];
-    const nameW = p.name.length*6+22;
-    const dx = (HOUSE.door[0]-x)/sc, dy = (HOUSE.door[1]-gy)/sc;
+    const psc = SMALL.includes(p.species) ? +(sc*0.62).toFixed(3) : sc;
+    if(st==='sleep'){ sleepers.push(p); return `<g transform="translate(${x},${gy}) scale(${psc})">${bowlSVG(p, full)}</g>`; }
+    const dx = (HOUSE.door[0]-x)/psc, dy = (HOUSE.door[1]-gy)/psc;
     const moving = st==='gohome' || st==='comeout';
     const flip = (st==='gohome' && dx<0) || (st==='comeout' && dx>0);
     const hasNote = petHasCloud(p,d);
-    return `<g class="slot st-${st} ${flip?'flip':''} ${hasNote?'has-note':''}" data-pet="${p.id}" transform="translate(${x},${gy}) scale(${sc})" style="--dx:${dx.toFixed(1)}px;--dy:${dy.toFixed(1)}px" role="img" aria-label="${esc(p.name)}: ${t('st_'+st)}">
+    return `<g class="slot st-${st} ${flip?'flip':''} ${hasNote?'has-note':''}" data-pet="${p.id}" transform="translate(${x},${gy}) scale(${psc})" style="--dx:${dx.toFixed(1)}px;--dy:${dy.toFixed(1)}px" role="img" aria-label="${esc(petName(p))}: ${t('st_'+st)}">
       ${moving?'':`<ellipse cx="6" cy="1" rx="30" ry="3.5" fill="var(--sand-2)" opacity=".7"/>`}
       ${bowlSVG(p, full)}
-      <g class="mover"><g class="walker">${petSVG(p, se)}</g>${fxSVG(p, sc, st==='refuse')}</g>
-      ${moving?'':`<g transform="translate(6,15) scale(${(1/sc).toFixed(3)})">
-        <rect x="${-nameW/2}" y="-8" width="${nameW}" height="16" rx="8" fill="var(--surface)" opacity=".92"/>
-        <circle cx="${-nameW/2+9}" cy="0" r="3.5" fill="${col}"/>
-        <text class="nm" x="${-nameW/2+16}" y="3.5">${esc(p.name)}</text></g>`}
+      <g class="mover"><g class="walker">${petSVG(p, se)}</g>${fxSVG(p, psc, st==='refuse')}</g>
+      ${moving?'':nameTag(p, 6, 15, psc)}
     </g>`;
   });
   // achterste rij eerst tekenen, dan de voorste (diepte)
@@ -1865,6 +2021,9 @@ function sceneSVG(){
       ${Array.from({length:12},(_,i)=>{const u=(i+.5)/12, x=(1-u)*(1-u)*52+2*(1-u)*u*170+u*u*288, y=(1-u)*(1-u)*186+2*(1-u)*u*232+u*u*168;
         return `<path d="M${(x-5).toFixed(1)} ${y.toFixed(1)} L${(x+5).toFixed(1)} ${y.toFixed(1)} L${x.toFixed(1)} ${(y+10).toFixed(1)}Z" fill="${PARTY[i%PARTY.length]}"/>`}).join('')}</g>` : '';
   const shore = 226;
+  const fp = quiet ? null : fishPet();
+  const fishG = fp ? `<g class="fishy" data-pet="${fp.id}">${fishSVG()}</g>` : '';
+  const fishTag = fp ? `<g class="fishtag" data-pet="${fp.id}">${nameTag(fp, 66, 236, 1)}</g>` : '';
   return `<svg viewBox="0 0 ${W} ${H}" class="${sky.dark?'night':''}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
     <defs>
       <linearGradient id="skyg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sky.skyTop}"/><stop offset="1" stop-color="${sky.skyBot}"/></linearGradient>
@@ -1880,6 +2039,7 @@ function sceneSVG(){
     <path d="M0 ${HOR} H${W} V${shore} Q${W*.75} ${shore-8} ${W/2} ${shore} T0 ${shore}Z" fill="url(#seag)"/>
     <path class="wave" d="M-20 ${HOR+12} q15 -4 30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0" stroke="${sky.foam}" stroke-width="1.4" fill="none" opacity=".45"/>
     <path class="wave w2" d="M-10 ${HOR+30} q15 -4 30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0" stroke="${sky.foam}" stroke-width="1.2" fill="none" opacity=".35"/>
+    ${fishG}
     <path d="M0 ${shore-2} Q${W*.25} ${shore-10} ${W/2} ${shore-2} T${W} ${shore-2} V${H} H0Z" fill="var(--sand)"/>
     <path class="wave" d="M-10 ${shore-2} Q${W*.25} ${shore-10} ${W/2} ${shore-2} T${W+10} ${shore-2}" stroke="${sky.foam}" stroke-width="3" fill="none" opacity=".85"/>
     <path d="M0 ${shore+8} Q${W*.25} ${shore} ${W/2} ${shore+8} T${W} ${shore+8} V${shore+26} Q${W*.6} ${shore+18} 0 ${shore+24}Z" fill="#E3CFA6" opacity=".35"/>
@@ -1892,6 +2052,7 @@ function sceneSVG(){
     <rect width="${W}" height="${H}" fill="#06182B" opacity="${sky.veil.toFixed(3)}" pointer-events="none"/>
     ${op.out}
     ${slotsSorted}
+    ${fishTag}
     ${op.clouds}
     <rect y="${H-14}" width="${W}" height="14" fill="url(#fadeg)" pointer-events="none"/>
   </svg>`;
@@ -1913,16 +2074,53 @@ function renderScene(){
 function renderHeader(){
   $('#hSub').textContent = fmtDay(today().date);
   $('#pawPts').innerHTML = ICON_PAW + '<span>' + rwNum(rwPts()) + '</span>';
+  const sp = $('#starPts');
+  if(S.role === 'sitter'){
+    const r = ratingOf(me());
+    sp.hidden = false;
+    sp.title = r ? t('bk_bookings',{n:r.n}) : t('verified');
+    sp.setAttribute('aria-label', sp.title);
+    sp.classList.toggle('only', !r);
+    sp.innerHTML = r ? '<span class="stmark">★</span><span>' + r.avg.toFixed(1) + '</span>' : ICON_VERIFIED;
+  } else sp.hidden = true;
   $('#roleBtn').textContent = t(S.role) + ' ⇄';
   $('#roleBtn').setAttribute('aria-label', t('view_as')+': '+t(S.role));
 }
+
+/* ---------------- uitklapbare secties ----------------
+   één vorm voor de hele app; wat je open of dicht zet, blijft zo — ook na herladen */
+function accSec(key, title, meta, inner, open){
+  const o = (S.acc && S.acc[key] !== undefined) ? S.acc[key] : open;
+  const cnt = /^\d+$/.test(String(meta||''));   /* een aantal komt als pilletje rechts, de rest als regel eronder */
+  return `<details class="fold" data-acc="${key}" ${o?'open':''}>
+    <summary><span>${esc(title)}</span>${meta?`<span class="${cnt?'cnt':'muted'}">${meta}</span>`:''}</summary>
+    <div class="inner">${inner}</div></details>`;
+}
+document.addEventListener('toggle', e=>{
+  const d = e.target.closest && e.target.closest('details.fold');
+  if(d && d.dataset.acc){ S.acc = S.acc || {}; S.acc[d.dataset.acc] = d.open; save(); }
+}, true);
 
 /* ---------------- views ---------------- */
 let openTask = null;
 const ICON_CHECK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 const ICON_TICK = '<svg class="tick" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+let reviewDraft = {stars:0, note:''};
+function reviewCard(){
+  if(S.role !== 'owner') return '';
+  const b = (S.bookings||[]).find(x=>x.state==='done' && x.accepted_by && !x.review && !x.review_skipped);
+  if(!b) return '';
+  const st = reviewDraft.stars || 0;
+  return `<div class="bcard" data-booking="${b.id}">
+    <h3>${t('rv_title',{name:esc((sitterById(b.accepted_by)||{}).name||'')})}</h3>
+    <div class="starpick">${[1,2,3,4,5].map(n=>`<button class="stbtn ${n<=st?'on':''}" data-act="rv-star" data-v="${n}" aria-label="${t('rv_stars',{n})}">★</button>`).join('')}</div>
+    <textarea data-f="rv.note" rows="2" placeholder="${t('rv_ph')}">${esc(reviewDraft.note||'')}</textarea>
+    <div class="brow"><button class="btn" data-act="rv-save" ${st?'':'disabled'}>${t('rv_save')}</button>
+      <button class="btn ghost" data-act="rv-skip">${t('rv_skip')}</button></div>
+    <p class="fineprint">${t('rv_note')}</p></div>`;
+}
 function viewToday(){
-  const head = S.role==='sitter' ? (isSigned(me()) ? intakeCard() : signCard()) : '';
+  const head = (S.role==='sitter' ? (isSigned(me()) ? intakeCard() : signCard()) : reviewCard());
   /* zonder boeking voor vandaag: geen takenlijst en geen berichten */
   if(!cur() || !bookingToday()) return head + bannerHTML();
   return head + bannerHTML() + inboxSection() + (S.role === 'owner' ? viewOwner() : viewSitter());
@@ -1930,7 +2128,7 @@ function viewToday(){
 /* één vak: het laatste ongelezen bericht of de laatste opmerking, of de chat zelf */
 function inboxSection(){
   const title = S.role === 'owner' ? t('notes_title') : t('notes_title_owner');
-  if(chatOpen) return `<section class="sec" id="cardsSec"><h2>${title}<span><button class="lnk" data-act="chat-close">${t('hide')}</button></span></h2>${chatBox()}</section>`;
+  if(chatOpen) return `<div id="cardsSec">${accSec('inbox', title, '', chatBox() + `<button class="lnk" data-act="chat-close">${t('hide')}</button>`, true)}</div>`;
   const un = unreadItems(S.role), last = un[un.length-1];
   const body = last
     ? `<button class="card" data-act="open-chat">
@@ -1938,7 +2136,7 @@ function inboxSection(){
         <div><div class="meta"><b>${last.system ? t('app_name') : esc(last.from==='owner'?ownerName():sitterName())}</b> · ${hmOf(last.at)}${last.task?` · ${esc(t('about_task',{task:last.task}))}`:''}</div><p>${esc(last.text)}</p></div>
         ${un.length>1?`<span class="pill acc">${un.length}</span>`:''}</button>`
     : `<button class="card empty-card" data-act="open-chat"><div class="av">${ICON_PERSON}</div><div><p class="muted">${t('no_cards')}</p></div></button>`;
-  return `<section class="sec" id="cardsSec"><h2>${title}</h2><div class="cards">${body}</div></section>`;
+  return `<div id="cardsSec">${accSec('inbox', title, un.length?String(un.length):'', `<div class="cards">${body}</div>`, true)}</div>`;
 }
 
 /* melding bovenaan: geen boeking, nieuwe aanvraag of nog niet ingecheckt */
@@ -2015,13 +2213,12 @@ function viewSitter(){
       </div>${exp ? taskExpand(x) : ''}</div>`;
   }).join('');
   const P = S.plan;
-  const notes = (P.notes || P.vet.name || P.health) ? `<section class="sec"><h2>${t('q_notes')}</h2><div class="panel">
+  const notes = (P.notes || P.vet.name || P.health) ? accSec('notes', t('q_notes'), '', `
       ${P.notes?`<p class="sub">${esc(P.notes)}</p>`:''}
       ${P.health?`<p class="sub"><b>${t('q_health')}:</b> ${esc(P.health)}</p>`:''}
-      ${P.vet.name?`<p class="sub"><b>${t('vet_short')}:</b> ${esc(P.vet.name)}${P.vet.phone?` · <a href="tel:${esc(P.vet.phone.replace(/\s/g,''))}">${esc(P.vet.phone)}</a>`:''}</p>`:''}
-    </div></section>` : '';
-  return `<section class="sec"><h2>${t('today')} <span>${doneN} / ${live.length} ${t('done')}</span></h2>
-    ${rows ? `<div class="list">${rows}</div>` : `<div class="empty">${t('no_tasks')}</div>`}</section>${notes}`;
+      ${P.vet.name?`<p class="sub"><b>${t('vet_short')}:</b> ${esc(P.vet.name)}${P.vet.phone?` · <a href="tel:${esc(P.vet.phone.replace(/\s/g,''))}">${esc(P.vet.phone)}</a>`:''}</p>`:''}`, true) : '';
+  return accSec('tasks', t('today'), `${doneN} / ${live.length} ${t('done')}`,
+    rows ? `<div class="list">${rows}</div>` : `<div class="empty">${t('no_tasks')}</div>`, true) + notes;
 }
 /* opmerkingen zijn optioneel: standaard alleen afvinken */
 let openCmt = null;
@@ -2066,8 +2263,9 @@ function viewOwner(){
   }).join('');
   const all = d.tasks.map(x=>{ const st = taskStatus(x,m,d.date), extra = ownerExtra(x);
     return `<div class="lrow"><span class="d ${st==='open'?'':st}"></span><span class="tm">${toHM(x.time_start)}</span><span>${esc(taskTitle(x))}${extra?` <span class="muted">· ${esc(extra)}</span>`:''}</span></div>`; }).join('');
-  return `<section class="sec"><div class="status">${groups || `<div class="st"><span class="d"></span><div><b>${t('no_tasks')}</b></div></div>`}</div></section>
-    <details class="all"><summary>${t('all_tasks',{n:d.tasks.length})}</summary><div style="margin-top:6px">${all}</div></details>`;
+  return accSec('tasks', t('today'), '', `
+    <div class="status">${groups || `<div class="st"><span class="d"></span><div><b>${t('no_tasks')}</b></div></div>`}</div>
+    <details class="all"><summary>${t('all_tasks',{n:d.tasks.length})}</summary><div style="margin-top:6px">${all}</div></details>`, true);
 }
 
 /* achter een taak alleen wat de oppas echt heeft gekozen of geschreven */
@@ -2103,7 +2301,7 @@ function reportPanel(done){
     `<div class="dayrow"><span><b>${esc(logWho(b))}</b></span>
       <span class="muted">${bookingRange(b)} · ${nlab((b.days||[]).length, 'bk_1day', 'bk_days')}</span>
       <span>${logAmount(b)} XCG</span></div>`).join('');
-  return `<div class="panel"><h3>${t('rep_title')}</h3>
+  return accSec('report', t('rep_title'), '', `
     <div class="repfilters">
       ${pick('y', logF.y, years.map(y=>[y,y]), t('rep_year'))}
       ${pick('m', logF.m, t('mon').map((n,i)=>[pad(i+1), n]), t('rep_month'))}
@@ -2111,7 +2309,7 @@ function reportPanel(done){
     </div>
     ${rows ? `<div class="daylist">${rows}
       <div class="dayrow total"><span><b>${t('rep_total')}</b></span><span></span><span><b>${total} XCG</b></span></div></div>`
-      : `<p class="sub muted">${t('rep_none')}</p>`}</div>`;
+      : `<p class="sub muted">${t('rep_none')}</p>`}`, true);
 }
 function viewLog(){
   const all = logBookings();
@@ -2122,13 +2320,11 @@ function viewLog(){
     const d = S.days[k], doneN = d.tasks.filter(x=>x.state==='done').length;
     const rows = d.tasks.map(x=>`<div class="lrow"><span class="d ${x.state==='done'?(x.note||x.outcome==='refused'?'note':'ok'):''}"></span><span class="tm">${x.state==='done'?hmOf(x.later_at||x.done_at):'\u2014'}</span>
       <span>${esc(taskTitle(x))}${outcomeText(x)?` <span class="muted">\u00b7 ${esc(outcomeText(x))}</span>`:''}${x.note?`<div class="muted">\u201c${esc(x.note)}\u201d</div>`:''}</span></div>`).join('');
-    return `<details class="day" ${i===0?'open':''}><summary><b>${fmtDay(k)}</b><span class="muted">${t('tasks_done',{a:doneN,b:d.tasks.length})}</span></summary><div class="inner">${rows}</div></details>`;
+    return accSec('log:'+k, fmtDay(k), t('tasks_done',{a:doneN,b:d.tasks.length}), `<div class="lrows">${rows}</div>`, i===0);
   }).join('') : '';
   const sums = done.length ? reportPanel(done) : '';
   const body = days + sums;
-  return `<section class="sec"><h2>${t('log')}</h2>${body
-    ? `<div style="display:flex;flex-direction:column;gap:10px">${body}</div>`
-    : `<div class="empty">${t('log_empty')}</div>`}</section>`;
+  return body || `<section class="sec"><div class="empty">${t('log_empty')}</div></section>`;
 }
 
 function ownerPhotos(){
@@ -2140,11 +2336,14 @@ function viewIntake(){
   const P = S.plan, ro = S.role!=='owner', dogs = P.pets.filter(p=>p.species==='dog');
   const look = S.anim !== false;   /* animaties uit: het uiterlijk blijft opgeslagen, de knoppen ervoor verdwijnen */
   const petCards = P.pets.map(p=>{ const fl = isFlock(p), L = LOOKS[p.species] || LOOKS.dog;
-    const prev = fl ? `<div class="petprev flock">${FLOCK_ICON[p.species]}</div>`
-      : look ? `<div class="petprev"><svg viewBox="-40 -64 96 72">${petSVG(p, season())}</svg></div>` : '';
+    const drawn = !SMALL.includes(p.species) && p.species !== 'fish';   /* hond, kat en schildpad blijven getekend */
+    const prev = drawn ? (look ? `<div class="petprev"><svg viewBox="-40 -64 96 72">${petSVG(p, season())}</svg></div>` : '')
+      : `<div class="petprev flock">${FLOCK_ICON[p.species]}</div>`;
     return `<div class="petcard" data-pet="${p.id}">
       <div class="pethead${prev?'':' noprev'}">${prev}
-        ${fl ? `<input type="number" min="1" max="99" step="1" inputmode="numeric" data-f="pet.count" value="${p.count||1}" aria-label="${t('pet_count')}">`
+        ${fl ? `<span class="stepper"><button class="stepbtn" data-act="pet-n" data-v="-1" aria-label="\u2212">\u2212</button>
+             <input type="number" min="1" max="99" step="1" inputmode="numeric" data-f="pet.count" value="${p.count||1}" aria-label="${t('pet_count')}">
+             <button class="stepbtn" data-act="pet-n" data-v="1" aria-label="+">+</button></span>`
              : `<input type="text" data-f="pet.name" value="${esc(p.name)}" aria-label="${t('name')}" maxlength="18">`}
         <button class="xbtn" data-act="del-pet" aria-label="${t('remove')}">×</button></div>
       <p class="lbl">${t('species')}</p>
@@ -2254,7 +2453,7 @@ function sitterCard(x, picked, showPick, days, opt){
       <span class="ava">${x.photos && x.photos.length ? `<img src="${x.photos[0]}" alt="">` : esc((x.name||'?')[0])}</span>
       <span><b>${esc(x.name)}</b><span class="sub">${x.hoods.slice(0,3).join(', ')}</span>
         <span class="sub price">${days ? (q ? `${q.total} XCG ${t('q_total').toLowerCase()}` : t('q_no_service')) : priceLine(x)}</span></span>
-      <span class="rate"><span class="st">${stars(x.rating)}</span><span class="sub">${x.rating.toFixed(1)} · ${t('bk_bookings',{n:x.bookings})}</span></span>
+      ${ratingBlock(x.id)}
     </button>
     ${open ? `<p class="sub">${esc(x.intro)}</p>
       ${(x.photos||[]).length?`<div class="photos">${x.photos.map(src=>`<div class="photo"><img src="${src}" alt=""></div>`).join('')}</div>`:''}
@@ -2328,24 +2527,14 @@ function bookingOwner(){
     : `<section class="sec"><button class="btn ghost" data-act="bk-form">${t('bk_new')}</button></section>`;
   const ready = petsReady();
   const petLine = S.plan.pets.length ? nlab(S.plan.pets.length, 'bk_1pet', 'bk_npets') : t('bk_petinfo_need');
-  const openPets = accOpen.pets == null ? !ready : accOpen.pets;
-  const openReq  = accOpen.req  == null ? true  : accOpen.req;
-  return `<details class="acc" data-acc="pets" ${openPets?'open':''}>
-      <summary><span>${t('bk_petinfo')}</span><span class="muted">${petLine}</span></summary>
-      <div class="inner">${viewIntake()}${formBar('plan')}</div></details>
-    ${ready ? `<details class="acc" data-acc="req" ${openReq?'open':''}>
-        <summary><span>${t('bk_reqsec')}</span><span class="muted">${list.length?nlab(list.length, 'bk_1req', 'bk_nreq'):''}</span></summary>
-        <div class="inner">${list.length?`<div class="cards">${cards}</div>`:''}${form}</div></details>`
-      : `<div class="acc off"><div class="head"><span>${t('bk_reqsec')}</span><span class="muted">${t('bk_locked')}</span></div></div>`}`;
+  return accSec('pets', t('bk_petinfo'), petLine, viewIntake() + formBar('plan'), !ready)
+    + (ready
+      ? accSec('req', t('bk_reqsec'), list.length ? nlab(list.length, 'bk_1req', 'bk_nreq') : '',
+          (list.length ? `<div class="cards">${cards}</div>` : '') + form, true)
+      : `<div class="fold off"><div class="head"><span>${t('bk_reqsec')}</span><span class="muted">${t('bk_locked')}</span></div></div>`);
 }
 /* de aanvraagsectie gaat pas open als de dieren zijn ingevuld én opgeslagen */
 const petsReady = () => (S.plan.pets||[]).length > 0 && !dirtyKinds().includes('plan');
-/* open of dicht blijft staan zolang de gebruiker er zelf aan zit; null = automatisch */
-let accOpen = {pets:null, req:null};
-document.addEventListener('toggle', e=>{
-  const d = e.target.closest && e.target.closest('details.acc');
-  if(d && d.dataset.acc) accOpen[d.dataset.acc] = d.open;
-}, true);
 /* wat de oppas van een boeking ziet: alle praktische info, geen animatie-instellingen */
 function planSummary(){
   const P = S.plan, oi = P.owner_info||{};
@@ -2374,7 +2563,8 @@ function planSummary(){
 /* prijs van een aanvraag bij een oppas: dagen ≥ 6 uur = oppas aan huis, korter = visite */
 function petCounts(){
   const pets = S.plan.pets, dc = pets.filter(p=>['dog','cat'].includes(p.species)).length;
-  return {dc, other: pets.length - dc};
+  const other = pets.filter(p=>!['dog','cat'].includes(p.species)).reduce((a,p)=>a + (p.count||1), 0);
+  return {dc, other};
 }
 function quote(sitterId, days, opt){
   const o = opt || {services:['day'], visits:1, walks:1};
@@ -2532,10 +2722,10 @@ function signCard(){
 }
 function signedPanel(){
   const g = signedOf(me()); if(!g) return '';
-  return `<div class="panel"><h3>${t('tm_title')} <span class="pill ok">${t('tm_done')}</span></h3>
+  return accSec('signed', t('tm_title'), t('tm_done'), `
     <p class="sub">${t('tm_signed_on',{date:fmtDay(dateKey(new Date(g.at))), v:g.version})}</p>
     <p class="sub muted">${t('tm_mailed',{mail:esc(g.mail||'')})}</p>
-    <details class="all"><summary>${t('tm_view')}</summary>${termsHTML()}</details></div>`;
+    <details class="all"><summary>${t('tm_view')}</summary>${termsHTML()}</details>`, false);
 }
 function deactivatedCard(){
   const at = deactivatedOf(me());
@@ -2641,9 +2831,7 @@ function sitterProfileForm(){
           <button class="btn ghost sm" data-act="sp-add-disc" data-k="${key}">${t('pr_add_disc')}</button>`)}
     </div>`;
   };
-  return `<section class="sec"><h2>${t('sp_profile')}</h2>
-    ${signedPanel()}
-    <div class="panel"><p class="sub">${t('sp_profile_s')}</p>
+  return `<div class="panel"><p class="sub">${t('sp_profile_s')}</p>
       <input type="text" data-f="sp.first" value="${esc(pr.first||'')}" placeholder="${t('sp_first')}">
       <input type="text" data-f="sp.last" value="${esc(pr.last||'')}" placeholder="${t('sp_last')}">
       <input type="tel" data-f="sp.phone" value="${esc(pr.phone||'')}" placeholder="${t('sp_phone')}">
@@ -2663,7 +2851,7 @@ function sitterProfileForm(){
     ${availPanel()}
     <div class="panel"><h3>${t('sp_prices')}</h3><p class="sub">${t('pr_net_s')}</p>
       ${PRICE_ORDER.map(k=>service(k, SV_LONG[k])).join('')}
-    </div></section>`;
+    </div>`;
 }
 
 function bookingSitter(){
@@ -2715,51 +2903,50 @@ function bookingSitter(){
       <p class="sub muted">${t('st_notchosen_s')}</p></div>`).join('');
   const none = !reqs.length && !mine.length && !pend.length && !lost.length;
   return `${off ? deactivatedCard() : ''}
-    ${reqs.length?`<section class="sec"><h2>${t('bk_requests')}</h2><div class="cards">${reqCards}</div></section>`:''}
-    ${pend.length?`<section class="sec"><h2>${t('st_pending')}</h2><div class="cards">${pendCards}</div></section>`:''}
-    ${mine.length?`<section class="sec"><h2>${t('bk_yours')}</h2><div class="cards">${mineCards}</div></section>`:''}
+    ${reqs.length?accSec('reqs', t('bk_requests'), String(reqs.length), `<div class="cards">${reqCards}</div>`, true):''}
+    ${pend.length?accSec('pend', t('st_pending'), String(pend.length), `<div class="cards">${pendCards}</div>`, true):''}
+    ${mine.length?accSec('mine', t('bk_yours'), String(mine.length), `<div class="cards">${mineCards}</div>`, true):''}
     ${lost.length?`<div class="cards">${lostCards}</div>`:''}
     ${none && signed && !off?`<div class="bcard"><h3>${esc(meSitter().name)} · ${t('bk_offer')}</h3><p class="sub muted">${intakeDone(me())?t('bk_no_req'):t('ik_locked')}</p></div>`:''}
-    ${sitterProfileForm()}${signed?'':termsAccept()}${formBar('profile', !signed)}`;
+    ${accSec('prof', t('sp_profile'), '', sitterProfileForm() + (signed?'':termsAccept()) + formBar('profile', !signed), true)}`;
 }
 
 function viewMore(){
   const chips = (act, cur, list) => `<div class="seg">${list.map(([v,l])=>`<button class="chip ${cur===v?'sel':''}" data-act="${act}" data-v="${v}">${l}</button>`).join('')}</div>`;
   const flags = (S.flags||[]).slice().reverse();
-  const alerts = flags.length ? `<div class="panel"><h3>${t('more_alerts')} <span class="pill warn">${flags.length}</span></h3>
+  const alerts = flags.length ? accSec('alerts', t('more_alerts'), String(flags.length), `
       <p class="sub muted">${t('flag_hint')}</p>
       <div class="daylist">${flags.map(f=>`<div class="dayrow"><span>${t('flag_phone')}</span>
         <span class="muted">${esc(f.from==='owner'?ownerName():((sitterById(f.sitter)||{}).name||t('sitter')))} · ${hmOf(f.at)}</span><span></span></div>
         <p class="sub" style="margin:-2px 0 4px">“${esc(f.text)}”</p>`).join('')}</div>
-      <button class="btn ghost sm" data-act="flags-clear">${t('flag_clear')}</button></div>` : '';
-  return `${alerts}${rewardsPanel()}<div class="panel">
+      <button class="btn ghost sm" data-act="flags-clear">${t('flag_clear')}</button>`, true) : '';
+  return `${alerts}${rewardsPanel()}
+  ${accSec('settings', t('m_settings'), '', `
     <p class="lbl">${t('role')}</p>${chips('set-role', S.role, [['sitter',t('sitter')],['owner',t('owner')]])}
     <p class="sub muted">${t('role_hint')}</p>
     <p class="lbl">${t('language')}</p>${chips('set-lang', S.lang, [['nl','Nederlands'],['en','English']])}
     <p class="lbl">${t('theme')}</p>${chips('set-theme', S.theme, [['auto',t('th_auto')],['light',t('th_light')],['dark',t('th_dark')]])}
     <p class="lbl">${t('anim')}</p>
     <button class="btn ghost" data-act="anim">${S.anim===false?t('anim_on'):t('anim_off')}</button>
-    <p class="sub muted">${t('anim_s')}</p>
-  </div>
-  <div class="panel"><button class="btn ghost" data-act="fees">${t('fee_more')}</button></div>
-  <div class="panel">
+    <p class="sub muted">${t('anim_s')}</p>`, true)}
+  ${accSec('fees', t('fee_more'), '', `<button class="btn ghost" data-act="fees">${t('fee_open')}</button>`, false)}
+  ${S.role==='sitter' ? signedPanel() : ''}
+  ${accSec('app', t('m_app'), '', `
     <p class="sub">${t('install')}</p>
     ${S.auth?`<p class="sub muted">${t('lg_signed',{name:esc(S.auth.name), mail:esc(S.auth.email)})}</p><button class="btn ghost" data-act="logout">${t('logout')}</button>`:''}
     <button class="btn ghost" data-act="export">${t('export')}</button>
     <button class="btn ghost" data-act="demo-full">${t('demo_full')}</button>
     <button class="btn ghost danger" data-act="reset">${t('reset')}</button>
-    <p class="sub muted" style="font-size:12.5px">${t('about')}</p>
-  </div>
-  ${S.auth?`<div class="panel"><h3>${t('deact')}</h3>
+    <p class="sub muted" style="font-size:12.5px">${t('about')}</p>`, true)}
+  ${S.auth?accSec('deact', t('deact'), '', `
     <p class="sub">${t('deact_s')}</p>
     ${S.auth.role==='sitter'?`<p class="sub muted">${t('deact_term',{date:plusYear(null)})}</p>`:''}
-    <button class="btn ghost danger" data-act="deactivate">${t('deact')}</button></div>`:''}
-  <div class="panel">
+    <button class="btn ghost danger" data-act="deactivate">${t('deact')}</button>`, false):''}
+  ${accSec('demo', t('m_demo'), '', `
     <p class="lbl">${t('season')}</p>${chips('set-season', S.season||'auto', [['auto',t('se_auto')],['december',t('se_dec')],['carnival',t('se_carn')],['none',t('se_none')]])}
     <p class="sub muted">${t('season_hint')}</p>
     <p class="lbl">${t('demo_me')}</p><div class="seg">${allSitters().map(x=>`<button class="chip ${me()===x.id?'sel':''}" data-act="set-me" data-v="${x.id}">${esc(sitterInfo(x.id).name||x.name)}</button>`).join('')}</div>
-    <p class="lbl">${t('demo_time')}</p>${chips('set-demo', S.demo_time||'', [['',t('live')],['07:15','07:15'],['10:20','10:20'],['12:30','12:30'],['18:10','18:10'],['22:30','22:30']])}
-  </div>`;
+    <p class="lbl">${t('demo_time')}</p>${chips('set-demo', S.demo_time||'', [['',t('live')],['07:15','07:15'],['10:20','10:20'],['12:30','12:30'],['18:10','18:10'],['22:30','22:30']])}`, false)}`;
 }
 
 /* ---------------- pootjes: sparen en uitgeven ----------------
@@ -2839,14 +3026,12 @@ function rewardsPanel(){
       </div></div>`;
   }).join('');
   const exp = rwNextExpiry();
-  return `<details class="day rw"><summary><b>${t('rw_title')}</b><span class="pill acc">${t('rw_pts',{n:rwNum(pts)})}</span></summary>
-    <div class="inner">
+  return accSec('rw', t('rw_title'), t('rw_pts',{n:rwNum(pts)}), `
       <p class="sub">${t('rw_how')}</p>
       <p class="lbl">${t('rw_earn')}</p><div class="daylist">${earn}</div>
       <p class="lbl" style="margin-top:12px">${t('rw_shop')}</p>
       <div class="daylist">${shop}</div>
-      <p class="fineprint">${t('rw_valid')}${exp?' '+t('rw_expire',{n:rwNum(exp.n), date:fmtShort(exp.date)}):''}</p>
-    </div></details>`;
+      <p class="fineprint">${t('rw_valid')}${exp?' '+t('rw_expire',{n:rwNum(exp.n), date:fmtShort(exp.date)}):''}</p>`, false);
 }
 
 /* ---------------- opslaan / ongedaan maken van de vragenlijsten ---------------- */
@@ -3094,7 +3279,18 @@ document.addEventListener('click', e=>{
     award('sitter', 'checkin:'+b.id+':'+dateKey(nowDate()), PTS.sitter.checkin);
     save(); render(); toast(t('bk_checked_in',{time:hmOf(b.checkin_at)})); return; }
   if(act==='bk-checkout'){ const el = a.closest('[data-booking]'); const b = el ? S.bookings.find(x=>x.id===el.dataset.booking) : cur(); if(!b) return;
-    b.state='accepted'; b.checkin_at = null; save(); render(); return; }
+    if(!confirm(t('co_q'))) return;
+    b.checkout_at = nowDate().toISOString(); b.state = 'done';
+    save(); render(); window.scrollTo({top:0}); return; }
+  if(act==='rv-star'){ reviewDraft.stars = Number(v); renderMain(); return; }
+  if(act==='rv-skip'){ const el = a.closest('[data-booking]'), b = el && S.bookings.find(x=>x.id===el.dataset.booking);
+    if(b){ b.review_skipped = true; save(); renderMain(); } return; }
+  if(act==='rv-save'){ const el = a.closest('[data-booking]'), b = el && S.bookings.find(x=>x.id===el.dataset.booking);
+    if(!b || !reviewDraft.stars) return;
+    /* in Odoo een concept: opgeslagen, nog niet gepubliceerd */
+    b.review = {stars:reviewDraft.stars, note:(reviewDraft.note||'').trim(), at:nowDate().toISOString(), state:'draft'};
+    reviewDraft = {stars:0, note:''};
+    save(); render(); toast(t('rv_done')); return; }
   const tEl = a.closest('[data-task]');
   if(tEl){
     const x = findTask(tEl.dataset.task); if(!x) return;
@@ -3117,10 +3313,10 @@ document.addEventListener('click', e=>{
       pr.signed = {version:TERMS_VERSION, at:nowDate().toISOString(), name:((pr.first||'')+' '+(pr.last||'')).trim(),
         mail, ua:navigator.userAgent.slice(0,120), mailed_at:nowDate().toISOString()};
       pr.intake = {requested_at:nowDate().toISOString(), done:false};
-      intakeMail(pr, mail); termsOK = false; accOpen = {pets:null, req:null};
+      intakeMail(pr, mail); termsOK = false; S.acc = S.acc || {}; delete S.acc.pets; delete S.acc.req;
       save(); snapshot(); render(); window.scrollTo({top:0}); toast(t('tm_toast',{mail})); return;
     }
-    accOpen = {pets:null, req:null}; save(); snapshot(); toast(t('saved')); render(); return; }
+    S.acc = S.acc || {}; delete S.acc.pets; delete S.acc.req; save(); snapshot(); toast(t('saved')); render(); return; }
   if(act==='ik-done'){ const pr = S.sitters[me()] = S.sitters[me()] || profile(me());
     pr.intake = {...(pr.intake||{}), done:true, done_at:nowDate().toISOString()};
     save(); snapshot(); render(); return; }
@@ -3186,9 +3382,11 @@ document.addEventListener('click', e=>{
   if(act==='add-pet'){ P.pets.push({id:uid('pet_'), name:S.lang==='en'?'New pet':'Nieuw', species:'dog', coat:LOOKS.dog.coats[0], pattern:'solid', ears:'flop'}); }
   else if(act==='del-pet' && pet){ P.pets = P.pets.filter(p=>p!==pet); P.walks.forEach(w=>w.dog_ids=w.dog_ids.filter(i=>i!==pet.id)); P.meds = P.meds.filter(m=>m.pet_id!==pet.id); }
   else if(act==='pet-species' && pet){ pet.species=v;
-    if(FLOCK.includes(v)){ pet.count = pet.count || 1; }
+    if(FLOCK.includes(v)){ pet.count = pet.count || 1;
+      if(v==='turtle'){ pet.coat = LOOKS.turtle.coats[0]; pet.pattern = 'plates'; } }
     else { pet.coat=LOOKS[v].coats[0]; pet.pattern=LOOKS[v].patterns[0]; if(v==='dog') pet.ears=pet.ears||'flop'; }
     if(v!=='dog') P.walks.forEach(w=>w.dog_ids=w.dog_ids.filter(i=>i!==pet.id)); }
+  else if(act==='pet-n' && pet){ pet.count = Math.max(1, Math.min(99, (pet.count||1) + Number(v))); }
   else if(act==='pet-coat' && pet) pet.coat=v;
   else if(act==='pet-pattern' && pet) pet.pattern=v;
   else if(act==='pet-ears' && pet) pet.ears=v;
@@ -3284,6 +3482,7 @@ document.addEventListener('input', e=>{
   if(n){ const x = findTask(n.dataset.note); if(x){ x.note = n.value; delete S.dismissed[dismissKey(today().date,x)]; clearTimeout(noteTimer); noteTimer = setTimeout(()=>{ save(); renderScene(); }, 400); } return; }
   const f = e.target.dataset.f; if(!f) return;
   if(f.startsWith('lg.')){ lg[f.slice(3)] = e.target.value; return; }
+  if(f==='rv.note'){ reviewDraft.note = e.target.value; return; }
   if(f==='tm.ok'){ termsOK = e.target.checked; renderMain(); return; }
   const P = S.plan, later = fn => { clearTimeout(noteTimer); noteTimer = setTimeout(fn, 400); };
   if(!f.startsWith('sp.') && !f.startsWith('av.') && S.role!=='owner') return;
@@ -3357,6 +3556,10 @@ function exportJSON(){
     'hoc.sitter': Object.entries(S.sitters||{}).map(([sid,p])=>({x_id:sid, name:((p.first||'')+' '+(p.last||'')).trim(), email:p.email||false,
       services:SERVICES.filter(k=>(p.prices||{})[k] && p.prices[k].on), hood_ids:p.hoods||[], care:p.care||[],
       availability_default:(p.avail||{}).base || 'yes', active:!p.deactivated_at, deactivated_at:p.deactivated_at||false})),
+    'hoc.review': (S.bookings||[]).filter(b=>b.review).map(b=>({booking_id:b.id, sitter_id:b.accepted_by,
+      partner_ref:((S.plan.owner_info||{}).email || OWNER_MAIL).toLowerCase(),
+      rating:b.review.stars, comment:b.review.note||false, state:b.review.state||'draft',
+      published:false, create_date:b.review.at})),
     'hoc.sitter.intake': Object.entries(S.sitters||{}).filter(([,p])=>p.intake).map(([sid,p])=>({
       sitter_id:sid, requested_at:p.intake.requested_at||false, state:p.intake.done?'done':'todo',
       done_at:p.intake.done_at||false, note:'Kennismakingsgesprek inplannen'})),
