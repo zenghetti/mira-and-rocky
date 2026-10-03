@@ -217,12 +217,12 @@ button.card .pill{align-self:center}
 .photo .x{position:absolute;right:2px;top:2px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(0,0,0,.5);color:#fff;font-size:14px;line-height:1;cursor:pointer;padding:0}
 .addphoto{width:78px;height:78px;border-radius:12px;border:1.5px dashed var(--line);display:grid;place-items:center;text-align:center;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;padding:4px}
 .svch{font:700 15px/1.2 inherit;margin:0 0 6px}
-.savebar{display:flex;align-items:center;gap:8px;padding:8px 10px 8px 15px;border-radius:99px;
+.savebar{display:flex;align-items:center;gap:8px;padding:8px 10px 8px 15px;border-radius:12px;
   background:var(--surface);border:1.5px solid var(--note);box-shadow:var(--shadow)}
 .savebar .dot{width:8px;height:8px;border-radius:50%;background:var(--note);flex:none}
 .savebar .txt{flex:1;font-size:13.5px;font-weight:600;color:var(--note);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.savebar .btn{padding:8px 15px;font-size:13.5px;border-radius:99px;width:auto}
-.savebar .btn.ico{padding:0;width:38px;height:38px;flex:none;display:grid;place-items:center}
+.savebar .btn{padding:8px 15px;font-size:13.5px;border-radius:10px;width:auto}
+.savebar .btn.ico{padding:0;width:38px;height:38px;flex:none;display:grid;place-items:center;border-radius:10px}
 .savebar .btn.ico svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .savebar.pulse{animation:saveping .8s ease-in-out 2}
 @keyframes saveping{0%,100%{box-shadow:var(--shadow)}50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--note) 30%,transparent)}}
@@ -369,9 +369,18 @@ details.all>summary::-webkit-details-marker{display:none}
 .toggle{display:grid;grid-template-columns:auto 1fr 124px;gap:10px;align-items:center;font-size:14.5px}
 .toggle input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent)}
 .choresub{display:grid;grid-template-columns:1fr 124px;gap:10px;margin-top:-2px}
+.toggle.plain{grid-template-columns:auto 1fr}
+.daypart{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:-2px 0 2px}
+.toggle+.daypart{margin-left:30px}
+.daypart select{padding:7px 10px;font-size:14px;color:var(--ink-2)}
 .choresub select{grid-column:2;padding:7px 10px;font-size:14px;color:var(--ink-2)}
 .checks{display:flex;flex-wrap:wrap;gap:6px}
 .ro-note{font-size:13px;background:var(--note-soft);color:var(--note);padding:9px 12px;border-radius:12px;font-weight:600}
+.visinfo{display:flex;flex-direction:column;gap:6px;background:var(--surface-2);border-radius:12px;padding:10px 12px}
+.visinfo .vrow{font-size:13.5px;line-height:1.4}
+.visinfo .when{font-weight:700}
+.visinfo .vrow.now .when{color:var(--accent)}
+.visinfo .note{display:block;color:var(--ink-3)}
 fieldset{border:0;margin:0;padding:0;min-width:0;display:flex;flex-direction:column;gap:14px}
 fieldset[disabled]{opacity:.7}
 
@@ -594,18 +603,21 @@ const I18N = {
     chicken:'Kippen', bird:'Vogels', fish:'Vissen', pet_count:'Aantal',
     turtle_n:'Schildpadden', chicken_1:'Kip', bird_1:'Vogel', fish_1:'Vis',
     coat:'Vachtkleur', shell:'Schildkleur', pattern:'Tekening', ears:'Oren',
-    p_solid:'Effen', p_spots:'Vlekken', p_bib:'Witte bef', p_saddle:'Zadel', p_tabby:'Gestreept', p_tux:'Sokjes & bef', p_calico:'Lapjes', p_plates:'Schubben',
+    p_solid:'Effen', p_spots:'Vlekken', p_bib:'Witte bef', p_saddle:'Zadel', p_tabby:'Strepen', p_tux:'Sokjes & bef', p_calico:'Lapjes', p_plates:'Schubben',
     e_flop:'Hangoren', e_up:'Staande oren', add_pet:'+ Dier toevoegen', remove:'Verwijderen',
     q_feed:'Hoe laat krijgen de dieren eten en vers drinkwater?', q_feed_s:'Voeg een moment toe per voertijd en kies per dier hoeveel.', add_feed:'+ Voedermoment',
     q_walk:'Worden de honden uitgelaten?', q_walk_s:'Geef per wandeling de tijd, duur en welke honden meegaan.', add_walk:'+ Wandeling', minutes:'min', no_dogs:'Geen honden in de vragenlijst.',
-    q_chores:'Wat moet er verder gebeuren?', every:'Elke', wd_pick:'Welke dag',
-    q_meds:'Medicatie', add_med:'+ Medicatie', med_ph:'Bijv. ½ tablet door het eten',
+    q_chores:'Wat moet er verder gebeuren?', every:'Elke', wd_pick:'Welke dag', part_pick:'Welk dagdeel',
+    pt_morning:'Ochtend', pt_afternoon:'Middag', pt_evening:'Avond', vi_today:'vandaag', vi_before:'tot {time}',
+    q_visit:'Wie komt er langs?', add_visitor:'+ Persoon', vi_note:'Opmerking',
+    vi_clean:'Schoonmaakster', vi_garden:'Tuinmannen', vi_pool:'Pool service', vi_other:'Anders',
+    q_meds:'Medicatie', q_health_sec:'Gezondheid', add_med:'+ Medicatie', med_ph:'Bijv. ½ tablet door het eten',
     q_custom:'Eigen taken', add_custom:'+ Eigen taak', custom_ph:'Omschrijving',
     q_notes:'Voor de oppas', notes_ph:'Bijzonderheden, gewoontes, waar ligt wat…', vet:'Dierenarts', phone:'Telefoon',
     log_intro:'Alle dagen blijven bewaard op dit apparaat.', tasks_done:'{a} van {b}',
     language:'Taal', theme:'Weergave', th_auto:'Automatisch', th_light:'Licht', th_dark:'Donker',
     demo_time:'Demo: tijd van de dag', live:'Live', season:'Seizoen', se_auto:'Automatisch', se_dec:'December', se_carn:'Karnaval', se_none:'Geen',
-    season_hint:'In december hangen er lichtjes in de palmboom. Tijdens het karnavalsseizoen (januari tot en met de dinsdag voor Aswoensdag) zijn de dieren feestelijk verkleed.',
+    demo_data:'Gegevens', season_hint:'In december hangen er lichtjes in de palmboom. Tijdens het karnavalsseizoen (januari tot en met de dinsdag voor Aswoensdag) zijn de dieren feestelijk verkleed.',
     export:'Exporteren (JSON voor Odoo)', reset:'Voorbeelddata herstellen', reset_q:'Alle boekingen, berichten en voortgang wissen? De vragenlijst met je gegevens en dieren blijft ingevuld staan.', demo_full:'Demo met lopende boeking', demo_full_q:'De voorbeeldboeking van vandaag terugzetten?',
     install:'Zet de app op je beginscherm: Delen → Zet op beginscherm (iPhone) of ⋮ → App installeren (Android).',
     about:'Prototype · gegevens staan alleen op dit apparaat.',
@@ -639,18 +651,21 @@ const I18N = {
     chicken:'Chickens', bird:'Birds', fish:'Fish', pet_count:'Number',
     turtle_n:'Turtles', chicken_1:'Chicken', bird_1:'Bird', fish_1:'Fish',
     coat:'Coat colour', shell:'Shell colour', pattern:'Markings', ears:'Ears',
-    p_solid:'Solid', p_spots:'Spots', p_bib:'White bib', p_saddle:'Saddle', p_tabby:'Tabby', p_tux:'Tuxedo', p_calico:'Calico', p_plates:'Scutes',
+    p_solid:'Solid', p_spots:'Spots', p_bib:'White bib', p_saddle:'Saddle', p_tabby:'Stripes', p_tux:'Tuxedo', p_calico:'Calico', p_plates:'Scutes',
     e_flop:'Floppy', e_up:'Upright', add_pet:'+ Add pet', remove:'Remove',
     q_feed:'When do the pets get food and fresh water?', q_feed_s:'Add a moment per mealtime and choose the portion per pet.', add_feed:'+ Mealtime',
     q_walk:'Do the dogs go for walks?', q_walk_s:'Set the time, duration and which dogs join each walk.', add_walk:'+ Walk', minutes:'min', no_dogs:'No dogs in the questionnaire.',
-    q_chores:'What else needs doing?', every:'Every', wd_pick:'Which day',
-    q_meds:'Medication', add_med:'+ Medication', med_ph:'E.g. ½ tablet in the food',
+    q_chores:'What else needs doing?', every:'Every', wd_pick:'Which day', part_pick:'Which part of the day',
+    pt_morning:'Morning', pt_afternoon:'Afternoon', pt_evening:'Evening', vi_today:'today', vi_before:'until {time}',
+    q_visit:'Who comes by?', add_visitor:'+ Person', vi_note:'Note',
+    vi_clean:'Cleaner', vi_garden:'Gardeners', vi_pool:'Pool service', vi_other:'Other',
+    q_meds:'Medication', q_health_sec:'Health', add_med:'+ Medication', med_ph:'E.g. ½ tablet in the food',
     q_custom:'Own tasks', add_custom:'+ Own task', custom_ph:'Description',
     q_notes:'For the sitter', notes_ph:'Habits, quirks, where things are…', vet:'Vet', phone:'Phone',
     log_intro:'Every day stays saved on this device.', tasks_done:'{a} of {b}',
     language:'Language', theme:'Appearance', th_auto:'Automatic', th_light:'Light', th_dark:'Dark',
     demo_time:'Demo: time of day', live:'Live', season:'Season', se_auto:'Automatic', se_dec:'December', se_carn:'Carnival', se_none:'None',
-    season_hint:'In December the palm tree gets fairy lights. During carnival season (January up to the Tuesday before Ash Wednesday) the pets dress up.',
+    demo_data:'Data', season_hint:'In December the palm tree gets fairy lights. During carnival season (January up to the Tuesday before Ash Wednesday) the pets dress up.',
     export:'Export (JSON for Odoo)', reset:'Restore sample data', reset_q:'Erase all bookings, messages and progress? The questionnaire with your details and pets stays filled in.', demo_full:'Demo with a running booking', demo_full_q:'Restore the example booking for today?',
     install:'Add the app to your home screen: Share → Add to Home Screen (iPhone) or ⋮ → Install app (Android).',
     about:'Prototype · data is stored on this device only.',
@@ -671,7 +686,7 @@ Object.assign(I18N.nl, {
   bk_npets:'{n} dieren', bk_nreq:'{n} aanvragen', bk_1pet:'1 dier', bk_1req:'1 aanvraag', bk_1day:'1 dag',
   rep_title:'Afgeronde boekingen', rep_year:'Jaar', rep_month:'Maand', rep_who:'Klant', rep_who_s:'Oppas',
   rep_all:'Alle', rep_total:'Totaal', rep_none:'Geen boekingen in deze selectie.',
-  fee_note:'Inclusief {share}% servicekosten en 6% OB.',
+  fee_note:'Inclusief servicekosten en 6% OB.',
   q_net:'Jij ontvangt',
   av_title:'Jouw beschikbaarheid', av_base:'Standaard sta je op', av_yes:'Beschikbaar', av_no:'Niet beschikbaar',
   av_base_s:'Dit geldt voor je hele kalender.', av_custom:'Per dag aanpassen',
@@ -689,9 +704,8 @@ Object.assign(I18N.nl, {
   tm_k1:'Je bepaalt zelf je tarief, je diensten en je beschikbaarheid',
   tm_k2:'De klant betaalt 50% vooraf; jij krijgt je bedrag binnen twee werkdagen',
   tm_k3:'Je tarief krijg je volledig; de klant betaalt daarnaast servicekosten van {share}% van het totaalbedrag',
-  tm_k4:'Twaalf maanden relatiebeding na deactivering, af te kopen vanaf XCG 500',
   tm_locked:'Onderteken eerst de voorwaarden, dan verschijnen hier de aanvragen.',
-  tm_accept:'Ik accepteer de voorwaarden', tm_need:'Zet eerst een vinkje bij de voorwaarden.',
+  tm_accept:'Ik accepteer de voorwaarden', tm_first:'Accepteer eerst de voorwaarden', tm_ready:'Klaar om op te slaan', tm_need:'Zet eerst een vinkje bij de voorwaarden.',
   ik_title:'We plannen een kennismakingsgesprek', ik_s:'Je profiel staat klaar. Zodra we elkaar gesproken hebben, ontvang je aanvragen.',
   ik_mailed:'Je gegevens zijn doorgestuurd naar info@huisdierenoppascuracao.com.',
   ik_demo:'Demo: gesprek afgerond', ik_locked:'Aanvragen verschijnen hier na het kennismakingsgesprek.',
@@ -723,16 +737,16 @@ Object.assign(I18N.nl, {
   fo2:'Vervanging als je oppas uitvalt', fo2s:'Valt je oppas uit, dan gaat je aanvraag met \u00e9\u00e9n tik als spoed naar alle oppassers die spoed aannemen. Over de resterende dagen betaal je nooit meer dan je al betaalde.',
   fo3:'Gecontroleerde oppassers', fo3s:'We controleren de identiteit en spreken iedereen persoonlijk voordat het profiel online komt. Beoordelingen komen alleen van echte boekingen.',
   fo4:'Dierenartsdekking', fo4s:'Tot XCG 250 per boeking voor spoedeisende hulp: maximaal XCG 200 naar de dierenarts en XCG 50 naar de oppas voor de rit en de tijd. Alleen voor klachten die tijdens de oppasperiode ontstaan; wat je vooraf meldt valt erbuiten.',
-  fo5:'Hulp van een mens', fo5s:'Loopt er iets mis, dan hoor je binnen 24 uur van ons. Bel of app +599 9 694 7642.',
+  fo5:'Support', fo5s:'Loopt er iets mis, dan kun je ons bereiken via Contact of op +599 9 694 7642. We reageren zo snel mogelijk.',
   fo6:'Elke dag zien wat er gedaan is', fo6s:'Je volgt de takenlijst live, met opmerkingen en foto\u2019s van de oppas, en je kunt meteen reageren.',
   fs1:'Je krijgt altijd betaald', fs1s:'De klant betaalt vooraf de helft. Jouw bedrag staat binnen twee werkdagen na de eindfactuur op je rekening, ook als de klant traag is.',
   fs2:'Vervanging als je uitvalt', fs2s:'Ziek of iets tussengekomen? Met \u00e9\u00e9n tik zetten wij de resterende dagen als spoed uit. Jouw beoordeling lijdt er niet onder.',
   fs3:'Klanten die al rond zijn', fs3s:'Je krijgt alleen aanvragen die bij je profiel passen, met de dieren, de buurt en de datums al ingevuld.',
   fs4:'Je administratie geregeld', fs4s:'Wij maken de factuur namens jou en geven je een jaaroverzicht van je omzet en OB voor je aangifte.',
-  fs5:'Hulp van een mens', fs5s:'Zit je ergens mee tijdens een boeking, dan hoor je binnen 24 uur van ons: +599 9 694 7642.',
+  fs5:'Support', fs5s:'Zit je ergens mee tijdens een boeking, dan kun je ons bereiken via Contact of op +599 9 694 7642. We reageren zo snel mogelijk.',
   fs6:'Vergoed voor een ritje naar de dierenarts', fs6s:'Moet je met spoed naar de dierenarts, dan krijg je XCG 50 voor de rit en de tijd, bovenop je tarief. De rekening zelf gaat tot XCG 200 naar de dierenarts.',
   react_s:'Je ontvangt geen aanvragen zolang je account gedeactiveerd is.',
-  pr_net_s:'Dit is jouw tarief: het bedrag dat jij ontvangt. De klant betaalt daarnaast servicekosten en OB.',
+  pr_net_s:'Dit is jouw tarief: het bedrag dat jij ontvangt.',
   need_host_s:'De dieren logeren bij de oppas. De begintijd geldt voor de eerste dag, de eindtijd voor de laatste.',
   need_day_s:'De oppas blijft slapen. De begintijd geldt voor de eerste dag, de eindtijd voor de laatste.',
   alone:'Hoe lang kunnen de dieren alleen zijn?', alone_u:'uur', per_day:'per dag',
@@ -747,7 +761,12 @@ Object.assign(I18N.nl, {
   bk_accepted_list:'Oppassers die hebben geaccepteerd', bk_msg:'Bericht', bk_choose_one:'Kies',
   bk_await_toast:'Je staat op de lijst · stuur gerust een bericht',
   th_ph:'Bericht aan {who}…', th_empty:'Nog geen berichten.',
-  ch_photo:'Foto', ch_add_photo:'Foto versturen', ch_photo_big:'Foto bekijken', ch_full:'Vol · foto niet verstuurd',
+  ch_photo:'Foto', ch_add_photo:'Foto versturen', ch_photo_big:'Foto bekijken', ch_full:'Vol \u00b7 foto niet verstuurd',
+  pic_ask:'Toegang tot je foto\u2019s',
+  pic_ask_s:'Je kiest zelf welke foto je verstuurt; de app ziet alleen die ene foto en nooit de rest van je bibliotheek. In het keuzescherm van je telefoon kun je ook voor de camera kiezen.',
+  pic_yes:'Toestaan en kiezen', pic_no:'Niet nu', pic_on:'Toegestaan', pic_off:'Nog niet gevraagd',
+  pic_lbl:'Foto\u2019s', pic_revoke:'Toestemming intrekken', pic_revoked:'Toestemming ingetrokken',
+  ch_keep:'Berichten en foto\u2019s bij een boeking verdwijnen zes maanden na het uitchecken.',
   m_settings:'Instellingen', m_app:'App en account', m_demo:'Demo-instellingen', fee_open:'Bekijken',
   more_alerts:'Meldingen', flag_phone:'Mogelijk telefoonnummer gedeeld', flag_clear:'Meldingen wissen',
   flag_hint:'In Odoo wordt dit een notificatie voor het platform; het gesprek blijft zichtbaar.',
@@ -762,18 +781,14 @@ Object.assign(I18N.nl, {
   rw_valid:'Pootjes zijn twaalf maanden geldig.', rw_expire:'De eerste {n} verlopen op {date}.',
   rw1:'Voorrang bij nieuwe aanvragen', rw1s:'Een week lang sta je bovenaan bij aanvragen die bij je passen.',
   rw2:'Je profiel een week uitgelicht', rw2s:'Een week lang sta je vooraan als eigenaren oppassers bekijken.',
-  rw3:'Tegoedbon dierenwinkel XCG 10', rw3s:'Te besteden bij een dierenwinkel op het eiland.',
   rw4:'Uitbetaling de volgende werkdag', rw4s:'Drie maanden lang staat je geld een werkdag eerder op je rekening.',
   rw5:'Keurmerk op je profiel', rw5s:'Drie maanden lang een label dat eigenaren zien als ze een oppas zoeken.',
   rw6:'EHBO-cursus voor dieren', rw6s:'Een dagcursus diereneerstehulp op het eiland, door ons betaald.',
   rw7:'Professionele foto\u2019s voor je profiel', rw7s:'Een fotograaf maakt foto\u2019s van jou aan het werk, door ons betaald.',
   ro1:'XCG 2,50 korting', ro1s:'Wordt verrekend met je volgende boeking.',
-  ro6:'Je aanvraag een week uitgelicht', ro6s:'Een week lang zien oppassers jouw aanvraag als eerste.',
   ro7:'Fotoshoot met je huisdier', ro7s:'Een fotograaf maakt foto\u2019s van jou en je dieren, door ons betaald.',
   ro8:'Premium-label op je profiel', ro8s:'Oppassers zien dat je vaste klant bent en reageren sneller.',
-  ro3:'Een korte visite extra', ro3s:'Tijdens je volgende boeking komt de oppas \u00e9\u00e9n keer extra langs, door ons betaald.',
   ro4:'XCG 25 korting', ro4s:'Wordt verrekend met je volgende boeking.',
-  ro5:'Lagere servicekosten', ro5s:'Op je volgende boeking betaal je 20% servicekosten in plaats van 25%, tot XCG 30 voordeel.',
   form_save:'Opslaan', form_undo:'Ongedaan maken', form_undone:'Wijzigingen teruggedraaid',
   unsaved:'Nog niet opgeslagen', form_leave:'Sla je wijzigingen eerst op.',
   q_owner_photos:'Foto\u2019s van jou of je dieren',
@@ -797,7 +812,7 @@ Object.assign(I18N.en, {
   bk_npets:'{n} pets', bk_nreq:'{n} requests', bk_1pet:'1 pet', bk_1req:'1 request', bk_1day:'1 day',
   rep_title:'Completed bookings', rep_year:'Year', rep_month:'Month', rep_who:'Customer', rep_who_s:'Sitter',
   rep_all:'All', rep_total:'Total', rep_none:'No bookings in this selection.',
-  fee_note:'Includes a {share}% service fee and 6% OB.',
+  fee_note:'Includes the service fee and 6% OB.',
   q_net:'You receive',
   av_title:'Your availability', av_base:'By default you are', av_yes:'Available', av_no:'Unavailable',
   av_base_s:'This applies to your whole calendar.', av_custom:'Adjust per day',
@@ -815,9 +830,8 @@ Object.assign(I18N.en, {
   tm_k1:'You set your own rates, services and availability',
   tm_k2:'The customer pays 50% up front; you are paid within two working days',
   tm_k3:'You keep your rate in full; the customer also pays a service fee of {share}% of the total',
-  tm_k4:'A twelve-month non-solicitation clause after deactivation, buyable from XCG 500',
   tm_locked:'Sign the terms first and requests will appear here.',
-  tm_accept:'I accept the terms', tm_need:'Tick the terms first.',
+  tm_accept:'I accept the terms', tm_first:'Accept the terms first', tm_ready:'Ready to save', tm_need:'Tick the terms first.',
   ik_title:'We are arranging an introductory call', ik_s:'Your profile is ready. Once we have spoken, requests start coming in.',
   ik_mailed:'Your details were sent to info@huisdierenoppascuracao.com.',
   ik_demo:'Demo: call completed', ik_locked:'Requests appear here after the introductory call.',
@@ -849,16 +863,16 @@ Object.assign(I18N.en, {
   fo2:'A replacement if your sitter drops out', fo2s:'If your sitter drops out, one tap sends your request as urgent to every sitter who takes urgent work. For the remaining days you never pay more than you already did.',
   fo3:'Checked sitters', fo3s:'We verify identity and speak to everyone in person before a profile goes live. Reviews only come from real bookings.',
   fo4:'Veterinary cover', fo4s:'Up to XCG 250 per booking for emergency care: up to XCG 200 to the vet and XCG 50 to the sitter for the trip and the time. Only for complaints arising during the booking; anything reported beforehand falls outside it.',
-  fo5:'A real person to call', fo5s:'If something goes wrong you hear from us within 24 hours. Call or message +599 9 694 7642.',
+  fo5:'Support', fo5s:'If something goes wrong you can reach us through Contact or on +599 9 694 7642. We reply as soon as we can.',
   fo6:'See what was done, every day', fo6s:'You follow the task list live, with notes and photos from the sitter, and can reply straight away.',
   fs1:'You always get paid', fs1s:'The customer pays half up front. Your amount lands within two working days of the final invoice, even if the customer is slow.',
   fs2:'A replacement if you drop out', fs2s:'Ill or something came up? One tap puts the remaining days out as urgent. Your rating is not affected.',
   fs3:'Requests that are already sorted', fs3s:'You only get requests that match your profile, with the pets, the area and the dates already filled in.',
   fs4:'Your paperwork handled', fs4s:'We invoice on your behalf and give you a yearly overview of your turnover and OB for your tax return.',
-  fs5:'A real person to call', fs5s:'Stuck during a booking? You hear from us within 24 hours: +599 9 694 7642.',
+  fs5:'Support', fs5s:'Stuck during a booking? Reach us through Contact or on +599 9 694 7642. We reply as soon as we can.',
   fs6:'Paid for an emergency vet trip', fs6s:'If you have to rush to the vet you get XCG 50 for the trip and the time, on top of your rate. The bill itself is covered up to XCG 200.',
   react_s:'You receive no requests while your account is deactivated.',
-  pr_net_s:'This is your rate: what you keep. On top of it the customer pays a service fee and OB.',
+  pr_net_s:'This is your rate: what you keep.',
   need_host_s:'The pets stay at the sitter\u2019s place. The start time applies to the first day, the end time to the last.',
   need_day_s:'The sitter stays over. The start time applies to the first day, the end time to the last.',
   alone:'How long can the pets be alone?', alone_u:'hours', per_day:'per day',
@@ -873,7 +887,12 @@ Object.assign(I18N.en, {
   bk_accepted_list:'Sitters who accepted', bk_msg:'Message', bk_choose_one:'Choose',
   bk_await_toast:'You are on the list · feel free to send a message',
   th_ph:'Message {who}…', th_empty:'No messages yet.',
-  ch_photo:'Photo', ch_add_photo:'Send a photo', ch_photo_big:'View photo', ch_full:'Full · photo not sent',
+  ch_photo:'Photo', ch_add_photo:'Send a photo', ch_photo_big:'View photo', ch_full:'Full \u00b7 photo not sent',
+  pic_ask:'Access to your photos',
+  pic_ask_s:'You pick the photo yourself; the app only ever sees that one photo, never the rest of your library. Your phone\u2019s picker also lets you choose the camera.',
+  pic_yes:'Allow and choose', pic_no:'Not now', pic_on:'Allowed', pic_off:'Not asked yet',
+  pic_lbl:'Photos', pic_revoke:'Withdraw permission', pic_revoked:'Permission withdrawn',
+  ch_keep:'Messages and photos from a booking are removed six months after checkout.',
   m_settings:'Settings', m_app:'App and account', m_demo:'Demo settings', fee_open:'Open',
   more_alerts:'Alerts', flag_phone:'Possible phone number shared', flag_clear:'Clear alerts',
   flag_hint:'In Odoo this becomes a platform notification; the conversation stays visible.',
@@ -888,18 +907,14 @@ Object.assign(I18N.en, {
   rw_valid:'Paws are valid for twelve months.', rw_expire:'The first {n} expire on {date}.',
   rw1:'Priority on new requests', rw1s:'For a week you appear at the top of requests that match you.',
   rw2:'Your profile featured for a week', rw2s:'For a week you appear first when owners browse sitters.',
-  rw3:'Pet shop voucher XCG 10', rw3s:'To spend at a pet shop on the island.',
   rw4:'Payout the next working day', rw4s:'For three months your money arrives a working day earlier.',
   rw5:'A mark on your profile', rw5s:'For three months a label owners see when they look for a sitter.',
   rw6:'Pet first-aid course', rw6s:'A one-day animal first-aid course on the island, paid by us.',
   rw7:'Professional photos for your profile', rw7s:'A photographer shoots you at work, paid by us.',
   ro1:'XCG 2.50 off', ro1s:'Settled against your next booking.',
-  ro6:'Your request featured for a week', ro6s:'For a week sitters see your request first.',
   ro7:'A photo shoot with your pet', ro7s:'A photographer shoots you and your pets, paid by us.',
   ro8:'A premium mark on your profile', ro8s:'Sitters see that you are a regular and respond faster.',
-  ro3:'One extra short visit', ro3s:'During your next booking the sitter drops by once more, paid by us.',
   ro4:'XCG 25 off', ro4s:'Settled against your next booking.',
-  ro5:'Lower service fee', ro5s:'On your next booking you pay a 20% service fee instead of 25%, up to XCG 30 off.',
   form_save:'Save', form_undo:'Undo changes', form_undone:'Changes reverted',
   unsaved:'Not saved yet', form_leave:'Save your changes first.',
   q_owner_photos:'Photos of you or your pets',
@@ -986,15 +1001,16 @@ Object.assign(I18N.nl, {
   bk_cancel:'Aanvraag annuleren', bk_new_req:'Nieuwe aanvraag', bk_accept:'Accepteren', bk_decline:'Weigeren',
   bk_accepted_by:'Geaccepteerd door {name}', bk_declined:'Aanvraag geweigerd', bk_req_from:'Aanvraag van {name}',
   bk_checkin:'Inchecken', bk_checkout:'Uitchecken', bk_checked_in:'Ingecheckt om {time}',
+  bk_co_last:'Uitchecken kan op de laatste dag, {date}.',
   co_q:'Weet je zeker dat je wilt uitchecken?',
   rv_title:'Hoe was het met {name}?', rv_ph:'Opmerking (optioneel)', rv_save:'Beoordeling opslaan',
   rv_skip:'Later', rv_note:'We bewaren je beoordeling en plaatsen hem na controle bij het profiel.',
   rv_done:'Bedankt voor je beoordeling', verified:'Geverifieerd', rv_stars:'{n} sterren',
   bk_not_started:'Nog niet ingecheckt', bk_not_started_s:'De animatie start zodra de oppas incheckt.',
   contact:'Contact', ct_title:'Stel je vraag', ct_name:'Naam', ct_mail:'E-mailadres', ct_ph:'Waar kunnen we mee helpen?',
-  ct_send:'Versturen', ct_sent:'Verstuurd \u00b7 je hoort binnen 24 uur van ons', ct_need:'Vul je e-mailadres en je vraag in',
-  ct_s:'We reageren binnen 24 uur op het adres dat je hier invult.', ct_subject:'Vraag via de app',
-  ct_cancel:'Annuleren', ct_more:'Contact', ct_more_s:'Een vraag over je account, een boeking of de servicekosten? Stuur ons een bericht.',
+  ct_send:'Versturen', ct_sent:'Verstuurd \u00b7 we reageren zo snel mogelijk', ct_need:'Vul je e-mailadres en je vraag in',
+  ct_s:'We reageren zo snel mogelijk op je bericht.', ct_subject:'Vraag via de app',
+  ct_cancel:'Annuleren', ct_more:'Contact', ct_more_s:'Een vraag over je account of een boeking? Stuur ons een bericht.',
   bk_soon:'Aankomende boeking', bk_starts_tom:'Begint morgen', bk_starts_today:'Begint vandaag', bk_starts_n:'Begint over {n} dagen',
   bk_soon_s_sitter:'Je staat ingepland. Op de eerste dag verschijnt hier de takenlijst.',
   bk_soon_s_owner:'De oppas staat vast. Op de eerste dag kun je hier meekijken.',
@@ -1017,15 +1033,16 @@ Object.assign(I18N.en, {
   bk_cancel:'Cancel request', bk_new_req:'New request', bk_accept:'Accept', bk_decline:'Decline',
   bk_accepted_by:'Accepted by {name}', bk_declined:'Request declined', bk_req_from:'Request from {name}',
   bk_checkin:'Check in', bk_checkout:'Check out', bk_checked_in:'Checked in at {time}',
+  bk_co_last:'Check out on the last day, {date}.',
   co_q:'Are you sure you want to check out?',
   rv_title:'How was it with {name}?', rv_ph:'Note (optional)', rv_save:'Save review',
   rv_skip:'Later', rv_note:'We keep your review and publish it on the profile after a check.',
   rv_done:'Thanks for your review', verified:'Verified', rv_stars:'{n} stars',
   bk_not_started:'Not checked in yet', bk_not_started_s:'The scene starts once the sitter checks in.',
   contact:'Contact', ct_title:'Ask your question', ct_name:'Name', ct_mail:'Email address', ct_ph:'What can we help you with?',
-  ct_send:'Send', ct_sent:'Sent \u00b7 you hear from us within 24 hours', ct_need:'Fill in your email address and your question',
-  ct_s:'We reply within 24 hours to the address you fill in here.', ct_subject:'Question via the app',
-  ct_cancel:'Cancel', ct_more:'Contact', ct_more_s:'A question about your account, a booking or the service fee? Send us a message.',
+  ct_send:'Send', ct_sent:'Sent \u00b7 we will reply as soon as we can', ct_need:'Fill in your email address and your question',
+  ct_s:'We will reply to your message as soon as we can.', ct_subject:'Question via the app',
+  ct_cancel:'Cancel', ct_more:'Contact', ct_more_s:'A question about your account or a booking? Send us a message.',
   bk_soon:'Upcoming booking', bk_starts_tom:'Starts tomorrow', bk_starts_today:'Starts today', bk_starts_n:'Starts in {n} days',
   bk_soon_s_sitter:'You are booked in. The task list appears here on the first day.',
   bk_soon_s_owner:'Your sitter is set. You can follow along here on the first day.',
@@ -1043,11 +1060,15 @@ function t(k, v){ let s = ((S && I18N[S.lang]) || I18N.nl)[k]; if(s==null) s = I
 
 /* ---------------- looks ---------------- */
 const LOOKS = {
-  dog:{ coats:['#D9B07A','#7A4A2B','#2E2A28','#F1EBE0','#B8652F','#8E9091'], patterns:['solid','spots','bib','saddle'] },
-  cat:{ coats:['#8D8F94','#D98E48','#2B2A2E','#F3EFE8','#E8D2AE'], patterns:['solid','tabby','spots'] },
+  dog:{ coats:['#D9B07A','#7A4A2B','#2E2A28','#F1EBE0','#B8652F','#8E9091'], patterns:['solid','bib','tabby','spots'] },
+  cat:{ coats:['#8D8F94','#D98E48','#2B2A2E','#F3EFE8','#E8D2AE'], patterns:['solid','bib','tabby','spots'] },
   turtle:{ coats:['#6F7F3A','#8A6337','#4F7A4A'], patterns:['solid','plates'] },
 };
 const CUPS = ['none','q','h','tq','f','f25','f5','f75','two'];
+/* dagdelen in plaats van een klok: de tijd eronder is de deadline van dat dagdeel */
+const PARTS = [['morning','11:00'], ['afternoon','17:00'], ['evening','23:00']];
+const partTime = k => (PARTS.find(x=>x[0]===k) || PARTS[2])[1];
+const VISITORS = ['clean','garden','pool','other'];
 const PARTY = ['#E63B5A','#F6C343','#2BB3A3','#7A5CC9','#FF8A3D'];
 
 /* ---------------- utils ---------------- */
@@ -1333,9 +1354,9 @@ function seed(){
       litter:{on:false,time:'09:00'},
       lamp:{on:false,time:'08:00',time_off:'19:00'}, plants:{on:true,time:'19:30'},
       mail:{on:false,time:'12:00'}, close:{on:false,time:'21:30'},
-      kliko:{on:true,time:'20:00',weekday:today.getDay()},
+      kliko:{on:true,time:'19:00',weekday:today.getDay(),part:'evening'},
     },
-    meds:[], custom:[],
+    meds:[], custom:[], visitors:[],
     owner_info:{name:'Mirthe', address:'Scharlooweg 42', hood:'Pietermaai', phone:'+599 9 512 3344'},
     notes:'Mira is bang voor onweer: laat dan de radio zachtjes aan. Rocky trekt aan de lijn als hij geiten ziet.',
     vet:{name:'Dierenkliniek (voorbeeld)', phone:'+599 9 000 0000'},
@@ -1352,7 +1373,7 @@ function seed(){
     {id:'m1', from:'owner', text:'Hoi Eline! De sleutel ligt onder de bloempot bij de achterdeur.', at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,32).toISOString()},
     {id:'m2', from:'sitter', text:'Dank je! Ik ben binnen, de dieren zijn blij. Ik hou je op de hoogte.', at:new Date(today.getFullYear(),today.getMonth(),today.getDate(),6,54).toISOString()},
   ];
-  const st = {v:1, lang:'nl', role:'sitter', user_type:'sitter', theme:'auto', season:'auto', demo_time:null, tab:'today', plan, days:{}, dismissed:{}, read:{owner:null, sitter:null}, me_sitter:DEFAULT_ME, sitters:defaultProfiles(), bookings:[booking], bkform:null, chat, threads:{}, flags:[], extra_sitters:[], contacts:[], rewards:{}, mails:[], acc:{}, anim:true, anim_by:{},
+  const st = {v:1, lang:'nl', role:'sitter', user_type:'sitter', theme:'auto', season:'auto', demo_time:null, tab:'today', plan, days:{}, dismissed:{}, read:{owner:null, sitter:null}, me_sitter:DEFAULT_ME, sitters:defaultProfiles(), bookings:[booking], bkform:null, chat, threads:{}, flags:[], extra_sitters:[], contacts:[], rewards:{}, mails:[], acc:{}, anim:true, anim_by:{}, photo_by:{},
     auth:{email:'info@huisdierenoppascuracao.com', name:'Eline', role:'sitter', sitter:DEFAULT_ME}};
   const y = new Date(today); y.setDate(y.getDate()-1);
   const yk = dateKey(y);
@@ -1385,10 +1406,12 @@ function load(){
         s.bookings.forEach(b=>{ b.sitter_ids = b.sitter_ids||[]; b.declined_by = b.declined_by||[]; if(b.sitter==='Shanti') b.sitter='Eline'; b.owner = s.plan.owner_info.name || 'Mirthe'; });
         s.read = s.read||{owner:null, sitter:null}; s.me_sitter = s.me_sitter||DEFAULT_ME; s.sitters = s.sitters||defaultProfiles(); s.user_type = s.user_type||null;
         if(s.plan && s.plan.chores) delete s.plan.chores.water;
-        s.mails = s.mails || []; s.acc = s.acc || {};
+        if(s.plan){ s.plan.visitors = s.plan.visitors || [];
+          const kl = (s.plan.chores||{}).kliko; if(kl && !kl.part) kl.part = 'evening'; }
+        s.mails = s.mails || []; s.acc = s.acc || {}; s.photo_by = s.photo_by || {}; purgeMessages(s);
         (s.plan.pets||[]).forEach(p=>{
           if(p.species==='turtle'){ p.coat = '#6F7F3A'; p.pattern = 'plates'; p.count = p.count || 1; }
-          if(p.species==='cat' && !['solid','tabby','spots'].includes(p.pattern)) p.pattern = 'solid';
+          if((p.species==='cat' || p.species==='dog') && !['solid','bib','tabby','spots'].includes(p.pattern)) p.pattern = 'solid';
         });
         Object.values(s.sitters||{}).forEach(p=>{ if(p && p.signed && !p.intake) p.intake = {done:true}; });
         s.anim_by = s.anim_by || {};
@@ -1414,11 +1437,12 @@ function generateTasks(plan, date){
     out.push({id:`walk:${w.id}`, kind:'walk', time_start:s, time_end:s+Math.max(60, Math.ceil(w.duration/60)*60), pet_ids:dogs.map(d=>d.id), pet_names:dogs.map(d=>d.name), params:{duration:w.duration}});
   }
   const has = sp => pets.some(p=>p.species===sp), C = plan.chores;
-  const chore = (key, hm) => out.push({id:`chore:${key}`, kind:'chore', time_start:toMin(hm), time_end:null, pet_ids:[], pet_names:[], params:{chore:key}});
+  const chore = (key, hm, deadline) => out.push({id:`chore:${key}`, kind:'chore', time_start:toMin(hm),
+    time_end:deadline ? toMin(hm) : null, pet_ids:[], pet_names:[], params:{chore:key}});
   if(C.litter.on && has('cat')) chore('litter', C.litter.time);
   if(C.plants.on) chore('plants', C.plants.time);
   if(C.mail.on) chore('mail', C.mail.time);
-  if(C.kliko.on && Number(C.kliko.weekday)===wd) chore('kliko', C.kliko.time);
+  if(C.kliko.on && Number(C.kliko.weekday)===wd) chore('kliko', partTime(C.kliko.part || 'evening'), true);
   for(const m of plan.meds){ const p = petById(m.pet_id); if(!p) continue;
     out.push({id:`med:${m.id}`, kind:'med', time_start:toMin(m.time), time_end:null, pet_ids:[p.id], pet_names:[petName(p)], params:{text:m.text}}); }
   for(const c of plan.custom){ if(!c.text) continue;
@@ -1510,6 +1534,10 @@ function screen(text, from, bid, sid){
   return true;
 }
 function firstDay(b){ return (b.days||[]).map(x=>x.date).sort()[0]; }
+/* inchecken hoort bij de eerste dag, uitchecken bij de laatste: de prijs gaat per
+   dienst, niet per uur, dus het zijn twee momenten per boeking en niet per dag */
+const isLastDay = b => lastDayOf(b) === dateKey(nowDate());
+const canCheckOut = b => !!b && b.state==='active' && lastDayOf(b) <= dateKey(nowDate());
 function bookingDay(key){ return (bk().days||[]).find(x=>x.date===key) || null; }
 function bookingToday(){ return bookingDay(dateKey(nowDate())); }
 function isActive(){ return bk().state==='active' && !!bookingToday(); }
@@ -1668,6 +1696,7 @@ function petSVG(p, outfit){
     if(p.pattern==='spots') pat = `<circle cx="-8" cy="-30" r="4.5" fill="${d}"/><circle cx="7" cy="-22" r="3.6" fill="${d}"/><circle cx="-15" cy="-22" r="2.6" fill="${d}"/>`;
     if(p.pattern==='saddle') pat = `<path d="M-19 -31 Q-2 -42 15 -31 Q-2 -35 -19 -31Z" fill="${d}"/>`;
     if(p.pattern==='bib') pat = `<ellipse cx="17" cy="-23" rx="5.5" ry="7.5" fill="${white}"/>`;
+    if(p.pattern==='tabby') pat = `<path d="M-14 -33 q1.5 6 0.5 11 M-6 -34.5 q1.5 6.5 0.5 11.5 M2 -34 q1.5 6 0.5 11 M10 -32 q1.5 5 0.5 9" stroke="${d}" stroke-width="2.6" stroke-linecap="round" fill="none"/>`;
     const paw = p.pattern==='bib' ? white : d;
     const ear = p.ears==='up'
       ? {before:`<path d="M15 -45 L18 -59 L26 -47 Z" fill="${d}"/>`, after:''}
@@ -1705,6 +1734,7 @@ function petSVG(p, outfit){
     if(p.pattern==='spots') pat = `<ellipse cx="-8" cy="-25.5" rx="5.4" ry="4.2" fill="${d}" transform="rotate(-14 -8 -25.5)"/>
       <ellipse cx="4.5" cy="-27" rx="4.2" ry="3.3" fill="${d}" transform="rotate(10 4.5 -27)"/>
       <ellipse cx="-14" cy="-19.5" rx="3.2" ry="2.5" fill="${d}"/>`;
+    if(p.pattern==='bib') pat = `<ellipse cx="13" cy="-19.5" rx="5" ry="6.5" fill="${white}"/>`;
     const headSpot = p.pattern==='spots' ? `<ellipse cx="15" cy="-39.5" rx="3.6" ry="2.7" fill="${d}" transform="rotate(-20 15 -39.5)"/>` : '';
     const hat = party ? `<g><path d="M15.5 -44 L20 -60 L24.5 -44Z" fill="${PARTY[3]}"/><path d="M17 -49 L23 -49 M18.3 -54 L21.7 -54" stroke="${PARTY[1]}" stroke-width="1.6"/><circle cx="20" cy="-61" r="2.3" fill="${PARTY[1]}"/></g>` : '';
     return `<g class="pet sp-cat"><g class="bodyg">
@@ -2246,9 +2276,21 @@ let chatAll = false, chatOpen = false;
 const ICON_PERSON = '<svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.8"><circle cx="12" cy="9" r="3.4"/><path d="M5 20c.8-3.8 3.6-5.4 7-5.4s6.2 1.6 7 5.4"/></svg>';
 const ICON_SEND = '<svg viewBox="0 0 24 24"><path d="M4.5 12h14"/><path d="M12.5 6 18.5 12l-6 6"/></svg>';
 const ICON_CAM = '<svg viewBox="0 0 24 24"><path d="M4 8.5h3l1.4-2.2h7.2L17 8.5h3v10H4z"/><circle cx="12" cy="13" r="3.4"/></svg>';
+/* Toestemming voor foto's, per persoon. Het keuzescherm van de telefoon opent de
+   bibliotheek en biedt daar zelf de camera aan; de app ziet alleen de gekozen foto. */
+const picKey = () => String((S.auth && S.auth.email) || '').toLowerCase();
+const picOK = () => !!(S.photo_by || {})[picKey()];
+const picInput = key => `<input type="file" accept="image/*" hidden data-chatpic="${key}">`;
+let picAsk = null;
 /* een fotoknop bij een chatvenster; het id koppelt de gekozen foto aan het juiste gesprek */
-const photoBtn = key => `<label class="clip" title="${t('ch_add_photo')}" aria-label="${t('ch_add_photo')}">${ICON_CAM}
-  <input type="file" accept="image/*" capture="environment" hidden data-chatpic="${key}"></label>`;
+const photoBtn = key => picOK()
+  ? `<label class="clip" title="${t('ch_add_photo')}" aria-label="${t('ch_add_photo')}">${ICON_CAM}${picInput(key)}</label>`
+  : `<button type="button" class="clip" data-act="pic-ask" data-v="${key}" title="${t('ch_add_photo')}" aria-label="${t('ch_add_photo')}">${ICON_CAM}</button>`;
+/* het uitlegvakje dat één keer verschijnt voordat de app bij je foto's mag */
+const picAskBox = key => picAsk !== key ? '' : `<div class="panel sign" id="picBox">
+    <h3>${t('pic_ask')}</h3><p class="sub">${t('pic_ask_s')}</p>
+    <div class="brow"><label class="btn" data-act="pic-yes">${t('pic_yes')}${picInput(key)}</label>
+      <button class="lnk" data-act="pic-no">${t('pic_no')}</button></div></div>`;
 /* één bericht in beeld: tekst, een foto, of allebei */
 const msgBody = m => (m.photo ? `<img src="${m.photo}" alt="${t('ch_photo')}" data-big="${esc(m.photo)}"${m.pw?` width="${m.pw}" height="${m.ph}"`:''}>` : '')
   + (m.text ? `<p>${esc(m.text)}</p>` : '');
@@ -2258,8 +2300,10 @@ function chatBox(){
   return `<div class="chat">
       ${all.length>6 && !chatAll ? `<button class="lnk" style="margin:10px 14px 0" data-act="chat-all">${t('chat_all',{n:all.length})}</button>` : ''}
       <div class="msgs" id="msgs">${list.length ? list.map(mm=>`<div class="msg ${mm.from===S.role && !mm.system?'me':''} ${mm.task?'note':''} ${mm.system?'sys':''} ${mm.photo?'pic':''}">${mm.task?`<i>${esc(mm.task)}</i>`:''}${msgBody(mm)}<time>${mm.system ? t('app_name') : mm.from===S.role ? t('me') : esc(mm.from==='owner'?ownerName():sitterName())} · ${hmOf(mm.at)}</time></div>`).join('') : `<p class="sub muted" style="padding:4px 2px">${t('chat_empty')}</p>`}</div>
+      ${picAskBox('chat')}
       <form class="chatin" id="chatForm" autocomplete="off">${photoBtn('chat')}<input id="chatInput" type="text" placeholder="${t('chat_ph',{who:esc(other)})}"><button class="send" type="submit" aria-label="${t('chat')}">${ICON_SEND}</button></form>
-    </div>`;
+    </div>
+    <p class="fineprint">${t('ch_keep')}</p>`;
 }
 
 let openThread = null;
@@ -2269,6 +2313,7 @@ function threadBox(bid, sid){
       <div class="msgs">${msgs.length ? msgs.map(mm=>`<div class="msg ${mm.from===S.role?'me':''} ${mm.photo?'pic':''}">${msgBody(mm)}
         <time>${mm.from===S.role ? t('me') : esc(mm.from==='owner'?ownerName():(sitterById(sid)||{}).name||'')} · ${hmOf(mm.at)}</time></div>`).join('')
         : `<p class="sub muted" style="padding:4px 2px">${t('th_empty')}</p>`}</div>
+      ${picAskBox('th|'+thKey(bid,sid))}
       <form class="chatin" data-thform="${thKey(bid,sid)}" autocomplete="off">
         ${photoBtn('th|'+thKey(bid,sid))}<input type="text" placeholder="${t('th_ph',{who:esc(other)})}"><button class="send" type="submit" aria-label="${t('chat')}">${ICON_SEND}</button></form>
     </div>`;
@@ -2280,6 +2325,22 @@ function threadRow(b, sid, canChoose){
       <span class="brow"><button class="btn ghost sm" data-act="th-open" data-v="${sid}">${t('bk_msg')}</button>
       ${canChoose?`<button class="btn sm" data-act="bk-choose" data-v="${sid}">${t('bk_choose_one')}</button>`:''}</span></div>
     ${openThread===key ? threadBox(b.id, sid) : ''}`;
+}
+/* wie er vandaag of deze week langskomt: korte regel boven de takenlijst */
+function visitorInfo(){
+  const list = (S.plan.visitors||[]).filter(x=>x && x.kind);
+  if(!list.length) return '';
+  const wd = nowDate().getDay();
+  const order = x => (Number(x.weekday) - wd + 7) % 7;
+  const cap = str => str.charAt(0).toUpperCase() + str.slice(1);
+  const rows = list.slice().sort((a,b)=>order(a)-order(b)).map(x=>{
+    const today = Number(x.weekday) === wd;
+    const day = cap(today ? t('vi_today') : t('wdl')[Number(x.weekday)]);
+    return `<div class="vrow ${today?'now':''}">
+      <span><b class="when">${day}:</b> ${t('vi_'+x.kind)} (${t('pt_'+(x.part||'morning')).toLowerCase()})</span>
+      ${x.note?`<span class="note">${esc(x.note)}</span>`:''}</div>`;
+  }).join('');
+  return `<div class="visinfo">${rows}</div>`;
 }
 function viewSitter(){
   const d = today(), m = nowMin(), live = liveTasks(d);
@@ -2307,7 +2368,7 @@ function viewSitter(){
       ${P.health?`<p class="sub"><b>${t('q_health')}:</b> ${esc(P.health)}</p>`:''}
       ${P.vet.name?`<p class="sub"><b>${t('vet_short')}:</b> ${esc(P.vet.name)}${P.vet.phone?` · <a href="tel:${esc(P.vet.phone.replace(/\s/g,''))}">${esc(P.vet.phone)}</a>`:''}</p>`:''}`, true) : '';
   return accSec('tasks', t('today'), `${doneN} / ${live.length} ${t('done')}`,
-    rows ? `<div class="list">${rows}</div>` : `<div class="empty">${t('no_tasks')}</div>`, true) + notes;
+    visitorInfo() + (rows ? `<div class="list">${rows}</div>` : `<div class="empty">${t('no_tasks')}</div>`), true) + notes;
 }
 /* opmerkingen zijn optioneel: standaard alleen afvinken */
 let openCmt = null;
@@ -2367,6 +2428,22 @@ function ownerExtra(x){
   return '';
 }
 
+/* Berichten en foto's blijven zes maanden na het uitchecken staan en gaan dan weg.
+   In Odoo doet een ir.cron hetzelfde; hier draait het bij het laden en na elk uitchecken. */
+const MSG_KEEP_DAYS = 183;
+function purgeMessages(st){
+  const old = {};                       /* boekingen waarvan de termijn voorbij is */
+  (st.bookings||[]).forEach(b=>{
+    if(b.checkout_at && daysSince(dateKey(new Date(b.checkout_at))) > MSG_KEEP_DAYS) old[b.id] = true;
+  });
+  if(!Object.keys(old).length) return false;
+  let gone = false;
+  st.threads = st.threads || {};
+  Object.keys(st.threads).forEach(k=>{ if(old[k.split('|')[0]]){ delete st.threads[k]; gone = true; } });
+  const keep = (st.chat||[]).filter(m=>!old[m.bid]);
+  if(keep.length !== (st.chat||[]).length){ st.chat = keep; gone = true; }
+  return gone;
+}
 /* Logboek: nog nooit geboekt → leeg. Lopende boeking → de dagen zelf.
    Twee dagen na afloop → alleen een samenvatting per boeking.            */
 const LOG_GRACE = 2;
@@ -2454,10 +2531,20 @@ function viewIntake(){
       <div class="checks">${dogs.map(dg=>`<button class="chip ${w.dog_ids.includes(dg.id)?'sel':''}" data-act="walk-dog" data-v="${dg.id}">${esc(dg.name)}</button>`).join('')}</div></div>`).join('')
       + `<button class="btn ghost sm" data-act="add-walk">${t('add_walk')}</button>` : `<p class="sub muted">${t('no_dogs')}</p>`;
   const C = P.chores, has = sp => P.pets.some(p=>p.species===sp);
-  const choreRow = key => `<label class="toggle"><input type="checkbox" data-f="chore.on" data-k="${key}" ${C[key].on?'checked':''}><span>${t('ch_'+key)}</span><input type="time" data-f="chore.time" data-k="${key}" value="${C[key].time}"></label>`;
+  const choreRow = key => `<label class="toggle plain"><input type="checkbox" data-f="chore.on" data-k="${key}" ${C[key].on?'checked':''}><span>${t('ch_'+key)}</span></label>`;
+  /* dag en dagdeel, dezelfde twee keuzelijsten bij de kliko en bij wie er langskomt */
+  const dayPart = (wd, part, fd, fp, k) => `<div class="daypart">
+      <select data-f="${fd}" ${k?`data-k="${k}"`:''} aria-label="${t('wd_pick')}">${t('wdl').map((n,i)=>`<option value="${i}" ${Number(wd)===i?'selected':''}>${n}</option>`).join('')}</select>
+      <select data-f="${fp}" ${k?`data-k="${k}"`:''} aria-label="${t('part_pick')}">${PARTS.map(([v])=>`<option value="${v}" ${part===v?'selected':''}>${t('pt_'+v)}</option>`).join('')}</select></div>`;
   const chores = [ has('cat') ? choreRow('litter') : '',
     choreRow('plants'), choreRow('mail'),
-    choreRow('kliko') + (C.kliko.on ? `<div class="choresub"><select data-f="chore.weekday" data-k="kliko" aria-label="${t('wd_pick')}">${t('wdl').map((n,i)=>`<option value="${i}" ${Number(C.kliko.weekday)===i?'selected':''}>${n}</option>`).join('')}</select></div>` : '')].join('');
+    choreRow('kliko') + (C.kliko.on ? dayPart(C.kliko.weekday, C.kliko.part || 'evening', 'chore.weekday', 'chore.part', 'kliko') : '')].join('');
+  /* wie er langskomt: een rijtje per persoon met dag, dagdeel en een opmerking */
+  const visitors = (P.visitors||[]).map(x=>`<div class="petcard" data-visitor="${x.id}">
+      <div class="pethead noprev"><div class="seg">${VISITORS.map(k=>`<button class="chip ${x.kind===k?'sel':''}" data-act="vi-kind" data-v="${k}">${t('vi_'+k)}</button>`).join('')}</div>
+        <button class="xbtn" data-act="del-visitor" aria-label="${t('remove')}">\u00d7</button></div>
+      ${dayPart(x.weekday, x.part, 'vi.weekday', 'vi.part')}
+      <input type="text" data-f="vi.note" value="${esc(x.note||'')}" placeholder="${t('vi_note')}"></div>`).join('');
   const meds = P.meds.map(m=>`<div class="petcard" data-med="${m.id}">
       <div class="line2"><input type="time" data-f="med.time" value="${m.time}"><select data-f="med.pet">${P.pets.map(p=>`<option value="${p.id}" ${m.pet_id===p.id?'selected':''}>${esc(petName(p))}</option>`).join('')}</select>
       <button class="xbtn" data-act="del-med" aria-label="${t('remove')}">×</button></div>
@@ -2476,12 +2563,12 @@ function viewIntake(){
     ${sec(t('q_feed'), '', feeds + `<button class="btn ghost sm" data-act="add-feed">${t('add_feed')}</button>`)}
     ${sec(t('q_walk'), '', walks)}
     ${sec(t('q_chores'), '', chores)}
-    ${sec(t('q_meds'), '', meds + `<button class="btn ghost sm" data-act="add-med" ${P.pets.length?'':'disabled'}>${t('add_med')}</button>`)}
+    ${sec(t('q_visit'), '', visitors + `<button class="btn ghost sm" data-act="add-visitor">${t('add_visitor')}</button>`)}
+    ${sec(t('q_health_sec'), '', `<p class="lbl">${t('q_health')}</p>
+      <textarea data-f="health" rows="2" placeholder="${t('q_health_ph')}">${esc(P.health||'')}</textarea>
+      ${meds}<button class="btn ghost sm" data-act="add-med" ${P.pets.length?'':'disabled'}>${t('add_med')}</button>`)}
     ${sec(t('q_custom'), '', custom + `<button class="btn ghost sm" data-act="add-custom">${t('add_custom')}</button>`)}
     ${sec(t('q_notes'), '', `<textarea data-f="notes" rows="3" placeholder="${t('notes_ph')}">${esc(P.notes)}</textarea>
-      <p class="lbl">${t('q_health')}</p>
-      <textarea data-f="health" rows="2" placeholder="${t('q_health_ph')}">${esc(P.health||'')}</textarea>
-      <p class="sub muted">${t('q_health_s')}</p>
       <p class="lbl">${t('vet')}</p><input type="text" data-f="vet.name" value="${esc(P.vet.name)}" placeholder="${t('vet')}">
       <input type="tel" data-f="vet.phone" value="${esc(P.vet.phone)}" placeholder="${t('phone')}">`)}
     </fieldset>`;
@@ -2499,6 +2586,7 @@ function bkForm(){
   f.visits = f.visits || 1; f.walks = f.walks || 1; f.alone = f.alone == null ? 4 : f.alone;
   return f;
 }
+const visitorOf = el => { const n = el.closest('[data-visitor]'); return n ? (S.plan.visitors||[]).find(x=>x.id===n.dataset.visitor) : null; };
 const hasDogs = () => S.plan.pets.some(p=>p.species==='dog');
 const hasCats = () => S.plan.pets.some(p=>p.species==='cat');
 /* hondendiensten alleen bij honden, kattenhotel alleen bij katten */
@@ -2629,7 +2717,7 @@ function planSummary(){
   const P = S.plan, oi = P.owner_info||{};
   const feed = P.feedings.map(f=>`<div class="dayrow"><span>${f.time}</span><span class="muted">${P.pets.filter(p=>(f.portions[p.id]||'none')!=='none').map(p=>`${esc(petName(p))}: ${t('cup_'+f.portions[p.id])}`).join(' · ')||'—'}</span><span></span></div>`).join('');
   const walks = P.walks.length ? P.walks.map(w=>`<div class="dayrow"><span>${w.time}</span><span class="muted">${w.duration} ${t('minutes')} · ${w.dog_ids.map(id=>esc((P.pets.find(p=>p.id===id)||{}).name||'')).filter(Boolean).join(', ')}</span><span></span></div>`).join('') : `<p class="sub muted">${t('no_dogs')}</p>`;
-  const chores = Object.entries(P.chores).filter(([,c])=>c.on).map(([k,c])=>`<div class="dayrow"><span>${c.time}</span><span class="muted">${t('ch_'+k)}${k==='kliko'?` · ${t('every')} ${t('wdl')[Number(c.weekday)]}`:''}</span><span></span></div>`).join('')
+  const chores = Object.entries(P.chores).filter(([,c])=>c.on).map(([k,c])=>`<div class="dayrow"><span>${k==='kliko'?t('pt_'+(c.part||'evening')):c.time}</span><span class="muted">${t('ch_'+k)}${k==='kliko'?` · ${t('every')} ${t('wdl')[Number(c.weekday)]}`:''}</span><span></span></div>`).join('')
     + P.meds.map(m=>`<div class="dayrow"><span>${m.time}</span><span class="muted">${t('med',{pet:esc((P.pets.find(p=>p.id===m.pet_id)||{}).name||'')})}: ${esc(m.text)}</span><span></span></div>`).join('')
     + P.custom.filter(c=>c.text).map(c=>`<div class="dayrow"><span>${c.time}</span><span class="muted">${esc(c.text)}</span><span></span></div>`).join('');
   return `<div class="panel">
@@ -2647,6 +2735,8 @@ function planSummary(){
     <div class="panel"><h3>${t('bk_plan_feed')}</h3><div class="daylist">${feed}</div></div>
     <div class="panel"><h3>${t('bk_plan_walks')}</h3><div class="daylist">${walks}</div></div>
     <div class="panel"><h3>${t('bk_plan_chores')}</h3><div class="daylist">${chores || `<p class="sub muted">—</p>`}</div></div>
+    ${(P.visitors||[]).length ? `<div class="panel"><h3>${t('q_visit')}</h3><div class="daylist">${(P.visitors||[]).map(x=>
+      `<div class="dayrow"><span>${t('pt_'+(x.part||'morning'))}</span><span class="muted">${t('vi_'+x.kind)} · ${t('every')} ${t('wdl')[Number(x.weekday)]}${x.note?` · ${esc(x.note)}`:''}</span><span></span></div>`).join('')}</div></div>` : ''}
     ${P.notes?`<div class="panel"><h3>${t('bk_plan_notes')}</h3><p class="sub">${esc(P.notes)}</p></div>`:''}`;
 }
 /* prijs van een aanvraag bij een oppas: dagen ≥ 6 uur = oppas aan huis, korter = visite */
@@ -2722,7 +2812,6 @@ function feesPage(){
     <p class="sub">${owner ? t('fee_lead_owner',{share:SHARE_PCT}) : t('fee_lead_sitter',{share:SHARE_PCT, pct:FEE_PCT})}</p>
     <div class="cards">${rows.map(([ic,k])=>`<div class="panel feerow">${feeIcon(ic)}<div><b>${t(k)}</b><span>${t(k+'s')}</span></div></div>`).join('')}</div>
     <p class="fineprint">${t('fee_disclaimer')}</p>
-    ${contactBlock()}
     <div class="brow"><button class="btn ghost" data-act="fees-close">${t('hide')}</button></div>
   </section>`;
 }
@@ -2770,7 +2859,7 @@ let termsOK = false;
 function termsAccept(){
   const mail = (S.auth && S.auth.email) || profile(me()).email || '';
   return `<div class="panel sign"><h3>${t('tm_head')}</h3>
-    <div class="daylist">${['tm_k1','tm_k2','tm_k3','tm_k4'].map(k=>`<div class="keypt">${ICON_TICK}<span>${t(k,{share:SHARE_PCT})}</span></div>`).join('')}</div>
+    <div class="daylist">${['tm_k1','tm_k2','tm_k3'].map(k=>`<div class="keypt">${ICON_TICK}<span>${t(k,{share:SHARE_PCT})}</span></div>`).join('')}</div>
     <details class="all"><summary>${t('tm_read')}</summary>${termsHTML()}</details>
     <label class="toggle" style="grid-template-columns:auto 1fr"><input type="checkbox" data-f="tm.ok" ${termsOK?'checked':''}><span><b>${t('tm_accept')}</b></span></label>
     <p class="fineprint">${t('tm_note',{v:TERMS_VERSION, mail:esc(mail)})}</p></div>`;
@@ -2826,7 +2915,7 @@ function signCard(){
     <div class="bcard sign">
       <h3>${t('tm_head')}</h3>
       <p class="sub">${t('tm_why')}</p>
-      <div class="daylist">${['tm_k1','tm_k2','tm_k3','tm_k4'].map(k=>`<div class="keypt">${ICON_TICK}<span>${t(k,{share:SHARE_PCT})}</span></div>`).join('')}</div>
+      <div class="daylist">${['tm_k1','tm_k2','tm_k3'].map(k=>`<div class="keypt">${ICON_TICK}<span>${t(k,{share:SHARE_PCT})}</span></div>`).join('')}</div>
       <details class="all"><summary>${t('tm_read')}</summary>${termsHTML()}</details>
       <div class="brow"><button class="btn" data-act="sign">${t('tm_sign')}</button></div>
       <p class="fineprint">${t('tm_note',{v:TERMS_VERSION, mail:esc(mail)})}</p>
@@ -2934,7 +3023,7 @@ function sitterProfileForm(){
     if(!p.on) return '';
     return `<div class="petcard" data-svc="${key}">
       <h4 class="svch">${t(lbl)}</h4>
-      ${money(key,'base','pr_base') + money(key,'extra','pr_extra') + money(key,'other','pr_other') +
+      ${money(key,'base','pr_base') + money(key,'extra','pr_extra') + (key==='walk' ? '' : money(key,'other','pr_other')) +
         (`<p class="lbl">${t('pr_disc')}</p>
           ${(p.discounts||[]).map((d,i)=>`<div class="discrow" data-disc="${i}">
               <span>${t('pr_from')}</span><input type="number" min="1" data-f="sp.disc" data-k="${key}" data-p="days" value="${d.days}" aria-label="${t('pr_days')}"><span>${t('pr_days_u')}</span>
@@ -2977,7 +3066,8 @@ function bookingSitter(){
       <div class="kv"><b>${t('bk_services')}</b><span>${svcNames(b.services)}</span><b>${t('bk_alone')}</b><span>${b.alone ?? '—'} ${t('alone_u')}</span></div>
       ${bkDays(b)}
       ${b.state==='active' && b.checkin_at?`<p class="sub">${t('bk_checked_in',{time:hmOf(b.checkin_at)})}</p>`:''}
-      <div class="brow">${b.state==='active' ? `<button class="btn ghost" data-act="bk-checkout">${t('bk_checkout')}</button>`
+      ${b.state==='active' && !canCheckOut(b) ? `<p class="sub muted">${t('bk_co_last',{date:fmtShort(lastDayOf(b))})}</p>` : ''}
+      <div class="brow">${b.state==='active' ? (canCheckOut(b) ? `<button class="btn ghost" data-act="bk-checkout">${t('bk_checkout')}</button>` : '')
         : bookingDay() && b.id===(cur()||{}).id ? `<button class="btn" data-act="bk-checkin">${t('bk_checkin')}</button>` : ''}
         ${daysLeft(b).length ? `<button class="btn ghost danger" data-act="ur-drop">${t('ur_drop')}</button>` : ''}</div></div>
       ${planSummary()}</section>`;
@@ -3039,15 +3129,15 @@ function viewMore(){
     <p class="lbl">${t('theme')}</p>${chips('set-theme', S.theme, [['auto',t('th_auto')],['light',t('th_light')],['dark',t('th_dark')]])}
     <p class="lbl">${t('anim')}</p>
     <button class="btn ghost" data-act="anim">${S.anim===false?t('anim_on'):t('anim_off')}</button>
-    <p class="sub muted">${t('anim_s')}</p>`, true)}
+    <p class="sub muted">${t('anim_s')}</p>
+    <p class="lbl">${t('pic_lbl')}</p>
+    <p class="sub muted">${picOK() ? t('pic_on') : t('pic_off')}</p>
+    ${picOK()?`<button class="btn ghost" data-act="pic-revoke">${t('pic_revoke')}</button>`:''}`, true)}
   ${accSec('fees', t('fee_more'), '', `<button class="btn ghost" data-act="fees">${t('fee_open')}</button>`, false)}
   ${S.role==='sitter' ? signedPanel() : ''}
   ${accSec('app', t('m_app'), '', `
     <p class="sub">${t('install')}</p>
     ${S.auth?`<p class="sub muted">${t('lg_signed',{name:esc(S.auth.name), mail:esc(S.auth.email)})}</p><button class="btn ghost" data-act="logout">${t('logout')}</button>`:''}
-    <button class="btn ghost" data-act="export">${t('export')}</button>
-    <button class="btn ghost" data-act="demo-full">${t('demo_full')}</button>
-    <button class="btn ghost danger" data-act="reset">${t('reset')}</button>
     <p class="sub muted" style="font-size:12.5px">${t('about')}</p>`, true)}
   ${accSec('contact', t('ct_more'), '', `
     <p class="sub">${t('ct_more_s')}</p>
@@ -3060,7 +3150,11 @@ function viewMore(){
     <p class="lbl">${t('season')}</p>${chips('set-season', S.season||'auto', [['auto',t('se_auto')],['december',t('se_dec')],['carnival',t('se_carn')],['none',t('se_none')]])}
     <p class="sub muted">${t('season_hint')}</p>
     <p class="lbl">${t('demo_me')}</p><div class="seg">${allSitters().map(x=>`<button class="chip ${me()===x.id?'sel':''}" data-act="set-me" data-v="${x.id}">${esc(sitterInfo(x.id).name||x.name)}</button>`).join('')}</div>
-    <p class="lbl">${t('demo_time')}</p>${chips('set-demo', S.demo_time||'', [['',t('live')],['07:15','07:15'],['10:20','10:20'],['12:30','12:30'],['18:10','18:10'],['22:30','22:30']])}`, false)}`;
+    <p class="lbl">${t('demo_time')}</p>${chips('set-demo', S.demo_time||'', [['',t('live')],['07:15','07:15'],['10:20','10:20'],['12:30','12:30'],['18:10','18:10'],['22:30','22:30']])}
+    <p class="lbl">${t('demo_data')}</p>
+    <button class="btn ghost" data-act="export">${t('export')}</button>
+    <button class="btn ghost" data-act="demo-full">${t('demo_full')}</button>
+    <button class="btn ghost danger" data-act="reset">${t('reset')}</button>`, false)}`;
 }
 
 /* ---------------- pootjes: sparen en uitgeven ----------------
@@ -3166,7 +3260,7 @@ function formBar(kind, always){
   if(!on && !always) return '';
   const blocked = always && !termsOK;
   return `<div class="savebar" data-savebar="${kind}">
-    <span class="dot"></span><span class="txt">${t(on?'unsaved':'tm_accept')}</span>
+    <span class="dot"></span><span class="txt">${t(on ? 'unsaved' : blocked ? 'tm_first' : 'tm_ready')}</span>
     <button class="btn ghost ico" data-act="form-undo" data-v="${kind}" ${on?'':'disabled'} aria-label="${t('form_undo')}" title="${t('form_undo')}">${ICON_UNDO}</button>
     <button class="btn" data-act="form-save" data-v="${kind}" ${blocked?'disabled':''}>${t('form_save')}</button></div>`;
 }
@@ -3383,6 +3477,12 @@ document.addEventListener('click', e=>{
     if(!x || rwPts() < x.cost || r.redeemed.some(y=>y.id===x.id && rwFresh(y.at))) return;
     r.redeemed.push({id:x.id, cost:x.cost, side:S.role, date:dateKey(nowDate()), at:nowDate().toISOString()});
     save(); renderMain(); toast(t('rw_toast')); return; }
+  if(act==='pic-ask'){ picAsk = picAsk===v ? null : v; renderMain();
+    setTimeout(()=>document.getElementById('picBox')?.scrollIntoView({block:'nearest', behavior:'smooth'}), 60); return; }
+  if(act==='pic-no'){ picAsk = null; renderMain(); return; }
+  if(act==='pic-yes'){ S.photo_by = S.photo_by || {}; S.photo_by[picKey()] = true; save(); return; }
+  if(act==='pic-revoke'){ S.photo_by = S.photo_by || {}; S.photo_by[picKey()] = false; picAsk = null;
+    save(); renderMain(); toast(t('pic_revoked')); return; }
   if(act==='contact'){ contactOpen = !contactOpen; if(contactOpen) ctForm = ctForm || ctInit();
     renderMain(); if(contactOpen) setTimeout(()=>{ const b = document.getElementById('ctBox');
       if(b){ b.scrollIntoView({block:'center', behavior:'smooth'}); b.querySelector('textarea').focus(); } }, 60);
@@ -3406,9 +3506,10 @@ document.addEventListener('click', e=>{
     award('sitter', 'checkin:'+b.id+':'+dateKey(nowDate()), PTS.sitter.checkin);
     save(); render(); toast(t('bk_checked_in',{time:hmOf(b.checkin_at)})); return; }
   if(act==='bk-checkout'){ const el = a.closest('[data-booking]'); const b = el ? S.bookings.find(x=>x.id===el.dataset.booking) : cur(); if(!b) return;
+    if(!canCheckOut(b)){ toast(t('bk_co_last',{date:fmtShort(lastDayOf(b))})); return; }
     if(!confirm(t('co_q'))) return;
     b.checkout_at = nowDate().toISOString(); b.state = 'done';
-    save(); render(); window.scrollTo({top:0}); return; }
+    purgeMessages(S); save(); render(); window.scrollTo({top:0}); return; }
   if(act==='rv-star'){ reviewDraft.stars = Number(v); renderMain(); return; }
   if(act==='rv-skip'){ const el = a.closest('[data-booking]'), b = el && S.bookings.find(x=>x.id===el.dataset.booking);
     if(b){ b.review_skipped = true; save(); renderMain(); } return; }
@@ -3506,7 +3607,11 @@ document.addEventListener('click', e=>{
   if(act==='demo-full'){ if(confirm(t('demo_full_q'))){ S = seed(); openBooking = null; openThread = null; showForm = false; chatOpen = false; save(); snapshot(); render(); window.scrollTo({top:0}); } return; }
   if(S.role!=='owner') return;
   const P = S.plan, petEl = a.closest('[data-pet]'), pet = petEl && P.pets.find(p=>p.id===petEl.dataset.pet);
-  if(act==='add-pet'){ P.pets.push({id:uid('pet_'), name:S.lang==='en'?'New pet':'Nieuw', species:'dog', coat:LOOKS.dog.coats[0], pattern:'solid', ears:'flop'}); }
+  if(act==='add-pet'){ P.pets.push({id:uid('pet_'), name:t('dog'), species:'dog', coat:LOOKS.dog.coats[0], pattern:'solid', ears:'flop'}); }
+  else if(act==='add-visitor'){ P.visitors = P.visitors || [];
+    P.visitors.push({id:uid('vi_'), kind:'clean', weekday:nowDate().getDay(), part:'morning', note:''}); }
+  else if(act==='vi-kind'){ const x = visitorOf(a); if(x) x.kind = v; }
+  else if(act==='del-visitor'){ const x = visitorOf(a); if(x) P.visitors = P.visitors.filter(y=>y!==x); }
   else if(act==='del-pet' && pet){ P.pets = P.pets.filter(p=>p!==pet); P.walks.forEach(w=>w.dog_ids=w.dog_ids.filter(i=>i!==pet.id)); P.meds = P.meds.filter(m=>m.pet_id!==pet.id); }
   else if(act==='pet-species' && pet){ pet.species=v;
     if(FLOCK.includes(v)){ pet.count = pet.count || 1;
@@ -3545,11 +3650,12 @@ function shrink(file, max, cb){
 document.addEventListener('change', e=>{
   const key = e.target.dataset && e.target.dataset.chatpic; if(!key) return;
   const file = e.target.files && e.target.files[0]; e.target.value = ''; if(!file) return;
+  S.photo_by = S.photo_by || {}; S.photo_by[picKey()] = true; picAsk = null;
   shrink(file, 720, (data, w, h)=>{
     if(!data) return;
     const msg = {id:uid('m_'), from:S.role, text:'', photo:data, pw:w, ph:h, at:nowDate().toISOString()};
     let undo;
-    if(key === 'chat'){ S.chat.push(msg); undo = () => S.chat.pop(); }
+    if(key === 'chat'){ msg.bid = (cur()||{}).id || null; S.chat.push(msg); undo = () => S.chat.pop(); }
     else { const [bid, sid] = key.slice(3).split('|'); const th = thread(bid, sid); th.push(msg); undo = () => th.pop(); }
     if(!save()){ undo(); save(); toast(t('ch_full')); return; }   /* localStorage vol: foto gaat er weer af */
     renderMain(); renderTabs();
@@ -3604,7 +3710,7 @@ document.addEventListener('submit', e=>{
   e.preventDefault();
   const inp = document.getElementById('chatInput'), text = inp.value.trim();
   if(!text) return;
-  S.chat.push({id:uid('m_'), from:S.role, text, at:nowDate().toISOString()});
+  S.chat.push({id:uid('m_'), from:S.role, bid:(cur()||{}).id || null, text, at:nowDate().toISOString()});
   const flagged = screen(text, S.role, (cur()||{}).id, (cur()||{}).accepted_by);
   inp.value=''; save(); renderMain();
   if(flagged) toast(t('flag_phone'));
@@ -3652,6 +3758,7 @@ document.addEventListener('input', e=>{
     p.count = Math.max(1, Math.min(99, parseInt(e.target.value,10)||1)); later(()=>planChanged(false)); }
   if(f==='notes'){ P.notes = e.target.value; later(save); }
   if(f==='health'){ P.health = e.target.value; later(save); }
+  if(f==='vi.note'){ const x = visitorOf(e.target); if(x) x.note = e.target.value; later(()=>planChanged(false)); }
   if(f && f.startsWith('sp.')){
     const pr = S.sitters[me()] = S.sitters[me()] || profile(me()), fld = f.slice(3);
     if(['first','last','phone','email','about'].includes(fld)){ pr[fld] = e.target.value; later(()=>{ save(); renderScene(); }); }
@@ -3684,6 +3791,10 @@ document.addEventListener('change', e=>{
   else if(f==='chore.time') P.chores[e.target.dataset.k].time = val;
   else if(f==='chore.time_off') P.chores.lamp.time_off = val;
   else if(f==='chore.weekday') P.chores.kliko.weekday = Number(val);
+  else if(f==='chore.part') P.chores.kliko.part = val;
+  else if(f==='vi.weekday'){ const x = visitorOf(e.target); if(x) x.weekday = Number(val); }
+  else if(f==='vi.part'){ const x = visitorOf(e.target); if(x) x.part = val; }
+
   else if(f==='med.time') byId(P.meds,'data-med').time = val;
   else if(f==='med.pet') byId(P.meds,'data-med').pet_id = val;
   else if(f==='sp.on'){ const pr = S.sitters[me()]; pr.prices[e.target.dataset.k].on = e.target.checked; save(); renderMain(); return; }
@@ -3735,14 +3846,19 @@ function exportJSON(){
     'hoc.care.plan': [{x_id:'plan_1', notes:P.notes, health_declaration:P.health||false, vet_name:P.vet.name, vet_phone:P.vet.phone}],
     'hoc.care.plan.feeding': P.feedings.flatMap(f=>Object.entries(f.portions).filter(([,c])=>c!=='none').map(([pid,c])=>({plan_id:'plan_1', moment_id:f.id, time:f2(toMin(f.time)), pet_id:pid, portion:c}))),
     'hoc.care.plan.walk': P.walks.map(w=>({x_id:w.id, plan_id:'plan_1', time:f2(toMin(w.time)), duration:w.duration, pet_ids:w.dog_ids})),
-    'hoc.care.plan.chore': Object.entries(P.chores).filter(([,c])=>c.on).map(([k,c])=>({plan_id:'plan_1', code:k, time:f2(toMin(c.time)), time_off:c.time_off?f2(toMin(c.time_off)):false, weekday:c.weekday??false}))
+    'hoc.care.plan.visitor': (P.visitors||[]).map(x=>({plan_id:'plan_1', kind:x.kind, weekday:x.weekday, day_part:x.part, note:x.note||false})),
+    'hoc.care.plan.chore': Object.entries(P.chores).filter(([,c])=>c.on).map(([k,c])=>({plan_id:'plan_1', code:k, time:f2(toMin(k==='kliko'?partTime(c.part||'evening'):c.time)), day_part:k==='kliko'?(c.part||'evening'):false, time_off:c.time_off?f2(toMin(c.time_off)):false, weekday:c.weekday??false}))
       .concat(P.meds.map(m=>({plan_id:'plan_1', code:'medication', time:f2(toMin(m.time)), pet_id:m.pet_id, description:m.text})))
       .concat(P.custom.map(c=>({plan_id:'plan_1', code:'custom', time:f2(toMin(c.time)), description:c.text}))),
     'hoc.booking': (S.bookings||[]).map(b=>({x_id:b.id, plan_id:'plan_1', type:b.type, state:b.state, services:b.services||['day'],
       visits_per_day:b.visits||1, walks_per_day:b.walks||1, alone_hours:b.alone??false, sitter_ids:b.sitter_ids||[],
       urgent:!!b.urgent, urgent_surcharge_pct:b.urgent?URGENT_BONUS:false, price_cap:b.cap ?? false,
       handover_from:(b.handover||{}).from || false, handover_at:(b.handover||{}).at || false, handover_reason:(b.handover||{}).reason || false,
-      declined_by:b.declined_by||[], accepted_ids:acceptedBy(b), accepted_by:b.accepted_by||false, requested_at:b.requested_at||false, checkin_at:b.checkin_at||false})),
+      declined_by:b.declined_by||[], accepted_ids:acceptedBy(b), accepted_by:b.accepted_by||false, requested_at:b.requested_at||false,
+      /* zelfde namen als hr.attendance; de projectfase volgt eruit */
+      check_in:b.checkin_at||false, check_out:b.checkout_at||false,
+      project_stage:b.checkout_at ? 'To Invoice' : b.checkin_at ? 'In Progress' : b.state==='done' ? 'Done' : b.state==='declined' ? 'Cancelled' : 'To Do',
+      messages_delete_on:b.checkout_at ? new Date(new Date(b.checkout_at).getTime()+MSG_KEEP_DAYS*864e5).toISOString() : false})),
     'hoc.message': Object.entries(S.threads||{}).flatMap(([k,ms])=>{ const [bid,sid] = k.split('|');
       return ms.map(m=>({booking_id:bid, sitter_id:sid, author:m.from, body:m.text,
         attachment_count:m.photo?1:0, attachment_mimetype:m.photo?'image/jpeg':false, create_date:m.at})); }),
@@ -3757,7 +3873,8 @@ function exportJSON(){
       ...(r.redeemed||[]).map(x=>({account_id:'loy_'+k, partner_ref:k, side:x.side||'owner',
         event:'redeem', ref:x.id, points:-x.cost, create_date:x.at, expires_at:false, expired:!rwFresh(x.at)}))]),
     /* wie heeft de animaties aan of uit staan */
-    'hoc.user.settings': Object.entries(S.anim_by||{}).map(([mail,on])=>({partner_ref:mail, animations_enabled:on !== false})),
+    'hoc.user.settings': Object.entries(S.anim_by||{}).map(([mail,on])=>({partner_ref:mail, animations_enabled:on !== false,
+      photo_access:(S.photo_by||{})[mail] === true})),
     'hoc.moderation.flag': (S.flags||[]).map(f=>({x_id:f.id, booking_id:f.booking||false, sitter_id:f.sitter||false, author:f.from, reason:'phone_number', body:f.text, create_date:f.at})),
     'hoc.booking.day': (S.bookings||[]).flatMap(b=>(b.days||[]).map(d=>({booking_id:b.id, date:d.date, time_start:f2(toMin(d.start)), time_end:f2(toMin(d.end))}))),
     'hoc.care.task': Object.values(S.days).flatMap(d=>d.tasks.map(x=>({x_id:d.date+'/'+x.id, date:d.date, kind:x.kind, name:taskTitle(x),

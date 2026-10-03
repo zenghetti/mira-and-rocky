@@ -96,6 +96,9 @@ verzameld, zolang je een account bij ons hebt, en zolang wij ze nodig hebben om 
 verplichtingen na te komen. Voor onze financiële administratie gelden de wettelijke
 bewaartermijnen.
 
+Berichten en foto's die bij een boeking horen, verwijderen wij zes maanden nadat de
+boeking is afgerond.
+
 Verzoek je ons je gegevens te verwijderen, dan doen wij dat. Gegevens die wij wettelijk
 moeten bewaren, ontkoppelen wij in dat geval van je account of maken wij anoniem.
 
@@ -107,7 +110,7 @@ persoonlijke accounts en is beperkt tot wie de gegevens voor zijn werk nodig hee
 Oppassers zijn contractueel tot geheimhouding verplicht, ook na afloop van een opdracht.
 
 Heb je aanwijzingen dat er iets mis is met de beveiliging van je gegevens, laat het ons dan
-weten via info@huisdierenoppascuracao.com. Wij reageren binnen 24 uur.
+weten via info@huisdierenoppascuracao.com. Wij reageren zo snel mogelijk.
 
 ## 8. Jouw rechten
 

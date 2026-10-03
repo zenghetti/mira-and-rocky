@@ -120,7 +120,11 @@ Wij bewaren je gegevens zolang je een account bij ons hebt en zolang dat nodig i
 boekingen, facturen en garanties af te handelen. Financiële administratie bewaren wij
 zolang de belastingwetgeving dat voorschrijft.
 
-Wij hanteren geen vaste einddatum, omdat een eerdere boeking van belang kan blijven: voor
+Voor berichten geldt wel een vaste termijn: de berichten en foto's die bij een boeking
+horen, verwijderen wij zes maanden nadat de boeking is afgerond. Daarna is het gesprek weg,
+ook bij de andere partij.
+
+Verder hanteren wij geen vaste einddatum, omdat een eerdere boeking van belang kan blijven: voor
 een garantie, een geschil of een volgende boeking bij dezelfde oppas. **Vraag je ons je
 gegevens te verwijderen, dan doen wij dat.** Wat wij wettelijk moeten bewaren, zoals
 facturen, maken wij in dat geval anoniem of houden wij apart, los van je account.
@@ -137,7 +141,7 @@ facturen, maken wij in dat geval anoniem of houden wij apart, los van je account
 - Alleen medewerkers die het nodig hebben, kunnen bij je gegevens.
 
 Vermoed je dat er iets mis is met de beveiliging van je gegevens? Laat het ons weten via
-info@huisdierenoppascuracao.com. Wij reageren binnen 24 uur.
+info@huisdierenoppascuracao.com. Wij reageren zo snel mogelijk.
 
 ## 8. Jouw rechten
 
@@ -202,6 +206,7 @@ Dit deel hoort niet op de website. Het is de checklist voor jezelf en je adviseu
 | Bewaartermijn administratie | Laat de fiscale bewaartermijn op Curaçao bevestigen en noem die in hoofdstuk 6 |
 | Reactietermijn | Dertig dagen is gebruikelijk; bevestig dat je dat haalt |
 | Screening op telefoonnummers | Vermeld in de platformovereenkomst dat berichten hierop worden gecontroleerd, zodat de app en de verklaring hetzelfde zeggen |
+| Foto's in de chat | De app vraagt zelf om toestemming voordat zij het keuzescherm van de telefoon opent; leg vast dat foto's dezelfde bewaartermijn van zes maanden volgen |
 | Minderjarigen | Bepaal of je accounts van onder de achttien toestaat en neem dat op |
 
 **Bronnen die voor deze tekst zijn gebruikt**
