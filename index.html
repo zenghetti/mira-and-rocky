@@ -16,6 +16,34 @@
 <meta name="theme-color" content="#0B1E27" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='#F8F6F1'/%3E%3Cg%20fill='none'%20stroke='#54585F'%20stroke-width='1.6'%3E%3Ccircle%20cx='32'%20cy='32'%20r='29'/%3E%3Ccircle%20cx='32'%20cy='32'%20r='26.2'/%3E%3C/g%3E%3Cg%20fill='#54585F'%3E%3Cellipse%20cx='18.4'%20cy='25.4'%20rx='4.8'%20ry='6.9'%20transform='rotate%28-12%2018.4%2025.4%29'/%3E%3Cellipse%20cx='29.6'%20cy='18.9'%20rx='4.9'%20ry='7'%20transform='rotate%28-4%2029.6%2018.9%29'/%3E%3Cellipse%20cx='40.4'%20cy='20.8'%20rx='4.9'%20ry='7'%20transform='rotate%2820%2040.4%2020.8%29'/%3E%3Cellipse%20cx='46.9'%20cy='32.4'%20rx='5'%20ry='6.9'%20transform='rotate%2842%2046.9%2032.4%29'/%3E%3Cpath%20d='M32.4%2026.6c4.4%200%206%203.6%205.8%207.2-.2%204%206.6%204.2%207.1%209.6.5%205.4-4.4%209.3-9.4%208.5-3.6-.6-5.4-3.9-9.9-4.1-5-.2-8.4.9-11.3-2.2-2.9-3.1-1.5-8.4%203.1-10.4%203.9-1.7%204.9-3%206.2-5.6%201.4-2.7%204.4-3%208.4-3z'/%3E%3C/g%3E%3C/svg%3E">
+<script>
+/* Sommige weergaven (zoals een gepubliceerde artifact-pagina) zetten deze pagina
+   binnen hun eigen <head>/<body>. Onze eigen regels komen dan in de body terecht
+   en dan vindt Safari het beginschermicoon niet en Chrome het manifest niet.
+   Daarom verhuizen ze hier alsnog naar de echte head. */
+(function(){ try{
+  var sel = 'title, meta[name^="apple-"], meta[name="mobile-web-app-capable"], meta[name="theme-color"],'
+          + 'meta[name="description"], link[rel~="icon"], link[rel="apple-touch-icon"], link[rel="manifest"]';
+  var move = [].slice.call(document.querySelectorAll(sel)).filter(function(el){ return !el.closest('head'); });
+  move.forEach(function(el){ document.head.appendChild(el); });
+
+  /* Staat de pagina op een adres zonder slash op het eind, dan wijzen de relatieve
+     paden een map te hoog. Laadt het icoon niet, dan proberen we dat adres alsnog. */
+  var touch = document.querySelector('link[rel="apple-touch-icon"]');
+  if(!touch) return;
+  var probe = new Image();
+  probe.onerror = function(){
+    var base = location.origin + location.pathname.replace(/\/$/, '') + '/';
+    [].slice.call(document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"],link[rel="manifest"]'))
+      .forEach(function(el){
+        var h = el.getAttribute('href') || '';
+        if(/^(data:|https?:|\/)/.test(h)) return;
+        el.setAttribute('href', base + h.replace(/^\.\//, ''));
+      });
+  };
+  probe.src = touch.href;
+}catch(e){} })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap">
@@ -164,12 +192,20 @@ button.card .pill{align-self:center}
 .opts.mini .opt{padding:8px 6px;font-size:13px;border-radius:10px}
 /* chat */
 .chat{background:var(--surface);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
-.msgs{display:flex;flex-direction:column;gap:8px;padding:14px 14px 10px;max-height:260px;overflow-y:auto}
+.msgs{display:flex;flex-direction:column;gap:8px;padding:14px 14px 10px;max-height:320px;overflow-y:auto}
 .msg{max-width:82%;align-self:flex-start;background:var(--surface-2);border-radius:14px 14px 14px 4px;padding:8px 11px}
 .msg.me{align-self:flex-end;background:var(--accent-soft);border-radius:14px 14px 4px 14px}
 .msg p{margin:0;font-size:14.5px;line-height:1.4}
 .msg time{display:block;font-size:11px;color:var(--ink-3);margin-top:3px}
-.chatin{display:grid;grid-template-columns:1fr 40px;gap:8px;padding:10px 12px 12px;border-top:1px solid var(--line)}
+.chatin{display:grid;grid-template-columns:40px 1fr 40px;gap:8px;padding:10px 12px 12px;border-top:1px solid var(--line)}
+.clip{border:1.5px solid var(--line);background:var(--surface);border-radius:50%;width:40px;height:40px;display:grid;place-items:center;cursor:pointer;color:var(--accent)}
+.clip svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.msg img{display:block;width:100%;height:auto;max-width:210px;border-radius:10px;margin:2px 0 1px;cursor:zoom-in}
+.msg.pic{padding:6px 7px}
+.lightbox{position:fixed;inset:0;z-index:60;background:rgba(10,20,25,.92);display:grid;place-items:center;padding:16px}
+.lightbox img{max-width:100%;max-height:100%;border-radius:12px}
+.lightbox button{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);right:14px;width:40px;height:40px;border-radius:50%;
+  border:0;background:rgba(255,255,255,.18);color:#fff;font-size:22px;line-height:1;cursor:pointer}
 .chatin input{border-radius:99px}
 .send{border:0;background:var(--accent);color:var(--accent-ink);border-radius:50%;width:40px;height:40px;display:grid;place-items:center;cursor:pointer}
 .send svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -546,7 +582,8 @@ const I18N = {
     ate:'Heeft gegeten', ate_s:'bak leeg', refused:'Niet gegeten', refused_s:'bak blijft staan',
     ate_later:'Heeft alsnog gegeten', sniff:'Rustig gesnuffeld', sniff_s:'op het gemak', run:'Gerend & gespeeld', run_s:'energie kwijt',
     mark_done:'Afvinken', undo:'Ongedaan maken', note_ph:'Opmerking voor de eigenaar (optioneel)', saved:'Opgeslagen', dismissed:'Kaartje weggelegd',
-    cup_q:'¼ beker', cup_h:'½ beker', cup_f:'1 beker', cup_f5:'1½ beker', cup_none:'Geen',
+    cup_q:'¼ beker', cup_h:'½ beker', cup_tq:'¾ beker', cup_f:'1 beker', cup_f25:'1¼ beker',
+    cup_f5:'1½ beker', cup_f75:'1¾ beker', cup_two:'2 bekers', cup_none:'Geen',
     ch_water:'Vers drinkwater geven', ch_litter:'Kattenbak schoonmaken', ch_lamp:'Warmtelamp schildpad aan', ch_lamp_off:'Warmtelamp schildpad uit',
     ch_plants:'Planten water geven', ch_mail:'Post uit de brievenbus halen', ch_kliko:'Kliko buiten zetten', ch_close:'Ramen en deuren sluiten',
     med:'Medicatie: {pet}', at:'om', now:'nu',
@@ -590,7 +627,8 @@ const I18N = {
     ate:'Ate', ate_s:'bowl empty', refused:"Didn't eat", refused_s:'bowl stays out',
     ate_later:'Ate after all', sniff:'Calm sniffing', sniff_s:'took it easy', run:'Ran & played', run_s:'burned energy',
     mark_done:'Mark done', undo:'Undo', note_ph:'Note for the owner (optional)', saved:'Saved', dismissed:'Card put away',
-    cup_q:'¼ cup', cup_h:'½ cup', cup_f:'1 cup', cup_f5:'1½ cups', cup_none:'None',
+    cup_q:'¼ cup', cup_h:'½ cup', cup_tq:'¾ cup', cup_f:'1 cup', cup_f25:'1¼ cups',
+    cup_f5:'1½ cups', cup_f75:'1¾ cups', cup_two:'2 cups', cup_none:'None',
     ch_water:'Fresh drinking water', ch_litter:'Clean the litter box', ch_lamp:'Turtle heat lamp on', ch_lamp_off:'Turtle heat lamp off',
     ch_plants:'Water the plants', ch_mail:'Collect the mail', ch_kliko:'Put the bin out', ch_close:'Close windows and doors',
     med:'Medication: {pet}', at:'at', now:'now',
@@ -666,7 +704,7 @@ Object.assign(I18N.nl, {
   q_health:'Klachten of behandeling op dit moment', q_health_ph:'Bijv. hinkt sinds vorige week, of krijgt een kuur tot vrijdag',
   q_health_s:'Meld wat er nu speelt. De oppas kan er rekening mee houden. Bestaande klachten vallen buiten de dierenartsdekking \u2014 die is voor wat er tijdens de oppasperiode ontstaat.',
   q_health_none:'Niets gemeld', vet_trip:'Vergoeding dierenartsrit',
-  bk_ask:'Vraag stellen', bk_asked:'Vraag van de oppas',
+  bk_ask:'Vraag stellen', bk_asked:'Vraag van de oppas', bk_meet:'Maak kennis',
   ur_pill:'Spoed', ur_drop:'Ik val uit', ur_need:'Vervanging nodig',
   ur_drop_q:'De resterende dagen worden als spoedaanvraag naar andere oppassers gestuurd. Doorgaan?',
   ur_title:'Spoedaanvraag', ur_from:'Spoedaanvraag van {name}',
@@ -705,10 +743,11 @@ Object.assign(I18N.nl, {
   bk_none_s_owner:'Maak een aanvraag in het boekingsscherm.',
   st_pending:'In afwachting eigenaar', st_notchosen:'Niet gekozen',
   st_notchosen_s:'De eigenaar heeft een andere oppas gekozen.',
-  bk_pending_s:'Je hebt geaccepteerd. De eigenaar kiest nu wie het wordt; je kunt alvast berichten uitwisselen.',
+  bk_pending_s:'Je staat op de lijst. De eigenaar kiest wie het wordt; maak hier alvast kennis.',
   bk_accepted_list:'Oppassers die hebben geaccepteerd', bk_msg:'Bericht', bk_choose_one:'Kies',
-  bk_await_toast:'Geaccepteerd · in afwachting van de eigenaar',
+  bk_await_toast:'Je staat op de lijst · stuur gerust een bericht',
   th_ph:'Bericht aan {who}…', th_empty:'Nog geen berichten.',
+  ch_photo:'Foto', ch_add_photo:'Foto versturen', ch_photo_big:'Foto bekijken', ch_full:'Vol · foto niet verstuurd',
   m_settings:'Instellingen', m_app:'App en account', m_demo:'Demo-instellingen', fee_open:'Bekijken',
   more_alerts:'Meldingen', flag_phone:'Mogelijk telefoonnummer gedeeld', flag_clear:'Meldingen wissen',
   flag_hint:'In Odoo wordt dit een notificatie voor het platform; het gesprek blijft zichtbaar.',
@@ -791,7 +830,7 @@ Object.assign(I18N.en, {
   q_health:'Current complaints or treatment', q_health_ph:'E.g. limping since last week, or on a course of pills until Friday',
   q_health_s:'Tell us what is going on now so the sitter can take it into account. Existing complaints fall outside the veterinary cover, which is for what arises during the booking.',
   q_health_none:'Nothing reported', vet_trip:'Vet trip compensation',
-  bk_ask:'Ask a question', bk_asked:'Question from the sitter',
+  bk_ask:'Ask a question', bk_asked:'Question from the sitter', bk_meet:'Get acquainted',
   ur_pill:'Urgent', ur_drop:'I have to drop out', ur_need:'I need a replacement',
   ur_drop_q:'The remaining days go out as an urgent request to other sitters. Continue?',
   ur_title:'Urgent request', ur_from:'Urgent request from {name}',
@@ -830,10 +869,11 @@ Object.assign(I18N.en, {
   bk_none_s_owner:'Send a request in the booking screen.',
   st_pending:'Waiting for the owner', st_notchosen:'Not chosen',
   st_notchosen_s:'The owner picked another sitter.',
-  bk_pending_s:'You accepted. The owner now picks a sitter; you can exchange messages in the meantime.',
+  bk_pending_s:'You are on the list. The owner picks a sitter; get acquainted here in the meantime.',
   bk_accepted_list:'Sitters who accepted', bk_msg:'Message', bk_choose_one:'Choose',
-  bk_await_toast:'Accepted · waiting for the owner',
+  bk_await_toast:'You are on the list · feel free to send a message',
   th_ph:'Message {who}…', th_empty:'No messages yet.',
+  ch_photo:'Photo', ch_add_photo:'Send a photo', ch_photo_big:'View photo', ch_full:'Full · photo not sent',
   m_settings:'Settings', m_app:'App and account', m_demo:'Demo settings', fee_open:'Open',
   more_alerts:'Alerts', flag_phone:'Possible phone number shared', flag_clear:'Clear alerts',
   flag_hint:'In Odoo this becomes a platform notification; the conversation stays visible.',
@@ -951,6 +991,13 @@ Object.assign(I18N.nl, {
   rv_skip:'Later', rv_note:'We bewaren je beoordeling en plaatsen hem na controle bij het profiel.',
   rv_done:'Bedankt voor je beoordeling', verified:'Geverifieerd', rv_stars:'{n} sterren',
   bk_not_started:'Nog niet ingecheckt', bk_not_started_s:'De animatie start zodra de oppas incheckt.',
+  contact:'Contact', ct_title:'Stel je vraag', ct_name:'Naam', ct_mail:'E-mailadres', ct_ph:'Waar kunnen we mee helpen?',
+  ct_send:'Versturen', ct_sent:'Verstuurd \u00b7 je hoort binnen 24 uur van ons', ct_need:'Vul je e-mailadres en je vraag in',
+  ct_s:'We reageren binnen 24 uur op het adres dat je hier invult.', ct_subject:'Vraag via de app',
+  ct_cancel:'Annuleren', ct_more:'Contact', ct_more_s:'Een vraag over je account, een boeking of de servicekosten? Stuur ons een bericht.',
+  bk_soon:'Aankomende boeking', bk_starts_tom:'Begint morgen', bk_starts_today:'Begint vandaag', bk_starts_n:'Begint over {n} dagen',
+  bk_soon_s_sitter:'Je staat ingepland. Op de eerste dag verschijnt hier de takenlijst.',
+  bk_soon_s_owner:'De oppas staat vast. Op de eerste dag kun je hier meekijken.',
   bk_before:'voor het inchecken', bk_outside:'buiten de oppastijd',
   bk_none:'Geen actieve boeking', bk_none_s:'Pas je profiel aan om meer aanvragen te tonen of neem contact op met +599 9 694 7642 voor support.', bk_to_booking:'Naar boeking',
   bk_offer_empty:'Je oppasprofiel komt hier later. Aanvragen verschijnen hier zodra ze binnenkomen.', bk_no_req:'Geen openstaande aanvragen.',
@@ -975,6 +1022,13 @@ Object.assign(I18N.en, {
   rv_skip:'Later', rv_note:'We keep your review and publish it on the profile after a check.',
   rv_done:'Thanks for your review', verified:'Verified', rv_stars:'{n} stars',
   bk_not_started:'Not checked in yet', bk_not_started_s:'The scene starts once the sitter checks in.',
+  contact:'Contact', ct_title:'Ask your question', ct_name:'Name', ct_mail:'Email address', ct_ph:'What can we help you with?',
+  ct_send:'Send', ct_sent:'Sent \u00b7 you hear from us within 24 hours', ct_need:'Fill in your email address and your question',
+  ct_s:'We reply within 24 hours to the address you fill in here.', ct_subject:'Question via the app',
+  ct_cancel:'Cancel', ct_more:'Contact', ct_more_s:'A question about your account, a booking or the service fee? Send us a message.',
+  bk_soon:'Upcoming booking', bk_starts_tom:'Starts tomorrow', bk_starts_today:'Starts today', bk_starts_n:'Starts in {n} days',
+  bk_soon_s_sitter:'You are booked in. The task list appears here on the first day.',
+  bk_soon_s_owner:'Your sitter is set. You can follow along here on the first day.',
   bk_before:'before check-in', bk_outside:'outside sitting hours',
   bk_none:'No active booking', bk_none_s:'Update your profile to receive more requests, or contact +599 9 694 7642 for support.', bk_to_booking:'Go to booking',
   bk_offer_empty:'Your sitter profile will live here later. Requests show up here as they come in.', bk_no_req:'No open requests.',
@@ -993,7 +1047,7 @@ const LOOKS = {
   cat:{ coats:['#8D8F94','#D98E48','#2B2A2E','#F3EFE8','#E8D2AE'], patterns:['solid','tabby','spots'] },
   turtle:{ coats:['#6F7F3A','#8A6337','#4F7A4A'], patterns:['solid','plates'] },
 };
-const CUPS = ['none','q','h','f','f5'];
+const CUPS = ['none','q','h','tq','f','f25','f5','f75','two'];
 const PARTY = ['#E63B5A','#F6C343','#2BB3A3','#7A5CC9','#FF8A3D'];
 
 /* ---------------- utils ---------------- */
@@ -1246,6 +1300,7 @@ function accounts(){
 const personKey = () => ((S.auth && S.auth.email) || 'demo').toLowerCase();
 function signIn(acc){
   S.auth = {email:acc.email, name:acc.name, role:acc.role, sitter:acc.sitter || null};
+  contactOpen = false; ctForm = null;   /* een ander account vult het contactformulier opnieuw voor */
   S.anim_by = S.anim_by || {};
   const ak = String(acc.email||'').toLowerCase();
   if(S.anim_by[ak] === undefined) S.anim_by[ak] = true;   /* iedereen krijgt een regel, ook wie niets wijzigt */
@@ -1343,7 +1398,7 @@ function load(){
         return s; } } }catch(e){}
   return null;
 }
-function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch(e){} }
+function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); return true; }catch(e){ return false; } }
 
 /* ---------------- task generation (vragenlijst → taken) ---------------- */
 function generateTasks(plan, date){
@@ -2133,13 +2188,35 @@ function inboxSection(){
   const body = last
     ? `<button class="card" data-act="open-chat">
         <div class="av">${last.task ? petAvatar((today().tasks.find(x=>taskTitle(x)===last.task)||{pet_ids:[]}).pet_ids[0]) : ICON_PERSON}</div>
-        <div><div class="meta"><b>${last.system ? t('app_name') : esc(last.from==='owner'?ownerName():sitterName())}</b> · ${hmOf(last.at)}${last.task?` · ${esc(t('about_task',{task:last.task}))}`:''}</div><p>${esc(last.text)}</p></div>
+        <div><div class="meta"><b>${last.system ? t('app_name') : esc(last.from==='owner'?ownerName():sitterName())}</b> · ${hmOf(last.at)}${last.task?` · ${esc(t('about_task',{task:last.task}))}`:''}</div><p>${esc(last.text || (last.photo ? t('ch_photo') : ''))}</p></div>
         ${un.length>1?`<span class="pill acc">${un.length}</span>`:''}</button>`
     : `<button class="card empty-card" data-act="open-chat"><div class="av">${ICON_PERSON}</div><div><p class="muted">${t('no_cards')}</p></div></button>`;
   return `<div id="cardsSec">${accSec('inbox', title, un.length?String(un.length):'', `<div class="cards">${body}</div>`, true)}</div>`;
 }
 
 /* melding bovenaan: geen boeking, nieuwe aanvraag of nog niet ingecheckt */
+/* een geaccepteerde boeking die nog moet beginnen */
+function upcoming(){
+  const k = dateKey(nowDate());
+  const bs = (S.bookings||[]).filter(b => S.role!=='sitter' || b.accepted_by===me());
+  return bs.filter(b => ['accepted','active'].includes(b.state) && firstDay(b) > k)
+           .sort((a,b)=>firstDay(a).localeCompare(firstDay(b)))[0] || null;
+}
+function upcomingCard(b){
+  const first = firstDay(b), n = -daysSince(first);
+  const when = n <= 0 ? t('bk_starts_today') : n === 1 ? t('bk_starts_tom') : t('bk_starts_n',{n});
+  const d0 = (b.days||[]).find(x=>x.date===first) || {};
+  const who = S.role==='sitter'
+    ? [t('bk_owner'), esc(b.owner || ownerName())]
+    : [t('bk_sitter'), esc(bookingName(b))];
+  return `<div class="bcard" data-booking="${b.id}">
+    <h3>${t('bk_soon')} <span class="pill acc">${when}</span></h3>
+    <div class="kv"><b>${t('bk_when_short')}</b><span>${bookingRange(b)}${d0.start?` \u00b7 ${d0.start}`:''}</span>
+      <b>${who[0]}</b><span>${who[1]}</span>
+      <b>${t('pets')}</b><span>${S.plan.pets.map(p=>esc(petName(p))).join(', ')}</span></div>
+    <p class="sub muted">${t(S.role==='sitter'?'bk_soon_s_sitter':'bk_soon_s_owner')}</p>
+    <div class="brow"><button class="btn ghost" data-act="go-booking">${t('bk_to_booking')}</button></div></div>`;
+}
 function bannerHTML(){
   const c = cur(), day = bookingToday();
   const newReq = S.role==='sitter' && openRequests().length
@@ -2150,9 +2227,14 @@ function bannerHTML(){
     return `<div class="bcard urgent"><h3>${t('ur_looking')} <span class="pill warn">${t('ur_pill')}</span></h3>
       <p class="sub">${t('ur_looking_s')}</p>
       <div class="brow"><button class="btn ghost" data-act="go-booking">${t('bk_to_booking')}</button></div></div>`;
-  if(!c || !day)
+  if(!c || !day){
+    const up = upcoming();
+    if(up) return newReq + upcomingCard(up);
     return newReq || `<div class="bcard"><h3>${t('bk_none')}</h3><p class="sub">${S.role==='sitter'?t('bk_none_s'):t('bk_none_s_owner')}</p>
-      <div class="brow"><button class="btn ghost" data-act="go-booking">${t('bk_to_booking')}</button></div></div>`;
+      <div class="brow"><button class="btn ghost" data-act="go-booking">${t('bk_to_booking')}</button>
+        <button class="btn ghost" data-act="contact">${t('contact')}</button></div>
+      ${contactOpen?contactBlock():''}</div>`;
+  }
   if(c.state!=='active')
     return newReq + `<div class="bcard"><h3>${t('bk_not_started')} <span class="pill acc">${fmtShort(day.date)} ${day.start}</span></h3>
       ${S.role==='sitter' ? `<div class="brow"><button class="btn" data-act="bk-checkin">${t('bk_checkin')}</button></div>` : ''}</div>`;
@@ -2163,13 +2245,20 @@ function bannerHTML(){
 let chatAll = false, chatOpen = false;
 const ICON_PERSON = '<svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.8"><circle cx="12" cy="9" r="3.4"/><path d="M5 20c.8-3.8 3.6-5.4 7-5.4s6.2 1.6 7 5.4"/></svg>';
 const ICON_SEND = '<svg viewBox="0 0 24 24"><path d="M4.5 12h14"/><path d="M12.5 6 18.5 12l-6 6"/></svg>';
+const ICON_CAM = '<svg viewBox="0 0 24 24"><path d="M4 8.5h3l1.4-2.2h7.2L17 8.5h3v10H4z"/><circle cx="12" cy="13" r="3.4"/></svg>';
+/* een fotoknop bij een chatvenster; het id koppelt de gekozen foto aan het juiste gesprek */
+const photoBtn = key => `<label class="clip" title="${t('ch_add_photo')}" aria-label="${t('ch_add_photo')}">${ICON_CAM}
+  <input type="file" accept="image/*" capture="environment" hidden data-chatpic="${key}"></label>`;
+/* één bericht in beeld: tekst, een foto, of allebei */
+const msgBody = m => (m.photo ? `<img src="${m.photo}" alt="${t('ch_photo')}" data-big="${esc(m.photo)}"${m.pw?` width="${m.pw}" height="${m.ph}"`:''}>` : '')
+  + (m.text ? `<p>${esc(m.text)}</p>` : '');
 function chatBox(){
   const other = S.role==='owner' ? sitterName() : ownerName();
   const all = stream(), list = chatAll ? all : all.slice(-6);
   return `<div class="chat">
       ${all.length>6 && !chatAll ? `<button class="lnk" style="margin:10px 14px 0" data-act="chat-all">${t('chat_all',{n:all.length})}</button>` : ''}
-      <div class="msgs" id="msgs">${list.length ? list.map(mm=>`<div class="msg ${mm.from===S.role && !mm.system?'me':''} ${mm.task?'note':''} ${mm.system?'sys':''}">${mm.task?`<i>${esc(mm.task)}</i>`:''}<p>${esc(mm.text)}</p><time>${mm.system ? t('app_name') : mm.from===S.role ? t('me') : esc(mm.from==='owner'?ownerName():sitterName())} · ${hmOf(mm.at)}</time></div>`).join('') : `<p class="sub muted" style="padding:4px 2px">${t('chat_empty')}</p>`}</div>
-      <form class="chatin" id="chatForm" autocomplete="off"><input id="chatInput" type="text" placeholder="${t('chat_ph',{who:esc(other)})}"><button class="send" type="submit" aria-label="${t('chat')}">${ICON_SEND}</button></form>
+      <div class="msgs" id="msgs">${list.length ? list.map(mm=>`<div class="msg ${mm.from===S.role && !mm.system?'me':''} ${mm.task?'note':''} ${mm.system?'sys':''} ${mm.photo?'pic':''}">${mm.task?`<i>${esc(mm.task)}</i>`:''}${msgBody(mm)}<time>${mm.system ? t('app_name') : mm.from===S.role ? t('me') : esc(mm.from==='owner'?ownerName():sitterName())} · ${hmOf(mm.at)}</time></div>`).join('') : `<p class="sub muted" style="padding:4px 2px">${t('chat_empty')}</p>`}</div>
+      <form class="chatin" id="chatForm" autocomplete="off">${photoBtn('chat')}<input id="chatInput" type="text" placeholder="${t('chat_ph',{who:esc(other)})}"><button class="send" type="submit" aria-label="${t('chat')}">${ICON_SEND}</button></form>
     </div>`;
 }
 
@@ -2177,11 +2266,11 @@ let openThread = null;
 function threadBox(bid, sid){
   const msgs = thread(bid, sid), other = S.role==='owner' ? ((sitterById(sid)||{}).name || '') : ownerName();
   return `<div class="chat" style="margin-top:8px">
-      <div class="msgs">${msgs.length ? msgs.map(mm=>`<div class="msg ${mm.from===S.role?'me':''}"><p>${esc(mm.text)}</p>
+      <div class="msgs">${msgs.length ? msgs.map(mm=>`<div class="msg ${mm.from===S.role?'me':''} ${mm.photo?'pic':''}">${msgBody(mm)}
         <time>${mm.from===S.role ? t('me') : esc(mm.from==='owner'?ownerName():(sitterById(sid)||{}).name||'')} · ${hmOf(mm.at)}</time></div>`).join('')
         : `<p class="sub muted" style="padding:4px 2px">${t('th_empty')}</p>`}</div>
       <form class="chatin" data-thform="${thKey(bid,sid)}" autocomplete="off">
-        <input type="text" placeholder="${t('th_ph',{who:esc(other)})}"><button class="send" type="submit" aria-label="${t('chat')}">${ICON_SEND}</button></form>
+        ${photoBtn('th|'+thKey(bid,sid))}<input type="text" placeholder="${t('th_ph',{who:esc(other)})}"><button class="send" type="submit" aria-label="${t('chat')}">${ICON_SEND}</button></form>
     </div>`;
 }
 function threadRow(b, sid, canChoose){
@@ -2513,7 +2602,7 @@ function bookingOwner(){
         if(!acc.length && !asked.length) return '';
         return `${acc.length?`<p class="lbl">${t('bk_accepted_list')}</p><div class="daylist">${acc.map(sid=>threadRow(b, sid, b.state==='pending')).join('')}</div>`:''}
           ${asked.length?`<p class="lbl">${t('bk_asked')}</p><div class="daylist">${asked.map(sid=>threadRow(b, sid, false)).join('')}</div>`:''}`; })()}
-      ${b.state==='declined'?`<p class="sub" style="color:var(--late)">${t('bk_declined_msg')}</p>`:''}
+      ${b.state==='declined'?`<p class="sub" style="color:var(--late)">${t('bk_declined_msg')}</p>${contactBlock()}`:''}
       ${b.state==='active' && b.checkin_at?`<p class="sub">${t('bk_checked_in',{time:hmOf(b.checkin_at)})}</p>`:''}
       <div class="brow">
         ${b.state==='declined'?`<button class="btn" data-act="bk-edit-search">${t('bk_edit_search')}</button>`:''}
@@ -2633,6 +2722,7 @@ function feesPage(){
     <p class="sub">${owner ? t('fee_lead_owner',{share:SHARE_PCT}) : t('fee_lead_sitter',{share:SHARE_PCT, pct:FEE_PCT})}</p>
     <div class="cards">${rows.map(([ic,k])=>`<div class="panel feerow">${feeIcon(ic)}<div><b>${t(k)}</b><span>${t(k+'s')}</span></div></div>`).join('')}</div>
     <p class="fineprint">${t('fee_disclaimer')}</p>
+    ${contactBlock()}
     <div class="brow"><button class="btn ghost" data-act="fees-close">${t('hide')}</button></div>
   </section>`;
 }
@@ -2691,6 +2781,28 @@ function intakeCard(){
   return `<div class="bcard"><h3>${t('ik_title')}</h3><p class="sub">${t('ik_s')}</p>
     <p class="sub muted">${t('ik_mailed')}</p>
     <button class="lnk" data-act="ik-done">${t('ik_demo')}</button></div>`;
+}
+/* ---------------- contact ----------------
+   Eén knop door de hele app. De mail die hier uit komt is in Odoo een Lead
+   (crm.lead) via de alias van het verkoopteam; zie docs/DATAMODEL.md.      */
+const CONTACT_MAIL = 'info@huisdierenoppascuracao.com';
+let contactOpen = false, ctForm = null;
+function ctInit(){
+  const a = S.auth || {}, pr = S.role==='sitter' ? profile(me()) : null;
+  return {name: a.name || (pr && pr.first) || ownerName() || '',
+          mail: a.email || (pr && pr.email) || '', text: ''};
+}
+function contactBlock(){
+  if(!contactOpen) return `<button class="btn ghost" data-act="contact">${t('contact')}</button>`;
+  const f = ctForm || (ctForm = ctInit());
+  return `<div class="panel sign" id="ctBox">
+    <h3>${t('ct_title')}</h3>
+    <input type="text" data-f="ct.name" value="${esc(f.name)}" placeholder="${t('ct_name')}" aria-label="${t('ct_name')}">
+    <input type="email" data-f="ct.mail" value="${esc(f.mail)}" placeholder="${t('ct_mail')}" aria-label="${t('ct_mail')}">
+    <textarea data-f="ct.text" rows="3" placeholder="${t('ct_ph')}" aria-label="${t('ct_ph')}">${esc(f.text)}</textarea>
+    <div class="brow"><button class="btn" data-act="ct-send">${t('ct_send')}</button>
+      <button class="lnk" data-act="contact">${t('ct_cancel')}</button></div>
+    <p class="fineprint">${t('ct_s')}</p></div>`;
 }
 /* in Odoo: een mail naar het platform plus een taak om het gesprek in te plannen */
 function intakeMail(pr, mail){
@@ -2882,8 +2994,7 @@ function bookingSitter(){
       ${bkDays(b)}
       ${(()=>{ const q = quote(me(), b.days, bkOpt(b)); if(!q) return '';
         return quoteHTML(q, 'net') + (b.urgent ? `<div class="daylist"><div class="dayrow total"><span><b>${t('ur_bonus',{pct:URGENT_BONUS})}</b></span><span></span><span><b>+${Math.round(q.net*URGENT_BONUS/100)} XCG</b></span></div></div><p class="fineprint">${t('ur_bonus_s')}</p>` : ''); })()}
-      <div class="brow"><button class="btn" data-act="bk-accept">${t('bk_accept')}</button>
-        <button class="btn ghost" data-act="th-open" data-v="${me()}">${t('bk_ask')}</button>
+      <div class="brow"><button class="btn" data-act="bk-accept">${t('bk_meet')}</button>
         <button class="btn ghost danger" data-act="bk-decline">${t('bk_decline')}</button></div>
       ${openThread===thKey(b.id, me()) ? threadBox(b.id, me()) : ''}</div>`).join('');
   const mineCards = mine.map(b=>`<button class="bcard tap" data-booking="${b.id}" data-act="bk-open">
@@ -2938,6 +3049,9 @@ function viewMore(){
     <button class="btn ghost" data-act="demo-full">${t('demo_full')}</button>
     <button class="btn ghost danger" data-act="reset">${t('reset')}</button>
     <p class="sub muted" style="font-size:12.5px">${t('about')}</p>`, true)}
+  ${accSec('contact', t('ct_more'), '', `
+    <p class="sub">${t('ct_more_s')}</p>
+    ${contactBlock()}`, false)}
   ${S.auth?accSec('deact', t('deact'), '', `
     <p class="sub">${t('deact_s')}</p>
     ${S.auth.role==='sitter'?`<p class="sub muted">${t('deact_term',{date:plusYear(null)})}</p>`:''}
@@ -3112,7 +3226,9 @@ function renderMain(){
   if(!S.auth){ $('#main').innerHTML = viewLogin(); return; }
   if(feesOpen){ $('#main').innerHTML = feesPage(); return; }
   $('#main').innerHTML = ({today:viewToday, booking:viewBooking, log:viewLog, more:viewMore}[S.tab] || viewToday)();
-  const ms = document.getElementById('msgs'); if(ms) ms.scrollTop = ms.scrollHeight;
+  const ms = document.getElementById('msgs');
+  if(ms){ ms.scrollTop = ms.scrollHeight;
+    ms.querySelectorAll('img').forEach(im=>{ if(!im.complete) im.addEventListener('load', ()=>{ ms.scrollTop = ms.scrollHeight; }, {once:true}); }); }
   // de lijst kan van hoogte veranderen: blijf staan waar je was
   if(y > 0) window.scrollTo({top: Math.min(y, document.body.scrollHeight - window.innerHeight), behavior:'instant'});
 }
@@ -3261,12 +3377,23 @@ document.addEventListener('click', e=>{
     openThread = null; save(); render(); window.scrollTo({top:0}); toast(t('bk_accepted_by',{name:b.sitter})); return; }
   if(act==='th-open'){ const el = a.closest('[data-booking]'); if(!el) return;
     const key = thKey(el.dataset.booking, v); openThread = openThread===key ? null : key; renderMain();
-    setTimeout(()=>document.querySelector('[data-thform] input')?.focus(), 60); return; }
+    setTimeout(()=>document.querySelector('[data-thform] input[type=text]')?.focus(), 60); return; }
   if(act==='rw-redeem'){
     const list = REWARDS[S.role==='sitter'?'sitter':'owner'], x = list.find(y=>y.id===v), r = rwStore();
     if(!x || rwPts() < x.cost || r.redeemed.some(y=>y.id===x.id && rwFresh(y.at))) return;
     r.redeemed.push({id:x.id, cost:x.cost, side:S.role, date:dateKey(nowDate()), at:nowDate().toISOString()});
     save(); renderMain(); toast(t('rw_toast')); return; }
+  if(act==='contact'){ contactOpen = !contactOpen; if(contactOpen) ctForm = ctForm || ctInit();
+    renderMain(); if(contactOpen) setTimeout(()=>{ const b = document.getElementById('ctBox');
+      if(b){ b.scrollIntoView({block:'center', behavior:'smooth'}); b.querySelector('textarea').focus(); } }, 60);
+    return; }
+  if(act==='ct-send'){ const f = ctForm || ctInit();
+    if(!f.mail.trim() || !f.text.trim()){ toast(t('ct_need')); return; }
+    S.mails = S.mails || [];
+    S.mails.push({to:CONTACT_MAIL, subject:t('ct_subject'),
+      body:['Naam: '+f.name, 'E-mailadres: '+f.mail, 'Rol: '+t(S.role==='sitter'?'sitter':'owner'),
+            'Vraag: '+f.text].join('\n'), at:nowDate().toISOString()});
+    contactOpen = false; ctForm = null; save(); renderMain(); toast(t('ct_sent')); return; }
   if(act==='flags-clear'){ S.flags = []; save(); renderMain(); return; }
   if(act==='bk-decline'){ const id = a.closest('[data-booking]').dataset.booking, b = S.bookings.find(x=>x.id===id); if(!b) return;
     b.declined_by = [...(b.declined_by||[]), me()];
@@ -3351,9 +3478,9 @@ document.addEventListener('click', e=>{
     }
     lg = {mode:'in', email:'', pass:'', name:'', phone:'', role:'owner'};
     snapshot(); save(); render(); window.scrollTo({top:0}); toast(t('lg_welcome',{name})); return; }
-  if(act==='logout'){ S.auth = null; openBooking = null; openThread = null; chatOpen = false; lg = {mode:'in', email:'', pass:'', name:'', phone:'', role:'owner'};
+  if(act==='logout'){ S.auth = null; openBooking = null; openThread = null; chatOpen = false; contactOpen = false; ctForm = null; lg = {mode:'in', email:'', pass:'', name:'', phone:'', role:'owner'};
     save(); render(); window.scrollTo({top:0}); return; }
-  if(act==='set-role'){ S.role=v; save(); render(); return; }
+  if(act==='set-role'){ S.role=v; if(ctForm && !ctForm.text.trim()){ contactOpen = false; ctForm = null; } save(); render(); return; }
   if(act==='set-lang'){ S.lang=v; save(); render(); return; }
   if(act==='set-theme'){ S.theme=v; save(); render(); return; }
   if(act==='anim'){ S.anim = S.anim === false; S.anim_by = S.anim_by || {}; S.anim_by[personKey()] = S.anim;
@@ -3403,6 +3530,39 @@ document.addEventListener('click', e=>{
   planChanged(true);
 });
 
+/* een foto in de chat: zelfde verkleining, daarna als eigen bericht in het gesprek */
+function shrink(file, max, cb){
+  const fr = new FileReader();
+  fr.onload = () => { const img = new Image();
+    img.onload = () => { const sc = Math.min(1, max/Math.max(img.width, img.height));
+      const cv = document.createElement('canvas'); cv.width = Math.round(img.width*sc); cv.height = Math.round(img.height*sc);
+      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      cb(cv.toDataURL('image/jpeg', .6), cv.width, cv.height); };
+    img.onerror = () => cb(null); img.src = fr.result; };
+  fr.onerror = () => cb(null);
+  fr.readAsDataURL(file);
+}
+document.addEventListener('change', e=>{
+  const key = e.target.dataset && e.target.dataset.chatpic; if(!key) return;
+  const file = e.target.files && e.target.files[0]; e.target.value = ''; if(!file) return;
+  shrink(file, 720, (data, w, h)=>{
+    if(!data) return;
+    const msg = {id:uid('m_'), from:S.role, text:'', photo:data, pw:w, ph:h, at:nowDate().toISOString()};
+    let undo;
+    if(key === 'chat'){ S.chat.push(msg); undo = () => S.chat.pop(); }
+    else { const [bid, sid] = key.slice(3).split('|'); const th = thread(bid, sid); th.push(msg); undo = () => th.pop(); }
+    if(!save()){ undo(); save(); toast(t('ch_full')); return; }   /* localStorage vol: foto gaat er weer af */
+    renderMain(); renderTabs();
+  });
+});
+/* een foto groot bekijken */
+document.addEventListener('click', e=>{
+  const img = e.target.closest('img[data-big]'); if(!img) return;
+  const box = document.createElement('div'); box.className = 'lightbox';
+  box.innerHTML = `<img src="${img.dataset.big}" alt="${t('ch_photo')}"><button aria-label="${t('hide')}">\u00d7</button>`;
+  box.addEventListener('click', ()=>box.remove());
+  document.body.appendChild(box);
+});
 /* foto's: verkleinen en als data-URL bewaren (blijft op dit apparaat) */
 document.addEventListener('change', e=>{
   if(e.target.id !== 'photoInput' && e.target.id !== 'ownerPhotoInput') return;
@@ -3431,13 +3591,13 @@ document.addEventListener('submit', e=>{
   const th = e.target.closest('[data-thform]');
   if(th){
     e.preventDefault();
-    const inp = th.querySelector('input'), text = inp.value.trim(); if(!text) return;
+    const inp = th.querySelector('input[type=text]'), text = inp.value.trim(); if(!text) return;
     const [bid, sid] = th.dataset.thform.split('|');
     thread(bid, sid).push({id:uid('m_'), from:S.role, text, at:nowDate().toISOString()});
     const flagged = screen(text, S.role, bid, sid);
     inp.value=''; save(); renderMain(); renderTabs();
     if(flagged) toast(t('flag_phone'));
-    document.querySelector(`[data-thform="${bid}|${sid}"] input`)?.focus();
+    document.querySelector(`[data-thform="${bid}|${sid}"] input[type=text]`)?.focus();
     return;
   }
   if(!e.target.matches('#chatForm')) return;
@@ -3483,6 +3643,7 @@ document.addEventListener('input', e=>{
   const f = e.target.dataset.f; if(!f) return;
   if(f.startsWith('lg.')){ lg[f.slice(3)] = e.target.value; return; }
   if(f==='rv.note'){ reviewDraft.note = e.target.value; return; }
+  if(f.startsWith('ct.')){ ctForm = ctForm || ctInit(); ctForm[f.slice(3)] = e.target.value; return; }
   if(f==='tm.ok'){ termsOK = e.target.checked; renderMain(); return; }
   const P = S.plan, later = fn => { clearTimeout(noteTimer); noteTimer = setTimeout(fn, 400); };
   if(!f.startsWith('sp.') && !f.startsWith('av.') && S.role!=='owner') return;
@@ -3583,7 +3744,8 @@ function exportJSON(){
       handover_from:(b.handover||{}).from || false, handover_at:(b.handover||{}).at || false, handover_reason:(b.handover||{}).reason || false,
       declined_by:b.declined_by||[], accepted_ids:acceptedBy(b), accepted_by:b.accepted_by||false, requested_at:b.requested_at||false, checkin_at:b.checkin_at||false})),
     'hoc.message': Object.entries(S.threads||{}).flatMap(([k,ms])=>{ const [bid,sid] = k.split('|');
-      return ms.map(m=>({booking_id:bid, sitter_id:sid, author:m.from, body:m.text, create_date:m.at})); }),
+      return ms.map(m=>({booking_id:bid, sitter_id:sid, author:m.from, body:m.text,
+        attachment_count:m.photo?1:0, attachment_mimetype:m.photo?'image/jpeg':false, create_date:m.at})); }),
     /* één spaarkaart per persoon; het saldo is de som van de regels hieronder */
     'hoc.loyalty.account': Object.entries(S.rewards||{}).map(([k,r])=>({x_id:'loy_'+k, partner_ref:k,
       valid_days:RW_DAYS, points_balance:rwBalance(r)})),
